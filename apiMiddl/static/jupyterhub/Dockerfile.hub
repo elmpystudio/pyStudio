@@ -1,0 +1,6 @@
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+FROM jupyterhub/jupyterhub:latest
+
+RUN pip3 install --upgrade pip
+RUN pip3 install oauthenticator dockerspawner jupyterhub-jwtauthenticator

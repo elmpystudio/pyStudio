@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+    <g fill="none" fill-rule="evenodd" stroke="#2F6BFF">
+        <path d="M3 0L0 0 0 14 3 14" transform="translate(1 1)"/>
+        <path d="M14 0L11 0 11 14 14 14" transform="translate(1 1) matrix(-1 0 0 1 25 0)"/>
+        <path d="M4 10L10 4M4 4L10 10M5.974 10L2.62 10M11.354 10L8 10M8 4L11.354 4M5.974 4L2.62 4" transform="translate(1 1)"/>
+    </g>
+</svg>

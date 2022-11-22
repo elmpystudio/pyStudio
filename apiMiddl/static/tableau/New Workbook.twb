@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20194.19.1105.1444                               -->
+<workbook original-version='18.1' source-build='2019.4.0 (20194.19.1105.1444)' version='18.1' xml:base='http://localhost:8238' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <SheetIdentifierTracking ignorable='true' predowngraded='true' />
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <repository-location id='wb_with_ds_inside' path='/t/API/workbooks' revision='1.0' site='API' />
+  <preferences />
+  <datasources>
+    <datasource caption='snakes_count_1001' inline='true' name='federated.11om9su1hq715y1c31uw21orzugy' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='snakes_count_1001' name='textscan.1gp8yv10d3gzcc13p26vr0bl79q2'>
+            <connection class='textscan' directory='Data/16h02j40c4pee118jukdt17306df' filename='snakes_count_1001.csv' />
+          </named-connection>
+        </named-connections>
+        <relation connection='textscan.1gp8yv10d3gzcc13p26vr0bl79q2' name='snakes_count_1001.csv' table='[snakes_count_1001#csv]' type='table'>
+          <columns character-set='UTF-8' header='yes' locale='en_US' separator=','>
+            <column datatype='integer' name='Game Number' ordinal='0' />
+            <column datatype='integer' name='Game Length' ordinal='1' />
+          </columns>
+        </relation>
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[snakes_count_1001.csv]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
+              <attribute datatype='string' name='collation'>&quot;en_US&quot;</attribute>
+              <attribute datatype='string' name='field-delimiter'>&quot;,&quot;</attribute>
+              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
+              <attribute datatype='string' name='locale'>&quot;en_US&quot;</attribute>
+              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Game Number</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Game Number]</local-name>
+            <parent-name>[snakes_count_1001.csv]</parent-name>
+            <remote-alias>Game Number</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Game Length</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Game Length]</local-name>
+            <parent-name>[snakes_count_1001.csv]</parent-name>
+            <remote-alias>Game Length</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <column datatype='integer' name='[Game Number]' role='dimension' type='ordinal' />
+      <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
+        <calculation class='tableau' formula='1' />
+      </column>
+      <layout dim-ordering='alphabetic' dim-percentage='0.5' measure-ordering='alphabetic' measure-percentage='0.4' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='Sheet 1'>
+      <repository-location id='Sheet1' path='/t/API/workbooks/wb_with_ds_inside' revision='' site='API' />
+      <table>
+        <view>
+          <datasources />
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{0B2C790F-527A-4222-B690-6E3C82933107}' />
+    </worksheet>
+  </worksheets>
+  <windows>
+    <window class='worksheet' maximized='true' name='Sheet 1'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='31'>
+            <card type='columns' />
+          </strip>
+          <strip size='31'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{31EED27D-F488-440F-A01D-B2962B8121DC}' />
+    </window>
+  </windows>
+</workbook>

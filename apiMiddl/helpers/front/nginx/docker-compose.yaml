@@ -1,0 +1,11 @@
+version: '3'
+services:
+  nginx:
+    image: nginx
+    build: .
+    network_mode: "host"
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+      - ./nginx/logs:/var/log/nginx
+      - ../frontend:/frontend
+

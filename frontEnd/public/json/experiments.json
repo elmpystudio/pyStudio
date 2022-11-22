@@ -1,0 +1,6 @@
+[
+  {"id": 1, "experimentName": "Campaign Predictions", "creationDate": "14/04/2019"},
+  {"id": 4, "experimentName": "Campaign outcome prediction", "creationDate": "02/05/2019"},
+  {"id": 3, "experimentName": "Campaign prediction2", "creationDate": "15/04/2019"},
+  {"id": 9, "experimentName": "test", "creationDate": "17/04/2020"}
+]

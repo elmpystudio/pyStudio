@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "name": "Brittany Stendall",
+        "job_title": "Office Assistant II",
+        "email": "bstendall0@washingtonpost.com",
+        "about": "Other disorders of continuity of bone, left fibula",
+        "skills": ["UX Design", "UI Design", "Sketch", "Adobe XD"],
+        "image": 1
+    },
+    {
+        "id": 2,
+        "name": "Nonnah Kidstone",
+        "job_title": "Senior Financial Analyst",
+        "email": "nkidstone1@altervista.org",
+        "about": "Conjunctival xerosis, unspecified, left eye",
+        "skills": ["UX Design", "Sketch", "Adobe XD"],
+        "image": 2
+    },
+    {
+        "id": 3,
+        "name": "Imogen Pibworth",
+        "job_title": "Media Manager III",
+        "email": "ipibworth2@msn.com",
+        "about": "Unspecified physeal fracture of upper end of unspecified fibula, subsequent encounter for fracture with nonunion",
+        "skills": ["UX Design", "Sketch", "Adobe XD"],
+        "image": 3
+    },
+    {
+        "id": 4,
+        "name": "Elisa Le Friec",
+        "job_title": "Financial Analyst",
+        "email": "ele3@dedecms.com",
+        "about": "Exposure of graft of urinary organ, initial encounter",
+        "skills": ["UX Design", "Sketch", "Adobe XD"],
+        "image": 4
+    },
+    {
+        "id": 5,
+        "name": "Livy Krelle",
+        "job_title": "Mechanical Systems Engineer",
+        "email": "lkrelle4@sciencedirect.com",
+        "about": "Disorder of tyrosine metabolism, unspecified",
+        "skills": ["UX Design", "Adobe XD"],
+        "image": 5
+    },
+    {
+        "id": 6,
+        "name": "Godart Grassett",
+        "job_title": "Senior Financial Analyst",
+        "email": "ggrassett5@bing.com",
+        "about": "Juvenile idiopathic scoliosis, thoracolumbar region",
+        "skills": ["UX Design", "Adobe XD"],
+        "image": 6
+    },
+    {
+        "id": 7,
+        "name": "Katharyn Ewin",
+        "job_title": "Graphic Designer",
+        "email": "kewin6@arizona.edu",
+        "about": "Unspecified pedal cyclist injured in collision with pedestrian or animal in traffic accident",
+        "skills": ["Adobe XD"],
+        "image": 7
+    },
+    {
+        "id": 8,
+        "name": "Judas Korfmann",
+        "job_title": "Help Desk Technician",
+        "email": "jkorfmann7@usatoday.com",
+        "about": "Laceration of stomach, sequela",
+        "skills": ["UX Design", "Adobe XD"],
+        "image": 8
+    },
+    {
+        "id": 9,
+        "name": "Dunc Deacock",
+        "job_title": "Human Resources Manager",
+        "email": "ddeacock8@google.cn",
+        "about": "Respiratory arrest of newborn",
+        "skills": ["Adobe XD"],
+        "image": 9
+    },
+    {
+        "id": 10,
+        "name": "Garold Lightfoot",
+        "job_title": "Civil Engineer",
+        "email": "glightfoot9@seattletimes.com",
+        "about": "Primary blast injury of duodenum, initial encounter",
+        "skills": ["Adobe XD"],
+        "image": 10
+    }
+]

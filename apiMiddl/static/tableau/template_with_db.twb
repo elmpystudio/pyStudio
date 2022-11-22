@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20194.19.1105.1444                               -->
+<workbook original-version='18.1' source-build='2019.4.0 (20194.19.1105.1444)' version='18.1' xml:base='http://localhost:8849' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <SheetIdentifierTracking ignorable='true' predowngraded='true' />
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <preferences />
+  <datasources>
+    <datasource caption='{table} (public)' inline='true' name='{table}' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='ap.entomu.com' name='{table}'>
+            <connection authentication='username-password' embedPassword="{db_pass}" password="{db_pass}"  class='postgres' dbname='{db_db}' odbc-native-protocol='' one-time-sql='' port='5432' server='ap.entomu.com' username='postgres' workgroup-auth-mode='' />
+            <connectionCredentials embed="true" name="postgres" password="{db_pass}" />
+          </named-connection>
+        </named-connections>
+        <relation connection='{table}' name='{table}' table='[public].[{table}]' type='table' />
+      </connection>
+      <aliases enabled='yes' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.5' measure-ordering='alphabetic' measure-percentage='0.4' show-structure='true' />
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='Sheet 1'>
+      <table>
+        <view>
+          <datasources />
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+    </worksheet>
+  </worksheets>
+  <windows>
+    <window class='worksheet' maximized='true' name='Sheet 1'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='31'>
+            <card type='columns' />
+          </strip>
+          <strip size='31'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+    </window>
+  </windows>
+</workbook>

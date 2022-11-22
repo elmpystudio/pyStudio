@@ -1,0 +1,55 @@
+# Editor directories and files
+.idea
+.vscode
+
+.persistant
+.DS_Store
+dist/
+
+#commented for first commit
+#dagster_resources/engine_config.py
+
+env/
+venv/
+
+!**/__pycache__/
+
+user/csvs
+
+# local env files
+.env.local
+.env.*.local
+
+
+#api related
+db.sqlite3
+!**/__pycache__/
+hyperd.log
+*.hyper
+*.pyc
+jupyterhub/data/jupyterhub-proxy.pid
+helpers/front/nginx/nginx/logs
+
+#commented for first commit
+#rest/settings.py
+
+
+#frontEnt related
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# npm
+node_modules
+package-lock.json
+yarn.lock
+
+# more Editor directories and files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+

@@ -1,0 +1,114 @@
+[
+    {
+        "model": "accounts.permission",
+        "pk": 1,
+        "fields": {
+            "name": "test_permission"
+        }
+    },
+    {
+        "model": "accounts.role",
+        "pk": 1,
+        "fields": {
+            "name": "test_role",
+            "permissions": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "accounts.organization",
+        "pk": 1,
+        "fields": {
+            "name": "E Corp",
+            "about": "E Corp",
+            "logo": "",
+            "creation_ts": "2020-03-05T08:47:40Z"
+        }
+    },
+    {
+        "model": "accounts.customuser",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$180000$oLVWDMgWVswK$7wVUSosLvrLOCPnOVHwOsGUc85tZpqzK+Z/PszbitX8=",
+            "last_login": "2020-03-17T08:04:10.359Z",
+            "is_superuser": true,
+            "username": "root",
+            "first_name": "root_first_name",
+            "last_name": "root_last_name",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2020-02-13T11:18:08.036Z",
+            "full_name": null,
+            "email": "root",
+            "about": null,
+            "avatar": "",
+            "creation_ts": "2020-02-13T11:18:08.036Z",
+            "organization": 1,
+            "tableau_user": "api-user",
+            "tableau_password": "Aa123456",
+            "jhub_token": "root_token",
+            "groups": [],
+            "user_permissions": [],
+            "roles": []
+        }
+    },
+    {
+        "model": "accounts.customuser",
+        "pk": 2,
+        "fields": {
+            "password": "w2w2w2W@",
+            "last_login": "2020-03-05T09:23:26Z",
+            "is_superuser": false,
+            "username": "analytic",
+            "first_name": "analytics",
+            "last_name": "last_name",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-03-05T09:23:18Z",
+            "full_name": null,
+            "email": "analytics",
+            "about": "",
+            "avatar": "",
+            "creation_ts": "2020-03-05T09:23:18Z",
+            "organization": 1,
+            "tableau_user": "analytics",
+            "tableau_password": "w2w2w2W@",
+            "jhub_token": "analytic_token",
+            "groups": [],
+            "user_permissions": [],
+            "roles": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "accounts.customuser",
+        "pk": 3,
+        "fields": {
+            "password": "w2w2w2W@",
+            "last_login": "2020-03-05T09:24:07Z",
+            "is_superuser": false,
+            "username": "manager",
+            "first_name": "mana first",
+            "last_name": "mana last",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-03-05T09:24:03Z",
+            "full_name": null,
+            "email": "manager",
+            "about": "",
+            "avatar": "",
+            "creation_ts": "2020-03-05T09:24:03Z",
+            "organization": 1,
+            "tableau_user": "manager",
+            "tableau_password": "w2w2w2W@",
+            "jhub_token": "manager_token",
+            "groups": [],
+            "user_permissions": [],
+            "roles": [
+                1
+            ]
+        }
+    }
+]

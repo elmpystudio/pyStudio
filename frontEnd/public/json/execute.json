@@ -1,0 +1,14 @@
+{
+  "nodes_status": [
+    {
+      "node": "flowchartNode1",
+      "note": "",
+      "status": "START",
+      "time": "Wed, 06 May 2020 18:57:18 GMT"
+    }
+  ],
+  "wf_finish_time": "",
+  "wf_notes": "",
+  "wf_start_time": "Wed, 06 May 2020 18:57:18 GMT",
+  "wf_status": "START"
+}
