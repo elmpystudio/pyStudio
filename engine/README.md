@@ -1,11 +1,5 @@
-# Analytics-Engine
+#  Elm's PyStudio - Engine
 About this project.
-
-# Installation
-## Clone the repo
-```bash
-git clone https://gitlab.com/elm-research/analytics-platform/new_analytics_engine.git
-```
 
 ## Enviroment setup:
 
