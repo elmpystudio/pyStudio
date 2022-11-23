@@ -1,9 +1,6 @@
-# analytics-frontend
+# Elm's PyStudio - frontEnd
 
-## Clone the repo
-```bash
-git clone https://gitlab.com/elm-research/analytics-platform/analytics-frontend.git
-```
+
 ### Project setup
 ```bash
 npm install
