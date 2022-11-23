@@ -1,9 +1,4 @@
-# apiMiddl
-
-## Clone the repo
-```bash
-git clone https://gitlab.com/elm-research/analytics-platform/analytics-restapi.git
-```
+#  Elm's PyStudio - apiMiddl
 
 ## Project setup
 ```
@@ -20,10 +15,6 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-### JupyterHub main path
-```
-/static/JupyterHub/
-```
 
 # Project strucutre
 
@@ -66,7 +57,7 @@ At main levels static folder:
 - tableau, settings for the tableau app, this is almost disable because for using tableau you need to pay a licence, it is a kind of legacy code we did as a trial. 
 - tab2.twb and tableau_workbook_template.twb, are to examples related to tableau test.
 
-## Installation
+## Installation with PyCharm
 
 if you are a pycharm fan you can use bellow guide to set up your project.
 
