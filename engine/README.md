@@ -1,5 +1,4 @@
 #  Elm's PyStudio - Engine
-About this project.
 
 ## Enviroment setup:
 
