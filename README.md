@@ -23,7 +23,7 @@ object storage. This service is based on Django you can see how to run it and al
 
 ### Engine
 
-The core of the machine learning studio build using Flask. Our Engine service is where each one of the droppable functionalities are implemented and the one responsible of running them. In order to run the engine and the [details about are here](https://github.com/elmpystudio/eps/blob/main/engine/README.md)
+The core of the machine learning studio build using Flask and [Dagster](https://dagster.io/) (kindly note we are using an old version of dagster updrading it is in our roadmap :grin: ). Our Engine service is where each one of the droppable functionalities are implemented and the one responsible of running them. In order to run the engine and the [details about it are here](https://github.com/elmpystudio/eps/blob/main/engine/README.md)
 
 ## Contribute 
 
