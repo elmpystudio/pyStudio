@@ -76,7 +76,7 @@ Discussing your changes with the maintainers before implementation is one of the
 
 
 
-#### Let's contribrute!
+# Let's contribrute!
 
 - Fork the Repository, this is as simple as clicking on a GitHub button. Navigate to the repository https://github.com/elmpystudio/pyStudio , then click onthe **"Fork"** button at the top left.
 
@@ -86,7 +86,7 @@ Discussing your changes with the maintainers before implementation is one of the
 git clone https://github.com/YOUR-USERNAME/pyStudio.git
 ```
 
-##### Create a Upstream
+### Create a Upstream
 
 Upstream is good to keep track from your repository to the original project repository.
 You must be sure that your branch has the latest changes from the original repository. Note
@@ -99,16 +99,18 @@ git remoteadd upstream <upstream address>
 ```
 
 You can use 
-```git pull upstream master
+
+```
+git pull upstream master
 ```
 to confirm that there have been no changes up to this point (since we forked the repository until now)
 
 
-##### Create a Branch
+### Create a Branch
 
 It is good to create a new branch every time you want to contribute, this allows us to identify that the branch is for the contribution you are about to make, it could be as small as correcting a typo or as long as implementing a new feature. Either way, it is good practice to create a branch.
 
-Another important part of creating branches is the naming, it is nice to use a name that an outsider who knows nothing about the repository can easily understand. If you want to add a login functionality, for example, you should create a branch called "add-login-feature" or "loginfeature".
+Another important part of creating branches is the naming, it is nice to use a name that an outsider who knows nothing about the repository can easily understand. If you want to add a login functionality, for example, you should create a branch called "add-login-feature" or "login-feature".
 
 To create a branch you must type the following command in your terminal:
 
@@ -117,11 +119,12 @@ git checkout -b <branch-name>
 ```
 
 This command will create a branch and point to it, if the branch name is "login-feature" then you can use the following command:
+
 ```
 git checkout-b login-feature
 ```
 
-##### Commit and Push Your Changes
+### Commit and Push Your Changes
 
 Once you've made your changes, you can stage them using:
 
@@ -141,7 +144,7 @@ This can easily be done with the `-s' command-line option to append this automat
 git commit -s -m 'Meaningful commit message'
 ```
 
-> In order to use the `-s` flag for auto signing the commits, you'll need to set your `user.name`and`user.email` git configs
+In order to use the `-s` flag for auto signing the commits, you'll need to set your `user.name`and`user.email` git configs
 
 Finally, you can push your changes to GitHub using:
 
@@ -151,7 +154,7 @@ git push origin <branch-name>
 
 Once you do that and visit the repository, you should see a button on the GitHub UI prompting you to make a PR.
 
-##### Pull Request Labels
+### Pull Request Labels
 
 This is the final step for any contribution to an open project, you will be saying "I have made some changes, would you mind adding them to the project". When you open a pull request, you will hope that the project owner or members like what they see and blend them. Otherwise, they may make changes or request that you make them before they blend with the stablebranch of the project.
 
@@ -161,17 +164,17 @@ You will be able to see the last branch you uploaded 'login-feature', then you s
 
 Clearly explain the changes you have made andthen create all PRs must have the appropriate labels based on the scope of the change. One of the following labels must be applied to Pull Requests:
 
-If a pull request includes a new feature that does not affect existing feature sets then you'd add the `release/new-feature` label.
+- If a pull request includes a new feature that does not affect existing feature sets then you'd add the `release/new-feature` label.
 
-If a pull request includes improves an existing feature please you'd add the `release/improve-feature` label.
+- If a pull request includes improves an existing feature please you'd add the `release/improve-feature` label.
 
-Pull requests containing bug fixes should have the `release/bug-fix` label.
+- Pull requests containing bug fixes should have the `release/bug-fix` label.
 
-Pull requests erlated to optimizing code fixes should have the `release/optimization` label.
+- Pull requests erlated to optimizing code fixes should have the `release/optimization` label.
 
-Any change that breaks, or significantly alters, current behavior should be labeled with `release/breaking-change`.
+- Any change that breaks, or significantly alters, current behavior should be labeled with `release/breaking-change`.
 
-The `release/documenting` label indicates that the change is associated with contents in the repo that are not associated with any code release. This would include updates to docs or tests in the repo which are not included in the release binaries.
+- The `release/documenting` label indicates that the change is associated with contents in the repo that are not associated with any code release. This would include updates to docs or tests in the repo which are not included in the release binaries.
 
 If a pull request does not have one of these labels checks will fail and PR merging will be blocked. If you're unsure which label to apply you are still more than welcome to open the PR and a team member can help identify the correct label during the review process.
 
