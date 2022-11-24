@@ -6,8 +6,8 @@
 .DS_Store
 dist/
 
-#commented for first commit
-#dagster_resources/engine_config.py
+#no config files
+engine/dagster_resources/engine_config.py
 
 env/
 venv/
@@ -30,8 +30,8 @@ hyperd.log
 jupyterhub/data/jupyterhub-proxy.pid
 helpers/front/nginx/nginx/logs
 
-#commented for first commit
-#rest/settings.py
+#no config files
+apiMiddl/rest/settings.py
 
 
 #frontEnt related
