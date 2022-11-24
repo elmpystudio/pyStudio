@@ -2,7 +2,7 @@
 
 ### Intro
 
-While developing our platform, we will like to used a Microservices architecture, for now as you can find in the different folders (apiMiddl, frontEnd, engine) we have made 3 and we are using JypyterHub and Minio services too.
+While developing our platform, we will like to used a Microservices architecture, for now as you can find in the different folders (apiMiddl, frontEnd, engine) we have made 3 and we are using [JupyterHub](https://jupyterhub.readthedocs.io/en/stable/) and [Minio](https://min.io/) services too.
 
 Then in order to have the platform running you need to run one by one all of them, we are working in one unique executable to make your life easy.
 
@@ -18,7 +18,8 @@ We call as Front-End the service which is responsible of running de Web applicat
 
 ### API
 
-Our main service which orchestrates all communications between the Front-End and the rest of services is called API which has main responsibility of handling, security implementing OAuth authentication method for communicating with JupyterHub-Server, user management using SQLlittle as a storage, and acting as a proxy for Engine service, JupyterHub-Server and MINIO object storage. This service is based on Django you can see how to run it and all details [clicking here](https://github.com/elmpystudio/eps/blob/main/apiMiddl/README.md)
+Our main service which orchestrates all communications between the Front-End and the rest of services is called API which has main responsibility of handling, security implementing OAuth authentication method for communicating with JupyterHub-Server, user management using SQLlittle as a storage, and acting as a proxy for Engine service, JupyterHub-Server and 
+object storage. This service is based on Django you can see how to run it and all details [clicking here](https://github.com/elmpystudio/eps/blob/main/apiMiddl/README.md)
 
 ### Engine
 
