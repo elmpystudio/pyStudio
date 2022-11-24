@@ -10,7 +10,7 @@ from django.conf import settings
 import json
 
 @api_view(['GET', 'POST'])
-@permission_classes((AllowAny,))   
+@permission_classes((AllowAny,))
 def service_list(request):
     if request.method == 'GET':
         services = Service.objects.all()
@@ -23,6 +23,19 @@ def service_list(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+@permission_classes((AllowAny,))
+def service_detail(request, pk):
+    try:
+        service = Service.objects.get(pk=pk)
+    except Service.DoesNotExist: 
+        return Response({'message': 'The service does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'DELETE':
+        service.delete()
+        return Response({'message': 'Service was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))   

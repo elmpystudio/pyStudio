@@ -2,21 +2,18 @@
     <div class="contant">
         <div class="search-container">
             <SearchIcon class="search-icon" />
-            <input
-                type="search"
-                class="search"
-                v-model="search"
-                placeholder="Search for services"
-            />
+            <input type="search" class="search" v-model="search" placeholder="Search for services" />
         </div>
-        <v-data-table
-            :headers="headers"
-            :items="data"
-            class="elevation-1"
-            :search="search"
-            :loading="isLoading"
-            @click:row="handle_click"
-        ></v-data-table>
+        <v-data-table :headers="headers" :items="data" class="elevation-1" :search="search" :loading="isLoading"
+            show-select v-model="selected" @click:row="handle_click">
+
+            <template v-slot:footer>
+                <div class="actions-container">
+                    <button @click="delete_action">Delete</button>
+                </div>
+            </template>
+        </v-data-table>
+
 
         <div class="body" v-if="isActive">
             <div class="header">
@@ -35,10 +32,7 @@
                             </div>
 
                             <div class="api">
-                                <div
-                                    class="api_container"
-                                    v-if="service.columns.length > 0"
-                                >
+                                <div class="api_container" v-if="service.columns.length > 0">
                                     <div class="api_container_form">
                                         <div class="name">Name:</div>
                                         <div class="value">
@@ -74,13 +68,9 @@
                                     </div>
 
                                     <!-- eval_metrics -->
-                                    <div
-                                        class="api_container_form"
-                                        v-for="(
+                                    <div class="api_container_form" v-for="(
                                             eval_metric, index
-                                        ) in service.eval_metrics"
-                                        :key="index"
-                                    >
+                                        ) in service.eval_metrics" :key="index">
                                         <div class="name">
                                             {{ eval_metric.name }}:
                                         </div>
@@ -102,36 +92,23 @@
 
                             <div class="columns">
                                 <div class="columns_container scroll">
-                                    <div
-                                        class="columns_container_column"
-                                        v-for="(
+                                    <div class="columns_container_column" v-for="(
                                             column, index
-                                        ) in filtered_columns(service.columns)"
-                                        :key="index"
-                                    >
-                                        <div
-                                            v-if="
-                                                column.hasOwnProperty('values')
-                                            "
-                                        >
+                                        ) in filtered_columns(service.columns)" :key="index">
+                                        <div v-if="
+                                            column.hasOwnProperty('values')
+                                        ">
                                             <div class="name">
                                                 {{ column.name }}
                                             </div>
 
                                             <div class="value">
-                                                <v-select
-                                                    :label="column.name"
-                                                    :item-color="'#2b468b'"
-                                                    :color="'#2b468b'"
-                                                    :items="
+                                                <v-select :label="column.name" :item-color="'#2b468b'"
+                                                    :color="'#2b468b'" :items="
                                                         Object.keys(
                                                             column.values
                                                         )
-                                                    "
-                                                    outlined
-                                                    dense
-                                                    v-model="column.value"
-                                                ></v-select>
+                                                    " outlined dense v-model="column.value"></v-select>
                                             </div>
                                         </div>
 
@@ -140,27 +117,15 @@
                                                 {{ column.name }}
                                             </div>
 
-                                            <input
-                                                type="text"
-                                                v-model="column.value"
-                                                placeholder="Number"
-                                            />
+                                            <input type="text" v-model="column.value" placeholder="Number" />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="submit">
-                                    <button
-                                        class="btn btn-primary"
-                                        id="deploy_post"
-                                        @click="handle_submit"
-                                    >
-                                        <v-progress-circular
-                                            v-if="submit.isLoading"
-                                            class="spin"
-                                            indeterminate
-                                            color="white"
-                                        ></v-progress-circular>
+                                    <button class="btn btn-primary" id="deploy_post" @click="handle_submit">
+                                        <v-progress-circular v-if="submit.isLoading" class="spin" indeterminate
+                                            color="white"></v-progress-circular>
                                         Send
                                     </button>
                                 </div>
@@ -170,11 +135,7 @@
                 </div>
             </div>
         </div>
-        <CModal
-            :title="'response'"
-            :active="modal_toggle"
-            @close="modal_toggle = false"
-        >
+        <CModal :title="'response'" :active="modal_toggle" @close="modal_toggle = false">
             <template #body>
                 <div class="message">{{ submit.response }}</div>
             </template>
@@ -185,7 +146,7 @@
 <script>
 import CModal from "@/components/CModal.vue";
 import SearchIcon from "@/assets/icons/search.svg";
-import { get_services, post_service, API_URL} from "@/api_client.js";
+import { get_services, post_service, delete_service, API_URL } from "@/api_client.js";
 
 export default {
     name: "",
@@ -200,6 +161,7 @@ export default {
                 { text: "Description", value: "description" },
             ],
             search: "",
+            selected: [],
             isLoading: false,
             isActive: false,
             access_url: API_URL,
@@ -216,7 +178,12 @@ export default {
     },
 
     mounted() {
-        get_services()
+        this.fetch_services();
+    },
+
+    methods: {
+        fetch_services(){
+            get_services()
             .then(({ status, data }) => {
                 if (status === 200) {
                     // convert [columns] string to json object
@@ -273,9 +240,7 @@ export default {
             .finally(() => {
                 this.isLoading = false;
             });
-    },
-
-    methods: {
+        },
         handle_click(event) {
             this.data.forEach((service) => {
                 if (service.name === event.name) this.service = service;
@@ -308,11 +273,11 @@ export default {
                 .then(({ status, data }) => {
                     if (status === 200) {
                         data = JSON.parse(data);
-                        if(data.hasOwnProperty("classification"))
+                        if (data.hasOwnProperty("classification"))
                             this.submit.response = run_model.name + " = " + this.get_key(run_model, JSON.parse(data.classification)[0]);
                         else if (data.hasOwnProperty("result"))
                             this.submit.response = "Result = " + JSON.parse(data.result)[0];
-                        else 
+                        else
                             this.submit.response = JSON.stringify(data);
                     }
                 })
@@ -327,8 +292,8 @@ export default {
 
         filtered_columns(columns) {
             const new_columns = [];
-            for(let index = 0; index<columns.length; index++){
-                if(columns[index].hasOwnProperty("run_model"))
+            for (let index = 0; index < columns.length; index++) {
+                if (columns[index].hasOwnProperty("run_model"))
                     continue;
                 new_columns.push(columns[index]);
             }
@@ -338,11 +303,21 @@ export default {
         get_key(column, value) {
             let found_key = null;
             Object.keys(column.values).forEach((key) => {
-                if(column.values[key] == value)
+                if (column.values[key] == value)
                     found_key = key;
             });
             return found_key;
-        }
+        },
+
+        delete_action() {
+            this.selected.forEach(service => {
+                delete_service(service.id);
+                // update data
+                this.data = this.data.filter(this_service => {
+                    return this_service.id != service.id 
+                });
+            });            
+        },
     },
 };
 </script>
@@ -626,6 +601,32 @@ export default {
         }
     }
 
+    .actions-container {
+        width: 100%;
+        height: 100%;
+        padding-top: 20px;
+        padding-left: 15px;;
+
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+
+        >button {
+            width: 75px;
+            height: 30px;
+            background-color: red;
+            border-radius: 5px;
+            transition: all 300ms;
+            color: white;
+            font-size: 15px;
+            
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+
     .message {
         height: 100%;
         width: 100%;
@@ -638,10 +639,11 @@ export default {
 </style>
 
 <style>
+.theme--light.v-data-table .v-data-footer {
+    border-top: none;
+}
 /* v-select override */
-.v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)
-    > .v-input__control
-    > .v-input__slot,
+.v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)>.v-input__control>.v-input__slot,
 .v-text-field.v-text-field--enclosed .v-text-field__details {
     margin: 0 !important;
 }
