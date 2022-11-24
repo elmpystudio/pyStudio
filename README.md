@@ -24,7 +24,7 @@ The core of the machine learning studio build using Flask. Our Engine service is
 
 ## Contribute 
 
-We are open source and we ❤️ contributions big or small. [See our guide](https://github.com/elmpystudio/eps/blob/main/README.md) on how to get started.
+We are open source and we ❤️ contributions big or small. [See our guide](https://github.com/elmpystudio/eps/blob/main/contribution.md) on how to get started.
 
 
 ## Get in touch 
