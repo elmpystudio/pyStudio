@@ -2,7 +2,7 @@
 
 ### Intro
 
-While developing our platform, we will like to used a Microservices architecture, for now as you can find in the different folders (apiMiddl, frontEnd, engine) we have made 3 and we are using [JupyterHub](https://jupyterhub.readthedocs.io/en/stable/) and [Minio](https://min.io/) services too.
+While developing our platform, we will like to use a Microservices architecture, for now as you can find in the different folders (apiMiddl, frontEnd, engine) we have made 3 and we are using [JupyterHub](https://jupyterhub.readthedocs.io/en/stable/) and [Minio](https://min.io/) services too, platform  can work without Minio but you will be only able to use your local CSV files in the Machine Learning Studio feature.
 
 Then in order to have the platform running you need to run one by one all of them, we are working in one unique executable to make your life easy.
 
