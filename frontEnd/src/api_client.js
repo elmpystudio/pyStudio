@@ -167,6 +167,12 @@ export const get_services = () => axios.get(`${API_URL}/api/services/`, {
     }
 });
 
+export const delete_service = (id) => axios.delete(`${API_URL}/api/services/${id}`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
 export const save_services = (payload) => axios.post(`${API_URL}/api/services`, payload, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
