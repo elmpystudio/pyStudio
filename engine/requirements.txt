@@ -5,6 +5,7 @@ joblib==1.1.0
 scikit-learn==1.1.2
 torch==1.12.1
 dagster==0.7.6
+dagster-aws==0.7.6
 s3fs==0.4.2
 pyarrow==5.0.0
 Flask==2.2.2

@@ -7,7 +7,7 @@ hyperd.log
 jupyterhub/data/jupyterhub-proxy.pid
 helpers/front/nginx/nginx/logs
 rest/settings.py
-
+.backup
 # Editor directories and files
 .idea
 .vscode

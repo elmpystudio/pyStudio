@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib import admin
 
-from items.models import Item
+# from items.models import Item
 
 User = get_user_model()
 
@@ -25,7 +25,7 @@ class Offering(models.Model):
     price = models.DecimalField(decimal_places=2,max_digits=10)
     tags = models.ManyToManyField(Tag, related_name = '+')
     owner = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "+")
-    item  = models.ForeignKey(Item, on_delete = models.CASCADE, null=True)
+    # item  = models.ForeignKey(Item, on_delete = models.CASCADE, null=True)
     subscriptionOptions = models.ManyToManyField(SubscriptionOption)
     description = models.TextField()
     briefDescription = models.TextField()
@@ -33,9 +33,9 @@ class Offering(models.Model):
     def __str__(self):
         return ' name:' + self.title
 
-    @property
-    def type(self):
-        return self.item.get_item().display_type_name
+    # @property
+    # def type(self):
+    #     return self.item.get_item().display_type_name
 
 
 class Review(models.Model):
