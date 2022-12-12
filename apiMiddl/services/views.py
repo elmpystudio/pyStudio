@@ -31,13 +31,13 @@ def service_list(request):
 def service_detail(request, pk):
     try:
         service = Service.objects.get(pk=pk)
-    except Service.DoesNotExist:
+        except Service.DoesNotExist:
+
         return Response({'message': 'The service does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'DELETE':
         service.delete()
         return Response({'message': 'Service was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
-
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))
