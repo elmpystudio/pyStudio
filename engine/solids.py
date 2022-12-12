@@ -1,12 +1,7 @@
-import numpy as np
-from dagster import execute_pipeline, execute_solid, pipeline, solid, Output, OutputDefinition, Materialization, \
-    EventMetadataEntry, lambda_solid, ModeDefinition, InputDefinition, resource, Field, Int, PresetDefinition, \
-    PipelineDefinition, DependencyDefinition, String, SolidInvocation, usable_as_dagster_type, SerializationStrategy, \
-    ExecutionTargetHandle, RunConfig, Bool
+from dagster import solid, Output, OutputDefinition, InputDefinition
 
 from tasks.dagster_types.dataframe_type import DataFrame
 from tasks.dagster_types.model_type import PipelineType
-from tasks.dagster_types.tasks_description_dicts import get_model_type
 import pandas as pd
 import xgboost as xgb
 import json
