@@ -11,13 +11,10 @@ class Dataset(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="+", blank=True)
     file = models.FileField()
+    is_public = models.BooleanField(default=False)
+    purchased = models.ManyToManyField(get_user_model(), related_name="purchased", blank=True)
 
     bucket = "datasets"
-
-    def is_public(self):
-        if hasattr(self, "public"):
-            return True
-        return False
 
     class Meta:
         db_table = "datasets"
@@ -52,12 +49,3 @@ class Dataset(models.Model):
     # def upload_db(self):
     #     sql = build_sql_for_dataset(self.name, self)
     #     exec_in_pg(sql)
-
-class PublicDataset(models.Model):
-    dataset = models.OneToOneField(Dataset, on_delete=models.CASCADE, null=False, blank=False, related_name="public")
-
-    class Meta:
-        db_table = "public_datasets"
-
-    def __str__(self):
-        return str(self.id)

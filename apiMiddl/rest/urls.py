@@ -49,7 +49,7 @@ urlpatterns = [
 
         path('ml/', include('ml_studio.urls')),
         path('whoami/', get_user),
-        path('items/', include('items.urls')),
+        path('datasets/', include('datasets.urls')),
         path('', include('accounts.urls')),
         # no tableu licence then no need
         # path('tableau/', include('tableau.urls')),

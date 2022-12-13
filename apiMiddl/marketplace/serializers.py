@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import *
 from accounts.models import *
-from items.models import *
 from django_filters.rest_framework import DjangoFilterBackend
 
 #class TagSerializer(serializers.Serializer):
