@@ -1,5 +1,4 @@
 from django.db import models
-from items.models import Dataset
 
 class Service(models.Model):
     name = models.TextField(blank=False, null=True)

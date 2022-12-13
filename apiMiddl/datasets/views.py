@@ -5,15 +5,14 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework import status
 from django.http import HttpResponse, Http404
 import json
-from .models import Dataset, PublicDataset
-from .serializers import DatasetSerializer, PublicDatasetSerializer
-
+from .models import Dataset
+from .serializers import DatasetSerializer
 
 class DatasetList(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        datasets = Dataset.objects.filter(user_id=request.user.id)
+        datasets = Dataset.objects.filter(user_id=request.user.id, is_public=False)
         serializer = DatasetSerializer(datasets, user=None, many=True)
         return Response(serializer.data)
 
@@ -107,23 +106,3 @@ class DatasetRaportJsonView(APIView):
     def get(self, request, pk):
         dataset = self.get_object(pk)
         return HttpResponse(JSONRenderer().render({"raport": json.loads(dataset.get_science_data_json())}))
-
-
-class PublicDatasetList(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        dataset_ids = []
-        for dataset in PublicDataset.objects.all():
-            dataset_ids.append(dataset.id)
-
-        datasets = Dataset.objects.filter(pk__in=dataset_ids)
-        serializer = DatasetSerializer(datasets, user=None, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, format=None):
-        serializer = PublicDatasetSerializer(data=request.data, user=request.user)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

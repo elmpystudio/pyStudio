@@ -94,7 +94,7 @@ import PlusIcon from '@/assets/icons/plus.svg';
 import SearchIcon from '@/assets/icons/search.svg';
 import DoneIcon from '@/assets/icons/done.svg';
 import { mdiClose } from "@mdi/js";
-import { createDataset, getDatasets, getDatasetsPublic } from '@/api_client.js';
+import { createDataset, getDatasets } from '@/api_client.js';
 
 export default {
     name: "Items",
@@ -135,7 +135,6 @@ export default {
                 maxFilesize: 10,
                 previewsContainer: false,
                 manuallyAddFile: true,
-                // autoProcessQueue: false
             },
             file: null,
             fileId: null,
@@ -197,17 +196,22 @@ export default {
             if (value.type === 'Dataset') {
                 this.$router.push({ name: 'dataset', params: { id: value.id } });
             }
-            if (value.type === 'Visual Analytics') {
-                this.$router.push({ name: 'analytics-view', params: { name: value.name } });
-            }
+            // if (value.type === 'Visual Analytics') {
+            //     this.$router.push({ name: 'analytics-view', params: { name: value.name } });
+            // }
         },
 
         // static method
-        private_datasets(datasets) {
-            const filtered_data = []
+        datasets_filter(datasets) {
+            const filtered_data = {
+                private: [],
+                purchased: []
+            }
             datasets.forEach(dataset => {
+                if(dataset.purchased.length !== 0 && !dataset.is_public)
+                    filtered_data.purchased.push(dataset);
                 if (!dataset.is_public)
-                    filtered_data.push(dataset);
+                    filtered_data.private.push(dataset);
             });
             return filtered_data;
         }
@@ -217,23 +221,15 @@ export default {
 
         getDatasets()
             .then(({ data }) => {
-                data = this.private_datasets(data);
-                this.privateItems.data = data;
+                data = this.datasets_filter(data);
+                this.privateItems.data = data.private;
                 this.privateItems.isLoading = false;
-            })
-            .catch(error => {
-                console.error(error)
-            })
-
-        getDatasetsPublic()
-            .then(({ data }) => {
-                this.purchasedItems.data = data;
+                this.purchasedItems.data = data.purchased;
                 this.purchasedItems.isLoading = false;
             })
             .catch(error => {
                 console.error(error)
             })
-
     }
 }
 </script>
