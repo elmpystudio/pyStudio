@@ -39,9 +39,6 @@ class MinioWrapper:
                                 secret_key=settings.MINIO_SERVER["SECRET_KEY"],
                                 secure=False
                     )
-
-            print("Initializing minio client done")
-
             buckets = ["datasets", "assets", "reports"]
 
             for bucket in buckets:
@@ -49,7 +46,7 @@ class MinioWrapper:
                     minio.make_bucket(bucket)
 
             self.minioClient = minio
-
+            print("Initializing minio client done")
         except Exception as e:
             print("Initializing minio client failure")
             print("you will be able to work only using upload CSV in the ML Studio")

@@ -15,6 +15,8 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+- Kindly note that we followed [this guide](https://github.com/minrk/jupyterhub-pydata-2016/blob/master/JupyterHub.pdf) to have our JupyterHub server running.
+
 
 # Project strucutre
 

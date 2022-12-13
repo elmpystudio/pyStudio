@@ -9,6 +9,7 @@ import requests
 from django.conf import settings
 import json
 
+
 @api_view(['GET', 'POST'])
 @permission_classes((AllowAny,))
 def service_list(request):
@@ -38,25 +39,18 @@ def service_detail(request, pk):
         return Response({'message': 'Service was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
-@permission_classes((AllowAny,))   
+@permission_classes((AllowAny,))
 def run(request):
-    if request.method == 'POST':
-        request_data = json.loads(request.body)        
-        url = settings.ML_ROOT_URL+"run/"+request_data['username']+"_"+request_data["model_name"]
-        response = requests.post(url, json.dumps(request_data['columns']))
-        response_status = status.HTTP_200_OK
-        if response.status_code != 200:
-            response_status = status.HTTP_400_BAD_REQUEST
-        return Response(response.text, status=response_status)
+    request_data = json.loads(request.body)
+    url = settings.ML_ROOT_URL + "run/" + request_data['username'] + "_" + request_data["model_name"]
+    response = requests.post(url, json.dumps(request_data['columns']))
+    return Response(response.text, status=response.status_code)
+
 
 @api_view(['POST'])
-@permission_classes((AllowAny,))   
+@permission_classes((AllowAny,))
 def uploadcsv(request):
-    if request.method == 'POST':
-        file = request.FILES['file']
-        url = settings.ML_ROOT_URL+"uploader"
-        response = requests.post(url, files={'file': file})
-        response_status = status.HTTP_200_OK
-        if response.status_code != 200:
-            response_status = status.HTTP_400_BAD_REQUEST
-        return Response(response.text, status=response_status)
+    file = request.FILES['file']
+    url = settings.ML_ROOT_URL + "uploader"
+    response = requests.post(url, files={'file': file})
+    return Response(response.text, status=response.status_code)
