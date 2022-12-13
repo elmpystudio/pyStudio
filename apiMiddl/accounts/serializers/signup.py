@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from accounts.models import Project, CustomUser
 from .users import UserSerializer
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password

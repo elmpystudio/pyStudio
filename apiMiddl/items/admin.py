@@ -8,8 +8,8 @@ class ItemAdmin(admin.ModelAdmin):
     def has_add_permission(self, request, obj=None):
        return False
 
-admin.site.register(Dataset, DatasetAdmin)
-#admin.site.register(Item, ItemAdmin)
+# admin.site.register(Dataset, DatasetAdmin)
+# #admin.site.register(Item, ItemAdmin)
 
-admin.site.register(Asset)
-admin.site.register(VisualAnalytics)
+# admin.site.register(Asset)
+# admin.site.register(VisualAnalytics)

@@ -48,7 +48,7 @@
 
 <script>
   import { mdiChevronLeft } from '@mdi/js'
-  import { editDataset, getDatasetById } from '@/api_client.js';
+  import { updateDataset, getDataset } from '@/api_client.js';
 
   export default {
     name: "EditDataset",
@@ -66,7 +66,7 @@
       }
     },
     created() {
-      getDatasetById(this.$route.params.id)
+      getDataset(this.$route.params.id)
         .then(({ data }) => {
           this.name = data[0].name || '';
           this.description = data[0].description || '';
@@ -81,7 +81,7 @@
           description: this.description,
         };
 
-        editDataset(this.$route.params.id, payload)
+        updateDataset(this.$route.params.id, payload)
           .then(() => {
             this.isLoading = false;
             this.$router.push({ name: 'dataset', params: { id: this.$route.params.id }});

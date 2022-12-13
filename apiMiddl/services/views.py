@@ -31,7 +31,7 @@ def service_list(request):
 def service_detail(request, pk):
     try:
         service = Service.objects.get(pk=pk)
-    except Service.DoesNotExist:
+    except Service.DoesNotExist: 
         return Response({'message': 'The service does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'DELETE':

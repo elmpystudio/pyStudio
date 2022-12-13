@@ -33,7 +33,7 @@ class WriteOfferingSerializer(serializers.Serializer):
     price = serializers.FloatField(write_only=True)
     #subscriptionOptionsData = SubscriptionOptionSerializer(many=True, write_only=True)
 
-    item = serializers.PrimaryKeyRelatedField(queryset=Item.objects.all(), write_only=True, required=False, allow_null=True)
+    # item = serializers.PrimaryKeyRelatedField(queryset=Item.objects.all(), write_only=True, required=False, allow_null=True)
 
     def create(self, validated_data):
         user = self.context['request'].user
