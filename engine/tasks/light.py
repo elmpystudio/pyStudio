@@ -1,25 +1,18 @@
-from sklearn.base import BaseEstimator, TransformerMixin, ClassifierMixin
-from sklearn.ensemble import RandomForestClassifier as LRandomForestClassifier
+from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.impute import SimpleImputer as Imputer
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler, StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import FunctionTransformer
-from sklearn.metrics import confusion_matrix
 from collections import defaultdict
 import sqlite3
 import pandas as pd
 import numpy as np
-import pickle
 import ast
 import imblearn.over_sampling as imbl_os
 import imblearn.under_sampling as imbl_us
-from sklearn.metrics import f1_score, recall_score, average_precision_score, accuracy_score, classification_report, \
-    confusion_matrix, r2_score, mean_absolute_error, mean_squared_error
+from sklearn.metrics import f1_score, recall_score, average_precision_score, accuracy_score, confusion_matrix, r2_score, mean_absolute_error, mean_squared_error
 from dagster_resources import engine_config as conf
-from tasks.dagster_types.tasks_description_dicts import get_model_type
+from tasks.ml_menu_generator import get_model_type
 from dagster_resources import object_storage_handler as osh
 # from sklearn.externals \
-import joblib
 
 USER_MODELS_ = "./user/models/"
 __outputs_path = conf.FS_HANDLER_CONFIG['outputs_path']

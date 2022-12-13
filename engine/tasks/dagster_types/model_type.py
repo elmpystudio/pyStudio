@@ -1,14 +1,7 @@
 import os
 
 from dagster import (
-    Bool,
-    Field,
-    Materialization,
-    Path,
     PythonObjectDagsterType,
-    String,
-    check,
-    resource,
 )
 
 from dagster.core.storage.system_storage import fs_system_storage
@@ -16,10 +9,12 @@ from dagster.core.storage.type_storage import TypeStoragePlugin
 from pyspark.ml import PipelineModel
 import joblib
 from s3fs import S3FileSystem
-from .tasks_metadata import TaskModelOutputMetaData, TaskMetaData
-from .tasks_description_dicts import get_task_params
+
+from tasks.dagster_types.tasks_metadata import TaskModelOutputMetaData, TaskMetaData
+from tasks.ml_menu_generator import get_task_params
 import json
 from dagster_resources import engine_config as conf
+
 
 class SparkDataFrameS3StoragePlugin(TypeStoragePlugin):  # pylint: disable=no-init
     @classmethod

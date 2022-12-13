@@ -1,10 +1,12 @@
-import glob
+import numpy as np
 import sys
-import uuid
 import time
 from multiprocessing import Process
 
-from dagster import DagsterInstance
+from dagster.core.definitions import resource
+from werkzeug.utils import secure_filename
+from dagster import DagsterInstance, PipelineDefinition, ModeDefinition, execute_pipeline, RunConfig, \
+    DependencyDefinition, SolidInvocation
 from dagster_aws.s3 import s3_resource
 from dagster_aws.s3.system_storage import s3_plus_default_storage_defs
 from flask import Flask, jsonify, request, abort, make_response
@@ -13,10 +15,12 @@ from joblib import load
 from dagster_resources import engine_config as conf
 from dagster_resources import fs_hander as fsh
 from dagster_resources.db_resource import delete_metadata, delete_dataset, read_status
-# never used
-# from dagster_resources.deploy import deployer, inference
-from dagster_resources.object_storage_handler import read_dataframe, get_deployed_wf_model
+from dagster_resources.object_storage_handler import read_dataframe
+from tasks.ml_menu_generator import make_the_menu
 from solids import *
+
+test = make_the_menu()
+print (str(test))
 
 app = Flask(__name__)
 
@@ -64,8 +68,6 @@ def handle_resources(wf):
 @resource
 def nothing(init_context):
     return None
-
-
 # there is no pySpark
 def execute(wf, mode='light', storage={'s3': {'config': {'s3_bucket': 'dagster-test'}}}):
     ##json parsing
@@ -145,50 +147,6 @@ def start_workflow():
 
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
-
-@app.route('/deployOLDMESS', methods=['POST'])
-def start_deployed_workflow():
-    wf = request.get_json(True)
-    if not wf or 'wf_unique_id' not in wf or 'wf_body' not in wf:
-        abort(400)
-    wf_unique_id = str(uuid.uuid4().hex)
-    wf['wf_unique_id'] = wf_unique_id
-
-    try:
-        delete_dataset(id)
-        delete_metadata(id)
-    except ValueError:
-        print(ValueError)
-
-    result = execute(wf)
-
-    if not result.success:
-        abort(400)
-    result_explanation = None
-
-    try:
-        deployed_wf = deployer(wf)
-    except Exception as e:
-        raise e
-        abort(make_response(jsonify({'message': str(e)}), 400))
-
-    items = glob.glob(fsh.__outputs_path + "{id}/*task_meta_data.json".format(id=wf_unique_id))
-    items.sort(reverse=True)
-    last_task_id = items[0]
-    port_meta_data = None
-
-    with open(last_task_id, 'r') as json_data:
-        node_meta_data = json.load(json_data)
-        for output_port in node_meta_data['outputs']:
-            if output_port['output_sequence'] == 1:
-                port_meta_data = output_port
-                break
-        if 'explanation' in node_meta_data:
-            result_explanation = node_meta_data['explanation']
-
-    result_dict = port_meta_data['sample_data']
-
-    return jsonify({'Result': result_dict, 'result_explanation': result_explanation})
 
 
 @app.route('/status/<wf_unique_id>', methods=['GET'])
@@ -438,11 +396,10 @@ def run_model_as_service(model_name):
         return jsonify({label: str(rs)})
 
 
-CSVS = "./user/csvs/"
+CSVS = ""
 @app.route('/uploader', methods = ['POST'])
 def upload_file():
-    if request.method == 'POST':
-        f = request.files['file']
-        csv_file = CSVS + f.filename
-        f.save(csv_file)
+    f = request.files['file']
+    csv_file = CSVS + f.filename
+    f.save(secure_filename(csv_file))
     return csv_file
