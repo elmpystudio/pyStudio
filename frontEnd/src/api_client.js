@@ -100,6 +100,27 @@ export const getDatasetRaport = (id) => axios.get(`${API_URL}/api/datasets/rapor
 });
 // END DATASET
 
+// START MARKETPLACE
+export const getMarketplaces = () => axios.get(`${API_URL}/api/marketplace/`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+export const getMarketplace = (id) => axios.get(`${API_URL}/api/marketplace/${id}`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+export const downloadMarketplace = (id) => axios.get(`${API_URL}/api/marketplace/download/${id}`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+// END MARKETPLACE
+
+
 export const getMarketplaceOfferings = () => axios.get(`${API_URL}/api/marketplace/offering/`, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`

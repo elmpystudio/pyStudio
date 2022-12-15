@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import *
+from . import views
 
 urlpatterns = [
-    path('offering/', OfferingView.as_view(), name='offering'),
-    path('purchase/', PurchaseView.as_view(), name='purchase')
+    path('', views.MarketplaceList.as_view()),
+    path('<int:pk>', views.MarketplaceDetail.as_view()),
+    path('download/<int:pk>', views.MarketplaceDownload.as_view())
 ]
