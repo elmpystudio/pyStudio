@@ -1,51 +1,35 @@
 <template>
     <v-container class="d-flex justify-content-center">
-       <v-card class="d-flex flex-column justify-content-between" height="100%" width="100%" max-width="300" min-height="400" elevation="5" :to="to" :ripple="false">
+        <v-card class="d-flex flex-column justify-content-between" height="100%" width="100%" max-width="250"
+            min-height="350" elevation="3"  :ripple="false">
 
-             <!--Herader-->
+            <!--Herader-->
             <div class="grey lighten-3">
-                 <v-card-text class="type">
-                    {{ type }}
+                <v-card-text style="font-size: 20px">
+                    {{ name }}
                 </v-card-text>
-
-                <div class="pa-2 d-flex flex-column align-start">
-                        <img src="@/assets/elm.png" alt="logo" width="50" class="rounded-pill"/>
-                        <span class="pl-3 caption">ELM</span>
-                </div>
             </div>
 
-            <!--Body-1-->
-            <div class="d-flex flex-column align-center flex-grow-1">
-                <v-card-title>
-                    {{ title }}
-                </v-card-title>
+            <!--Body-->
+            <div class="align-center flex-grow-1 py-2">
                 <p class="description">
                     {{ description }}
                 </p>
             </div>
 
-            <!--Body-2-->
-            <div class="py-4 d-flex justify-content-around">
-                <v-chip v-for="(tag, index) in tags" :key="index">
-                    {{ tag.name }}
-                </v-chip>
-            </div>
-
             <!--Footer-->
-            <div class="py-5 grey lighten-3 d-flex justify-content-around">
-               <v-chip label outlined class="primary--text">{{ date }}</v-chip>
-                <v-chip label outlined>
-                    <v-rating
-                    :value="rate"
-                    color="primary"
-                    dense
-                    half-increments
-                    readonly
-                    size="16">
-                    </v-rating>
-                </v-chip>
-           </div>
-       </v-card>
+            <div class="py-3 grey lighten-3">
+                <v-btn v-if="is_public" @click="download_click(id)" color="primary" style="width: 100px; height: 30px; font-size:12px" elevation="1">Download</v-btn>
+
+                <div class="d-flex justify-content-around pt-2">
+                    <v-chip label outlined class="primary--text">{{ date }}</v-chip>
+                    <v-chip label outlined>
+                        <v-rating :value="rate" color="primary" dense half-increments readonly size="16">
+                        </v-rating>
+                    </v-chip>
+                </div>
+            </div>
+        </v-card>
     </v-container>
 </template>
 
@@ -54,37 +38,47 @@ export default {
     name: "CCard",
 
     props: {
+        id: { type: Number, required: true },
         type: { type: String, required: true },
-        title: { type: String, required: true },
+        name: { type: String, required: true },
         description: { type: String, required: true },
         tags: { type: Array, required: true },
         date: { type: String, required: true },
         rate: { type: Number, required: true },
-        to: { type: String, required: true }
+        is_public: { type: Boolean, default: false },
+        to: { type: String, required: true },
+    },
+
+    methods: {
+        download_click(id){
+            this.$emit('download', id)
+        }
     }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 a {
     text-decoration: none;
-}
 
-a:hover {
-    filter: brightness(95%);
+    transition: all 300ms;
+
+    &:hover {
+        opacity: 0.9;
+    }
 }
 
 .type {
     position: absolute;
-    text-align: center; 
+    text-align: center;
     font-size: 14px;
-    top: 12px; 
+    top: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .description {
-    font-size: 14px; 
+    font-size: 14px;
     padding: 0 12px;
 
     letter-spacing: 1px;
@@ -92,7 +86,7 @@ a:hover {
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 4;
-    line-clamp: 2; 
+    line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 </style>

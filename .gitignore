@@ -29,10 +29,11 @@ hyperd.log
 *.pyc
 jupyterhub/data/jupyterhub-proxy.pid
 helpers/front/nginx/nginx/logs
+_migrations/*
+!_migrations/__init__.py
 
 #no config files
 apiMiddl/rest/settings.py
-
 
 #frontEnt related
 
@@ -52,4 +53,3 @@ yarn.lock
 *.njsproj
 *.sln
 *.sw?
-
