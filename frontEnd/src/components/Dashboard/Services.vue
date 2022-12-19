@@ -136,6 +136,7 @@
             </div>
         </div>
         <CModal :title="'response'" :active="modal_toggle" @close="modal_toggle = false">
+
             <template #default>
                 <div class="modal-container">
                     <div class="status">
@@ -147,6 +148,7 @@
                         </div>
                     </div>
                 </div>
+
             </template>
         </CModal>
     </div>
@@ -191,6 +193,7 @@ export default {
     },
 
     methods: {
+
         fetch_services() {
             get_services()
                 .then(({ status, data }) => {
@@ -249,6 +252,7 @@ export default {
                 .finally(() => {
                     this.isLoading = false;
                 });
+
         },
         handle_click(event) {
             this.data.forEach((service) => {
@@ -323,9 +327,11 @@ export default {
                 delete_service(service.id);
                 // update data
                 this.data = this.data.filter(this_service => {
+
                     return this_service.id != service.id
                 });
             });
+
         },
     },
 };
@@ -616,6 +622,7 @@ export default {
         padding-top: 20px;
         padding-left: 15px;
 
+
         display: flex;
         flex-flow: row nowrap;
         justify-content: flex-start;
@@ -635,6 +642,7 @@ export default {
             }
         }
     }
+
 
     .modal-container {
         height: 100%;
