@@ -43,11 +43,8 @@ class CustomUser(AbstractUser):
         return minio.getModels(user)
 
     def __str__(self):
-        return (
-            self.username,
-            self.jhub_token
-        )
-
+        return str(self.id)
+        
 admin.site.register(Permission)
 admin.site.register(Role)
 admin.site.register(CustomUser)
