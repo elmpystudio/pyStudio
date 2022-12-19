@@ -56,6 +56,8 @@ urlpatterns = [
         path('marketplace/', include('marketplace.urls')),
         path('jupyterhub/', include('jupyterhub.urls')),
         path('services/', include('services.urls')),
+        path('notifications/', include('notifications.urls')),
+
 
         # django browsable api, probably will be deleted
         path('api/', include('rest_framework.urls', namespace='rest_framework')),

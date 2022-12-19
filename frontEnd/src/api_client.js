@@ -120,6 +120,20 @@ export const downloadMarketplace = (id) => axios.get(`${API_URL}/api/marketplace
 });
 // END MARKETPLACE
 
+// START NOTIFICATION
+export const getNotifications = () => axios.get(`${API_URL}/api/notifications/`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+export const createNotification = (payload) => axios.post(`${API_URL}/api/notifications/`, payload, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+// end NOTIFICATION
+
 
 export const getMarketplaceOfferings = () => axios.get(`${API_URL}/api/marketplace/offering/`, {
     headers: {

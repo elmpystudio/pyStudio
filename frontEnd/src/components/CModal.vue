@@ -8,15 +8,7 @@
                     </div>
                 </div>
                 <div class="body">
-                    <div class="status">
-                        <i class="fa fa-check-circle" aria-hidden="true"></i>
-                        <!-- <i class="fa fa-times-circle-o" aria-hidden="true"></i> -->
-                    </div>
-                    <div class="body_container">
-                        <div class="body_container_content">
-                            <slot name="body"></slot>
-                        </div>
-                    </div>
+                    <slot></slot>
                 </div>
 
                 <div class="footer">
@@ -56,26 +48,22 @@ export default {
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 2;
 
-    opacity: 0;
-    transform: scale(0);
-
-    transition: all 300ms;
+    display: none;
 
     &.active {
-        opacity: 1;
-        transform: scale(1);
+        display: block;
     }
 
     .content {
         position: absolute;
-        width: 40%;
-        height: 40%;
-        left: calc(50% - calc(40%/2));
-        top: calc(50% - calc(40%/2));
+        width: 50%;
+        height: 50%;
+        left: calc(50% - calc(50%/2));
+        top: calc(50% - calc(50%/2));
 
         border-radius: 10px;
         overflow: hidden;
-        border: 2px solid #2b468b;
+        border: 2px solid #1976d2;
 
         .container {
             padding: 0;
@@ -87,7 +75,7 @@ export default {
             background-color: #fff;
 
             .header {
-                flex: 0 0 50px;
+                flex: 0 0 40px;
                 padding: 0 10px;
 
                 display: flex;
@@ -95,12 +83,12 @@ export default {
                 justify-content: center;
                 align-items: center;
 
-                background: #2b468b;
+                background: #1976d2;
 
                 .mytitle {
                     flex-grow: 1;
                     text-align: center;
-                    font-size: 22px;
+                    font-size: 20px;
                     text-transform: uppercase;
                     letter-spacing: 2px;
                     color: #e1e5ee;
@@ -109,64 +97,16 @@ export default {
 
             .body {
                 flex: 1 1 90%;
-
-                display: flex;
-                flex-flow: column nowrap;
-
-                .status {
-                    flex: 1 1 10%;
-
-                    > i {
-                        font-size: 60px;
-                        color: green;
-                    }
-                }
-
-                &_container {
-                    flex: 1 1 90%;
-                    position: relative;
-
-                    &_content {
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        height: 100%;
-                        width: 100%;
-                        overflow-y: scroll;
-                        overflow-x: hidden;
-
-                        // /* width */
-                        &::-webkit-scrollbar {
-                            width: 8px;
-                        }
-
-                        /* Track */
-                        &::-webkit-scrollbar-track {
-                            // background: #0000000a;
-                        }
-
-                        /* Handle */
-                        &::-webkit-scrollbar-thumb {
-                            background: #2b468b;
-                            border-radius: 5px;
-                        }
-
-                        /* Handle on hover */
-                        &::-webkit-scrollbar-thumb:hover {
-                            background: #2b468bb0;
-                        }
-                    }
-                }
             }
 
             .footer {
-                flex: 1 1 50px;
+                flex: 1 1 40px;
                 overflow: hidden;
 
                 button {
                     width: 100%;
                     height: 100%;
-                    background: #2b468b;
+                    background: #1976d2;
                     color: white;
                     font-size: 20px;
                     letter-spacing: 1px;
