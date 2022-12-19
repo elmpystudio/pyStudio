@@ -136,8 +136,19 @@
             </div>
         </div>
         <CModal :title="'response'" :active="modal_toggle" @close="modal_toggle = false">
-            <template #body>
-                <div class="message">{{ submit.response }}</div>
+
+            <template #default>
+                <div class="modal-container">
+                    <div class="status">
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    </div>
+                    <div class="content">
+                        <div class="message-container">
+                            <div class="message">{{ submit.response }}</div>
+                        </div>
+                    </div>
+                </div>
+
             </template>
         </CModal>
     </div>
@@ -182,64 +193,66 @@ export default {
     },
 
     methods: {
-        fetch_services(){
-            get_services()
-            .then(({ status, data }) => {
-                if (status === 200) {
-                    // convert [columns] string to json object
-                    data.forEach((service) => {
-                        service.columns = JSON.parse(service.columns);
-                        // service.eval_metrics = JSON.parse(service.eval_metrics)
 
-                        // eval_metrics
-                        if (service.eval_metrics !== null) {
-                            let tmp = JSON.parse(service.eval_metrics);
-                            if (tmp.model_type === "classification")
-                                service.eval_metrics = [
-                                    {
-                                        name: "Accuracy Score",
-                                        value: tmp.accuracy_score,
-                                    },
-                                    {
-                                        name: "Precision Score",
-                                        value: tmp.precision_score,
-                                    },
-                                    {
-                                        name: "Recall Score",
-                                        value: tmp.recall_score[0],
-                                    },
-                                    {
-                                        name: "F1 Score",
-                                        value: tmp.f1_score[0],
-                                    },
-                                ];
-                            else if (tmp.model_type === "regression")
-                                service.eval_metrics = [
-                                    {
-                                        name: "Mean Absolute Error",
-                                        value: tmp.mean_absolute_error,
-                                    },
-                                    {
-                                        name: "Mean Squared",
-                                        value: tmp.mean_squared_error,
-                                    },
-                                    {
-                                        name: "R2 Score",
-                                        value: tmp.r2_score,
-                                    },
-                                ];
-                        }
-                    });
-                    this.data = data;
-                    this.isLoading = true;
-                }
-            })
-            .catch(() => {
-                console.error("service call");
-            })
-            .finally(() => {
-                this.isLoading = false;
-            });
+        fetch_services() {
+            get_services()
+                .then(({ status, data }) => {
+                    if (status === 200) {
+                        // convert [columns] string to json object
+                        data.forEach((service) => {
+                            service.columns = JSON.parse(service.columns);
+                            // service.eval_metrics = JSON.parse(service.eval_metrics)
+
+                            // eval_metrics
+                            if (service.eval_metrics !== null) {
+                                let tmp = JSON.parse(service.eval_metrics);
+                                if (tmp.model_type === "classification")
+                                    service.eval_metrics = [
+                                        {
+                                            name: "Accuracy Score",
+                                            value: tmp.accuracy_score,
+                                        },
+                                        {
+                                            name: "Precision Score",
+                                            value: tmp.precision_score,
+                                        },
+                                        {
+                                            name: "Recall Score",
+                                            value: tmp.recall_score[0],
+                                        },
+                                        {
+                                            name: "F1 Score",
+                                            value: tmp.f1_score[0],
+                                        },
+                                    ];
+                                else if (tmp.model_type === "regression")
+                                    service.eval_metrics = [
+                                        {
+                                            name: "Mean Absolute Error",
+                                            value: tmp.mean_absolute_error,
+                                        },
+                                        {
+                                            name: "Mean Squared",
+                                            value: tmp.mean_squared_error,
+                                        },
+                                        {
+                                            name: "R2 Score",
+                                            value: tmp.r2_score,
+                                        },
+                                    ];
+                            }
+                        });
+                        this.data = data;
+                        this.isLoading = true;
+                    }
+                })
+                .catch(() => {
+                    console.error("service call");
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                });
+
         },
         handle_click(event) {
             this.data.forEach((service) => {
@@ -314,9 +327,11 @@ export default {
                 delete_service(service.id);
                 // update data
                 this.data = this.data.filter(this_service => {
-                    return this_service.id != service.id 
+
+                    return this_service.id != service.id
                 });
-            });            
+            });
+
         },
     },
 };
@@ -605,7 +620,8 @@ export default {
         width: 100%;
         height: 100%;
         padding-top: 20px;
-        padding-left: 15px;;
+        padding-left: 15px;
+
 
         display: flex;
         flex-flow: row nowrap;
@@ -620,20 +636,72 @@ export default {
             transition: all 300ms;
             color: white;
             font-size: 15px;
-            
+
             &:hover {
                 opacity: 0.8;
             }
         }
     }
 
-    .message {
+
+    .modal-container {
         height: 100%;
         width: 100%;
 
-        padding: 5px 20px;
-        font-size: 20px;
-        word-break: break-all;
+        .status {
+            flex: 1 1 10%;
+
+            >i {
+                font-size: 60px;
+                color: green;
+            }
+        }
+
+        .content {
+            flex: 1 1 90%;
+            position: relative;
+
+            .message-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                overflow-y: scroll;
+                overflow-x: hidden;
+
+                // /* width */
+                &::-webkit-scrollbar {
+                    width: 8px;
+                }
+
+                /* Track */
+                &::-webkit-scrollbar-track {
+                    // background: #0000000a;
+                }
+
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    background: #2b468b;
+                    border-radius: 5px;
+                }
+
+                /* Handle on hover */
+                &::-webkit-scrollbar-thumb:hover {
+                    background: #2b468bb0;
+                }
+
+                .message {
+                    height: 100%;
+                    width: 100%;
+
+                    padding: 5px 20px;
+                    font-size: 20px;
+                    word-break: break-all;
+
+                }
+            }
+        }
     }
 }
 </style>
@@ -642,6 +710,7 @@ export default {
 .theme--light.v-data-table .v-data-footer {
     border-top: none;
 }
+
 /* v-select override */
 .v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)>.v-input__control>.v-input__slot,
 .v-text-field.v-text-field--enclosed .v-text-field__details {

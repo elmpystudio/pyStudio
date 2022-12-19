@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import { getHTMLRaport } from '@/api_client.js';
+  import { getDatasetRaport } from '@/api_client.js';
 
   export default {
     name: "Report",
@@ -26,7 +26,7 @@
     },
     created() {
       this.isLoading = true;
-      getHTMLRaport(this.$route.params.id)
+      getDatasetRaport(this.$route.params.id)
         .then(({ data }) => {
           this.isLoading = false;
           this.raport = data.raport;

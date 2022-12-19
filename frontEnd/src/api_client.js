@@ -36,23 +36,11 @@ export const register = ({ username, email, password, about, image }) => {
     });
 };
 
-export const getProjects = () => axios.get(`${API_URL}/api/accounts/projects/`, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
-
-export const getDashboardItems = (type) => axios.get(`${API_URL}/api/items/dashboard/${type}/`, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
-
-export const getTableauToken = (ip) => axios.post(`${API_URL}/api/tableau/trusted/`, { ip: ip.replace(/\n/g, '') }, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
+// export const getDashboarddatasets = (type) => axios.get(`${API_URL}/api/datasets/dashboard/${type}/`, {
+//     headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`
+//     }
+// });
 
 export const getWorkbooks = () => axios.get(`${API_URL}/api/tableau/workbooks/`, {
     headers: {
@@ -60,10 +48,14 @@ export const getWorkbooks = () => axios.get(`${API_URL}/api/tableau/workbooks/`,
     }
 });
 
-export const uploadItem = (fileName, file) => {
-    const bodyFormData = new FormData();
-    bodyFormData.set(fileName, file);
-    return axios.post(`${API_URL}/api/items/file_upload/${fileName}/`, bodyFormData, {
+// START DATASET
+// DATASET[GET, GET<id>, POST], smaple, report
+export const createDataset = (payload) => {
+    const formdata = new FormData();
+    for ( var key in payload )
+        formdata.append(key, payload[key]);
+        
+    return axios.post(`${API_URL}/api/datasets/`, formdata, {
         headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -71,23 +63,77 @@ export const uploadItem = (fileName, file) => {
     })
 };
 
-export const uploadDataset = (name, id) => axios.post(`${API_URL}/api/items/datasets/`, { name, file: id }, {
+export const updateDataset = (id, payload) => axios.put(`${API_URL}/api/datasets/${id}`, payload, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
 });
 
-export const getDatasetById = (id) => axios.get(`${API_URL}/api/items/datasets/?id=${id}`, {
+export const getDatasets = () => axios.get(`${API_URL}/api/datasets/`, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
 });
 
-export const createVA = (payload) => axios.post(`${API_URL}/api/items/va/`, payload, {
+export const getDataset = (id) => axios.get(`${API_URL}/api/datasets/${id}`, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
 });
+
+export const getDatasetsPublic = () => axios.get(`${API_URL}/api/datasets/public`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+export const getDatasetSample = (id) => axios.get(`${API_URL}/api/datasets/sample/${id}`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+export const getDatasetRaport = (id) => axios.get(`${API_URL}/api/datasets/raport/html/${id}`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+// END DATASET
+
+// START MARKETPLACE
+export const getMarketplaces = () => axios.get(`${API_URL}/api/marketplace/`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+export const getMarketplace = (id) => axios.get(`${API_URL}/api/marketplace/${id}`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+export const downloadMarketplace = (id) => axios.get(`${API_URL}/api/marketplace/download/${id}`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+// END MARKETPLACE
+
+// START NOTIFICATION
+export const getNotifications = () => axios.get(`${API_URL}/api/notifications/`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+export const createNotification = (payload) => axios.post(`${API_URL}/api/notifications/`, payload, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+// end NOTIFICATION
+
 
 export const getMarketplaceOfferings = () => axios.get(`${API_URL}/api/marketplace/offering/`, {
     headers: {
@@ -101,13 +147,8 @@ export const getMarketplaceOfferingById = (id) => axios.get(`${API_URL}/api/mark
     }
 });
 
-export const getMyIP = () => axios.get('http://icanhazip.com/');
+// export const getMyIP = () => axios.get('http://icanhazip.com/');
 
-export const getItemsSample = (id) => axios.get(`${API_URL}/api/items/sample/${id}/`, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
 
 export const purchaseOffering = (data) => axios.post(`${API_URL}/api/marketplace/purchase/`, { ...data }, {
     headers: {
@@ -115,19 +156,8 @@ export const purchaseOffering = (data) => axios.post(`${API_URL}/api/marketplace
     }
 });
 
-export const getHTMLRaport = (id) => axios.get(`${API_URL}/api/items/raport/html/${id}/`, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
 
 export const publishOffering = (data) => axios.post(`${API_URL}/api/marketplace/offering/`, { ...data }, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
-
-export const editDataset = (id, payload) => axios.patch(`${API_URL}/api/items/datasets/${id}`, payload, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }

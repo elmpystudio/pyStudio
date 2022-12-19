@@ -18,10 +18,8 @@ from django.http import JsonResponse
 
 from utils.authentication import CsrfExemptSessionAuthentication
 from utils.mixins import ReadWriteSerializerMixin
-# from utils.TableauWrapper import TableauWrapper
 from utils.random_utils import random_str
 from accounts.serializers.signup import *
-from accounts.models import Project
 from django.contrib.auth import authenticate, login
 
 User = get_user_model()
@@ -55,30 +53,6 @@ class RegisterView(CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save(self.request)
         user.save()
-
-        # tableau account creation
-        #t = TableauWrapper()
-        
-        # t_role = "Publisher"
-        # t_user = "t3st_"+random_str(5)
-        # t_password = random_str(10)
-
-        # print("Creating new tableau user: %s %s %s" % ( t_role, t_user, t_password ))
-        
-        # new_tab_user = t.create_user(t_user, t_password, t_role)
-
-        # if new_tab_user == None:
-        #     return JsonResponse({"result": False, "error": "Error while creating tableau user"})
-        # if new_tab_user.site_role == "Unlicensed":
-        #     return JsonResponse({"result": False, "error": "Created new user in Tableau, but with role Unlicensed!"})
-        
-        # savind final user object
-        # user = serializer.save(self.request)
-        # user.tableau_user = t_user
-        # user.tableau_password = t_user
-        # user.tableau_password = t_password
-        # user.save()
-
         return JsonResponse({"result": True})
 
 class LoginView(CreateAPIView):

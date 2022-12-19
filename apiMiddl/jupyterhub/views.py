@@ -19,7 +19,7 @@ from accounts.models import CustomUser
 def startView(request):
     token = request.GET.get("token")
 
-    user = CustomUser.objects.get(jhub_token=token)
+    user = CustomUser.objects.filter(jhub_token=token)[0]
     history = Jupyter_history.objects.create(user=user)
     history.save()
 
@@ -101,7 +101,7 @@ def loginView(request):
 def userView(request):
 
     token = request.META.get('HTTP_AUTHORIZATION', '').split()[1]
-    user = CustomUser.objects.get(jhub_token=token)
+    user = CustomUser.objects.filter(jhub_token=token)[0]
 
     # close auth
     jupyter = Jupyter.objects.get(pk=1)

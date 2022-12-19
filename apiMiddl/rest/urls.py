@@ -49,13 +49,15 @@ urlpatterns = [
 
         path('ml/', include('ml_studio.urls')),
         path('whoami/', get_user),
-        path('items/', include('items.urls')),
+        path('datasets/', include('datasets.urls')),
         path('', include('accounts.urls')),
         # no tableu licence then no need
         # path('tableau/', include('tableau.urls')),
         path('marketplace/', include('marketplace.urls')),
         path('jupyterhub/', include('jupyterhub.urls')),
         path('services/', include('services.urls')),
+        path('notifications/', include('notifications.urls')),
+
 
         # django browsable api, probably will be deleted
         path('api/', include('rest_framework.urls', namespace='rest_framework')),
