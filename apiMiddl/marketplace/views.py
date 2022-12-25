@@ -13,32 +13,32 @@ class MarketplaceList(APIView):
 
     def get(self, request, format=None):
         datasets = Dataset.objects.filter(user_id=request.user.id)
-        serializer = MarketplaceSerializer(datasets, user=None, many=True)
+        serializer = MarketplaceSerializer(datasets, user=request.user, many=True)
         return Response(serializer.data)
 
-class MarketplaceDetail(APIView):
-    permission_classes = [IsAuthenticated]
+# class MarketplaceDetail(APIView):
+#     permission_classes = [IsAuthenticated]
 
-    def get_object(self, pk):
-        try:
-            data = Dataset.objects.filter(user_id=self.request.user.id, pk=pk)
-            if len(data) > 0:
-                return data[0]
-            raise Dataset.DoesNotExist
-        except Dataset.DoesNotExist:
-            raise Http404
+#     def get_object(self, pk):
+#         try:
+#             data = Dataset.objects.filter(user_id=self.request.user.id, pk=pk)
+#             if len(data) > 0:
+#                 return data[0]
+#             raise Dataset.DoesNotExist
+#         except Dataset.DoesNotExist:
+#             raise Http404
 
-    def get(self, request, pk, format=None):
-        dataset = self.get_object(pk)
-        serializer = MarketplaceSerializer(dataset, user=None)
-        return Response(serializer.data)
+#     def get(self, request, pk, format=None):
+#         dataset = self.get_object(pk)
+#         serializer = MarketplaceSerializer(dataset, user=None)
+#         return Response(serializer.data)
 
 class MarketplaceDownload(APIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         try:
-            data = Dataset.objects.filter(pk=pk, is_public=True)
+            data = Dataset.objects.filter(pk=pk, purchased__id__exact=self.request.user.id)
             if len(data) > 0:
                 return data[0]
             raise Dataset.DoesNotExist

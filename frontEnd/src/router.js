@@ -13,7 +13,7 @@ import DatasetView from '@/views/DatasetView';
 import PublishOffering from '@/views/PublishOffering';
 import EditDataset from '@/views/EditDataset';
 import PublishVA from '@/views/PublishVA';
-import Notifications from '@/views/Notifications';
+import Notifications from '@/views/NotificationsView';
 import Profile from '@/views/Profile';
 import MachineLearningView from '@/views/MachineLearningView';
 import Notebook from '@/views/NotebookView';

@@ -1,84 +1,131 @@
 <template>
-  <div class="notifications">
-    <div class="content">
-      <div
-        v-for="notification in notifications"
-        :key="notification.id"
-        :class="[notification.active ? 'active' : '', 'notification']"
-      >
-        <div>
-          <p class="description">{{ notification.description }}</p>
-          <span class="time">{{ notification.time }}</span>
+    <div class="notifications">
+        <div class="content">
+            <div class="content-container" v-for="notification in data" :key="notification.id">
+                <div class="message-container">
+                    <h6 class="title">Dataset Request</h6>
+                    <p class="message">{{ short_message(notification.message) }}</p>
+                    <div class="more-container">
+                        <p class="more">Dataset Name: Covid</p>
+                        <p class="more">From User: Jameel</p>
+                    </div>
+                </div>
+                <div class="actions-container">
+                    <v-btn class="action primary" @click="handle_action('accept', notification.id)">Accept</v-btn>
+                    <v-btn class="action danger" @click="handle_action('deny', notification.id)">Deny</v-btn>
+                </div>
+
+            </div>
         </div>
-        <span
-          @click="handleReadNotification(notification.id)"
-          v-if="notification.active"
-          class="mark-text"
-        >
-          Mark as read
-        </span>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
-  import vClickOutside from 'v-click-outside';
-  import { mapState, mapGetters } from 'vuex';
-
-  export default {
+export default {
     name: "Notifications",
-    directives: {
-      clickOutside: vClickOutside.directive,
-    },
-    components: {
-    },
+    props: {
+        short: { type: Boolean, default: false }
+    },  
 
     computed: {
-      ...mapGetters(['totalActiveNotifications']),
-      ...mapState(['notifications']),
+        data(){
+            return this.$store.getters.notifications;
+        },
     },
-    methods: {
-      handleReadNotification(id) {
-        this.$store.dispatch('readNotification', id);
-      }
+
+    mounted() {
+        this.$store.dispatch('GET_NOTIFICATIONS');
+    },
+
+    methods: { 
+        handle_action(type, id) {
+            if (type === 'accept') {
+                this.$store.dispatch('ACCEPT_NOTIFICATION', id);
+                this.$store.dispatch('GET_NOTIFICATIONS');
+            }
+            else if (type === 'deny') {
+                this.$store.dispatch('DENY_NOTIFICATION', id);
+                this.$store.dispatch('GET_NOTIFICATIONS');
+            }
+        },
+
+        short_message(message){
+            if(this.short)
+                return message.substring(0, 60) + '...';
+            return message;
+        },
     }
-  }
+}
 </script>
 
 <style lang="scss" scoped>
-  .content {
-    padding: 30px;
+.content {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    box-shadow: 0px 0px 10px rgba(138, 138, 138, 0.3490196078);
+    background-color: #ffffff;
+    padding: 10px;
 
-    .notification {
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      padding: 10px;
-      box-shadow: 0 13px 12px 0 #eaedf4;
-      background-color: #ffffff;
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 5px;
 
-      &.active {
-        background-color: rgba(0, 114, 255, 0.2);
-      }
+    overflow-y: scroll;
+    overflow-x: hidden;
 
-      .mark-text {
-        font-size: 12px;
-        font-weight: bold;
-        cursor: pointer;
-      }
+    .content-container {
+        background-color: #1976d238;
+        padding: 0 20px;
 
-      .description {
-        margin: 0;
-      }
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 5px;
+        column-gap: 10px;
 
-      .time {
-        color: #9296ad;
-        font-size: 16px;
-        font-weight: 500;
-      }
+
+        .message-container {
+            height: 120px;
+            padding: 5px 0;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: space-between;
+
+
+            .title {
+                text-align: start;
+                font-size: 18px !important;
+                margin: 0;
+            }
+
+            .message {
+                text-align: start;
+                font-size: 15px;
+                margin: 0;
+            }
+
+            .more-container {
+                .more {
+                    text-align: start;
+                    font-size: 11px;
+                    margin: 0;
+                }
+            }
+        }
+
+        .actions-container {
+            display: flex;
+            flex-flow: row nowrap;
+            column-gap: 10px;
+
+            .action {
+                width: 75px;
+                font-size: 14px;
+                text-transform: none;
+            }
+        }
     }
-  }
+}
 </style>

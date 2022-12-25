@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Notifications from '@/components/Notifications';
+import Notifications from '@/components/Notifications.vue';
 
 export default {
     name: "NotificationsView",

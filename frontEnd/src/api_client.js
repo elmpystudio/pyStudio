@@ -132,6 +132,18 @@ export const createNotification = (payload) => axios.post(`${API_URL}/api/notifi
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
 });
+
+export const acceptNotification = (id) => axios.get(`${API_URL}/api/notifications/accept/${id}`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+export const denyNotification = (id) => axios.get(`${API_URL}/api/notifications/deny/${id}`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
 // end NOTIFICATION
 
 
