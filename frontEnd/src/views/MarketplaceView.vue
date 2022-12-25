@@ -15,7 +15,7 @@
             <v-row no-gutters>
                 <v-col v-for="(marketplace, index) in data" :key="index">
                     <CCard :id="marketplace.id" :name="marketplace.name" :description="marketplace.description"
-                        :date="'02.06.2020'" :rate="3.5" :is_public="marketplace.is_public"
+                        :date="'02.06.2020'" :rate="3.5" :access="marketplace.access"
                         :to="`/marketplace/${marketplace.type === 'Dataset' ? 'dataset' : 'va'}/${marketplace.item}`"
                         @action="handle_action">
 
