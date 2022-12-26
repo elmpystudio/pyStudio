@@ -28,7 +28,6 @@ export default new Vuex.Store({
                 .catch((error) => console.log(error))
         },
         DENY_NOTIFICATION({state}, id) {
-            console.log(id)
             denyNotification(id)
                 .then(() => {
                     console.log(state)
