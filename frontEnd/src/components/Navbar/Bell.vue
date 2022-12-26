@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-menu offset-y>
+        <v-menu offset-y :close-on-content-click="false">
             <template v-slot:activator="{ on, attrs }">
                 <div v-bind="attrs" v-on="on">
                     <v-badge :content="$store.getters.notifications.length.toString()" color="red" overlap>
@@ -9,10 +9,17 @@
                 </div>
             </template>
 
-            <div class="notifications">
-                <Notifications short />
+            <div class="bell-container">
 
-                <router-link class="go_to" :to="{ name: 'notifications' }">
+                <div class="header">
+                    Notifications
+                </div>
+
+                <div class="notifications-container">
+                    <Notifications short />
+                </div>
+
+                <router-link class="link" :to="{ name: 'notifications' }">
                     All Notifications
                 </router-link>
             </div>
@@ -27,31 +34,46 @@ export default {
     name: "Bell",
     components: {
         Notifications
+    },
+
+    data() {
+        return {
+
+        }
+    },
+
+    mounted() {
+        this.$store.dispatch('GET_NOTIFICATIONS');
     }
 }
 </script>
 
 <style scoped lang="scss">
-.notifications {
+.bell-container {
     width: 500px;
     height: 500px;
     display: flex;
+    background-color: #FFFFFF;
     flex-flow: column nowrap;
     justify-content: space-between;
 
+    .header {
+        background-color: #F2F2F2;
+        padding: 5px;
+        font-size: 20px;
+    }
 
-    .go_to {
+    .notifications-container {
         flex: 1 1 100%;
+        overflow: hidden;
+    }
+
+    .link {
+        background-color: #F2F2F2;
+        flex: 1 1 30px;
         padding: 5px;
         cursor: pointer;
-        background-color: #CEDFEF;
-        transition: all 300ms;
-        opacity: 1;
-
-        &:hover {
-            opacity: 0.9;
-        }
-
+        color: #2B468B;
     }
 }
 </style>

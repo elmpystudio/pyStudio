@@ -34,7 +34,7 @@
 import Items from "./Items";
 import Projects from "./Projects";
 import Services from "./Services.vue";
-import { getMyIP, getTableauToken } from "@/api_client.js";
+// import { getMyIP, getTableauToken } from "@/api_client.js";
 
 export default {
     name: "Dashboard",
@@ -50,15 +50,15 @@ export default {
         };
     },
     mounted() {
-        getMyIP()
-            .then((response) => {
-                getTableauToken(response.data).then(({ status, data }) => {
-                    if (status === 200) {
-                        data.key && localStorage.setItem("key", data.key);
-                    }
-                });
-            })
-            .catch((error) => console.error(error));
+        // getMyIP()
+        //     .then((response) => {
+        //         getTableauToken(response.data).then(({ status, data }) => {
+        //             if (status === 200) {
+        //                 data.key && localStorage.setItem("key", data.key);
+        //             }
+        //         });
+        //     })
+        //     .catch((error) => console.error(error));
     },
     methods: {
         handle_click(name) {
