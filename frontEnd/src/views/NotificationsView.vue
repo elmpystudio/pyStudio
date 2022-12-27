@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="notifications-view">
         <Notifications />
     </div>
 </template>
@@ -16,4 +16,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.notifications-view {
+    padding: 30px
+}
 </style>

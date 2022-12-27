@@ -18,16 +18,12 @@
                         :date="'02.06.2020'" :rate="3.5" :access="marketplace.access"
                         :to="`/marketplace/${marketplace.type === 'Dataset' ? 'dataset' : 'va'}/${marketplace.item}`"
                         @action="handle_action">
-
-                        <template #footer>
-                            <button>dd</button>
-                        </template>
                     </CCard>
                 </v-col>
             </v-row>
         </v-container>
 
-        <CModal title="Send Request" :active="modalToggle" @close="modalToggle = false">
+        <CModal title="Request" :active="modalToggle" @close="handle_close()">
             <template #default>
                 <div class="modal-contaienr">
                     <div class="message-container">
@@ -36,8 +32,13 @@
                         <v-btn class="request_btn" @click="send_request()" color="primary"
                             style="width: 100px; height: 30px; font-size:12px" elevation="1">Send</v-btn>
                     </div>
-                    <div class="status">
-                        <i v-if="status" class="fa fa-check-circle" aria-hidden="true"></i>
+                    <div v-if="status === true" class="status good">
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                        <div class="message">Request Sent Successfully</div>
+                    </div>
+                    <div v-else-if="status === false" class="status bad">
+                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                        <div class="message">Request Error</div>
                     </div>
                 </div>
             </template>
@@ -64,7 +65,7 @@ export default {
     data() {
         return {
             modalToggle: false,
-            status: false,
+            status: null,
             data: [],
             selected_dataset_id: null,
             request_message: '',
@@ -100,10 +101,19 @@ export default {
             this.data = data;
         },
 
+        handle_close() {
+            // close toggle window
+            this.modalToggle = false;
+
+            // reset
+            this.request_message = '';
+            this.status = null;
+        },
+
         handle_action(data) {
             this.selected_dataset_id = data.id;
 
-            if (data.type === 'download') 
+            if (data.type === 'download')
                 this.download_marketplace();
 
             else if (data.type === 'request')
@@ -124,6 +134,8 @@ export default {
                 .then((response) => {
                     if (response.status === 201)
                         this.status = true;
+                    else
+                        this.status = false;
                 })
                 .catch((erroe) => console.error(erroe))
         }
@@ -136,6 +148,7 @@ export default {
     width: 100%;
     height: 100%;
     position: relative;
+    background-color: #F5F5F5;
 
     .modal-contaienr {
         width: 100%;
@@ -153,16 +166,23 @@ export default {
             flex-flow: column nowrap;
             align-items: center;
             row-gap: 10px;
-            ;
 
             .message {
-                width: 450px;
-                max-height: 120px;
+                width: 80%;
+                min-height: 120px;
+                max-height: 200px;
                 padding: 10px;
-                background-color: rgb(230, 230, 230);
+                background-color: rgb(233 233 233);
 
                 border: 2px solid #1976d2;
                 border-radius: 5px;
+                transition: all 300ms;
+
+                &:focus {
+                    outline: none !important;
+                    box-shadow: 0 0 10px #719ECE;
+                }
+
             }
 
             .request_btn {}
@@ -172,9 +192,34 @@ export default {
             flex: 1 1 50%;
 
             >i {
-                font-size: 60px;
-                color: green;
+                font-size: 40px;
             }
+
+            .message {
+                font-size: 20px;
+            }
+
+            &.good {
+                >i {
+                    color: #2B81D6;
+                }
+
+                .message {
+                    color: #2B81D6;
+                }
+            }
+
+            &.bad {
+                >i {
+                    color: red;
+                }
+
+                .message {
+                    color: red;
+                }
+            }
+
+
         }
     }
 }
