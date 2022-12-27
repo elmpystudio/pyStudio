@@ -4,7 +4,45 @@ from .models import Notification
 from datasets.models import Dataset
 
 
-class NotificationSerializer(serializers.ModelSerializer):
+class NotificationSerializerGet(serializers.ModelSerializer):
+    from_user = serializers.SerializerMethodField('_get_from_user')
+    to_user = serializers.SerializerMethodField('_get_to_user')
+    dataset = serializers.SerializerMethodField('_get_dataset')
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    def _get_from_user(self, notification):
+        return {
+            "id": notification.from_user.id,
+            "username": notification.from_user.username,
+        }
+
+    def _get_to_user(self, notification):
+        return {
+            "id": notification.from_user.id,
+            "username": notification.from_user.username,
+        }
+
+    def _get_dataset(self, notification):
+        return {
+            "name": notification.dataset.name,
+        }
+
+    class Meta:
+        model = Notification
+        fields = [
+            'id',
+            'message',
+            'from_user',
+            'to_user',
+            'dataset'
+        ]
+
+
+class NotificationSerializerPost(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')

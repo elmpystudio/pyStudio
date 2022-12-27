@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="pt-2">
-                    <v-btn v-if="is_public" @click="onClick({ type: 'download', id })" color="primary"
+                    <v-btn v-if="access" @click="onClick({ type: 'download', id })" color="primary"
                         style="width: 100px; height: 30px; font-size:12px" elevation="1">Download</v-btn>
                     <v-btn v-else @click="onClick({ type: 'request', id })" color="primary"
                         style="width: 120px; height: 30px; font-size:12px" elevation="1">Send Request</v-btn>
@@ -51,7 +51,7 @@ export default {
         // tags: { type: Array, required: true },
         date: { type: String, required: true },
         rate: { type: Number, required: true },
-        is_public: { type: Boolean, default: false },
+        access: { type: Boolean, default: false },
         to: { type: String, required: true },
     },
 

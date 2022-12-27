@@ -12,7 +12,7 @@ class DatasetList(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        datasets = Dataset.objects.filter(user_id=request.user.id, is_public=False)
+        datasets = Dataset.objects.filter(user_id=request.user.id)
         serializer = DatasetSerializer(datasets, user=None, many=True)
         return Response(serializer.data)
 

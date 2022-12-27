@@ -1,84 +1,181 @@
 <template>
-  <div class="notifications">
-    <div class="content">
-      <div
-        v-for="notification in notifications"
-        :key="notification.id"
-        :class="[notification.active ? 'active' : '', 'notification']"
-      >
-        <div>
-          <p class="description">{{ notification.description }}</p>
-          <span class="time">{{ notification.time }}</span>
+    <div class="notifications" v-if="data.length > 0">
+        <div class="content" v-for="notification in data" :key="notification.id" :id="`notification_${notification.id}`">
+            <div class="message-container">
+                <h6 class="title">Dataset Request</h6>
+                <p class="message">{{ short_message(notification.message) }}</p>
+                <div class="more-container">
+                    <div class="more">
+                        <div class="name">
+                            Dataset:
+                        </div>
+                        <div class="value">
+                            {{ notification.dataset.name }}
+                        </div>
+                    </div>
+
+                    <div class="more">
+                        <div class="name">
+                            From:
+                        </div>
+                        <div class="value">
+                            {{ notification.from_user.username }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="actions-container">
+                <v-btn class="action primary" @click="handle_action('accept', notification.id)">Accept</v-btn>
+                <v-btn class="action danger" @click="handle_action('deny', notification.id)">Deny</v-btn>
+            </div>
         </div>
-        <span
-          @click="handleReadNotification(notification.id)"
-          v-if="notification.active"
-          class="mark-text"
-        >
-          Mark as read
-        </span>
-      </div>
     </div>
-  </div>
+
+    <div class="notifications empty" v-else>
+        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+        There are no notifications to display
+    </div>
 </template>
 
 <script>
-  import vClickOutside from 'v-click-outside';
-  import { mapState, mapGetters } from 'vuex';
+import $ from 'jquery';
 
-  export default {
+export default {
     name: "Notifications",
-    directives: {
-      clickOutside: vClickOutside.directive,
-    },
-    components: {
+    props: {
+        short: { type: Boolean, default: false }
     },
 
     computed: {
-      ...mapGetters(['totalActiveNotifications']),
-      ...mapState(['notifications']),
+        data() {
+            return this.$store.getters.notifications;
+        },
     },
+
     methods: {
-      handleReadNotification(id) {
-        this.$store.dispatch('readNotification', id);
-      }
+        handle_action(type, id) {
+            if (type === 'accept')
+                this.$store.dispatch('ACCEPT_NOTIFICATION', id);
+            else if (type === 'deny')
+                this.$store.dispatch('DENY_NOTIFICATION', id); 
+
+            $(`#notification_${id}`).addClass("hide");
+            this.$store.dispatch('GET_NOTIFICATIONS');
+        },
+
+        short_message(message) {
+            if (this.short)
+                return message.substring(0, 60) + '...';
+            return message;
+        },
     }
-  }
+}
 </script>
 
 <style lang="scss" scoped>
-  .content {
-    padding: 30px;
+.notifications {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
 
-    .notification {
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      padding: 10px;
-      box-shadow: 0 13px 12px 0 #eaedf4;
-      background-color: #ffffff;
+    overflow-y: scroll;
+    overflow-x: hidden;
 
-      &.active {
-        background-color: rgba(0, 114, 255, 0.2);
-      }
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 5px; 
 
-      .mark-text {
-        font-size: 12px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-
-      .description {
-        margin: 0;
-      }
-
-      .time {
-        color: #9296ad;
-        font-size: 16px;
-        font-weight: 500;
-      }
+    /* width */
+    &::-webkit-scrollbar {
+        width: 5px;
     }
-  }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+
+        &:hover {
+            background: #555;
+        }
+    }
+
+    .content {
+        background-color: #e7e7e7;
+        padding: 0 20px;
+
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 5px;
+        column-gap: 10px;
+        
+
+        &.hide {
+            display: none;
+        }
+
+        .message-container {
+            height: 120px;
+            padding: 5px 0;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: space-between;
+
+
+            .title {
+                text-align: start;
+                font-size: 18px !important;
+                margin: 0;
+            }
+
+            .message {
+                text-align: start;
+                font-size: 15px;
+                margin: 0;
+            }
+
+            .more-container {
+                .more {
+                    display: flex;
+                    flex-flow: row nowrap;
+                    column-gap: 5px;
+
+                    .name {
+                        font-size: 11px;
+                        font-weight: bold;
+                    }
+
+                    .value {
+                        font-size: 11px;
+                    }
+                }
+            }
+        }
+
+        .actions-container {
+            display: flex;
+            flex-flow: row nowrap;
+            column-gap: 10px;
+
+            .action {
+                width: 70px;
+                font-size: 14px;
+                text-transform: none;
+            }
+        }
+    }
+
+    &.empty {
+        >i {
+            font-size: 30px;
+            color: grey;
+        }
+    }
+}
 </style>

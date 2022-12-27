@@ -63,7 +63,10 @@ export default {
 
         border-radius: 10px;
         overflow: hidden;
-        border: 2px solid #1976d2;
+        border: 2px solid #2B81D6;
+        box-shadow: 0 0 10px #719ECE;
+
+
 
         .container {
             padding: 0;
@@ -82,8 +85,8 @@ export default {
                 flex-flow: row nowrap;
                 justify-content: center;
                 align-items: center;
+                background: #F2F2F2;
 
-                background: #1976d2;
 
                 .mytitle {
                     flex-grow: 1;
@@ -91,7 +94,7 @@ export default {
                     font-size: 20px;
                     text-transform: uppercase;
                     letter-spacing: 2px;
-                    color: #e1e5ee;
+                    color: #2B81D6;
                 }
             }
 
@@ -102,11 +105,10 @@ export default {
             .footer {
                 flex: 1 1 40px;
                 overflow: hidden;
-
                 button {
                     width: 100%;
                     height: 100%;
-                    background: #1976d2;
+                    background: #2B81D6;
                     color: white;
                     font-size: 20px;
                     letter-spacing: 1px;

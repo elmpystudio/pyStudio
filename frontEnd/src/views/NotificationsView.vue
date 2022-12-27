@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div class="notifications-view">
         <Notifications />
     </div>
 </template>
 
 <script>
-import Notifications from '@/components/Notifications';
+import Notifications from '@/components/Notifications.vue';
 
 export default {
     name: "NotificationsView",
@@ -16,4 +16,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.notifications-view {
+    padding: 30px
+}
 </style>

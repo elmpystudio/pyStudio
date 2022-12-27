@@ -29,8 +29,8 @@
             <v-spacer></v-spacer>
 
             <div class="control-container">
-                <Notifications class="notification" />
-                <Profile class="profile" />
+                <Bell />
+                <Profile />
             </div>
         </v-toolbar>
     </nav>
@@ -38,8 +38,8 @@
 
 <script>
 //components
-import Notifications from '@/components/Navbar/Notifications.vue';
-import Profile from '@/components/Navbar/Profile.vue';
+import Bell from './Bell.vue';
+import Profile from './Profile.vue';
 //icons
 import DashboardIcon from '@/assets/icons/dashboard.svg';
 import MarketplaceIcon from '@/assets/icons/marketplace.svg';
@@ -52,7 +52,7 @@ export default {
     },
 
     components: {
-        Notifications,
+        Bell,
         Profile,
         DashboardIcon,
         MarketplaceIcon
@@ -62,55 +62,47 @@ export default {
 
 <style scoped lang="scss">
 .content {
+    padding: 0 10px;
     z-index: 100 !important;
     height: 64px !important;
     background: white !important;
     filter: brightness(95%);
-}
 
-.title {
-    display: inline;
-    font-size: 24px !important;
-    letter-spacing: 2px !important;
-    text-align: start;
-    padding-left: 10px;
-}
+    .title {
+        display: inline;
+        font-size: 24px !important;
+        letter-spacing: 2px !important;
+        text-align: start;
+        padding-left: 10px;
+    }
 
-.icon-box {
-    display: flex;
-    border-radius: 4px;
-    background-color: #e7eeff;
-    justify-content: center;
-    align-items: center;
-    height: 35px;
-    width: 35px;
+    .icon-box {
+        display: flex;
+        border-radius: 4px;
+        background-color: #e7eeff;
+        justify-content: center;
+        align-items: center;
+        height: 35px;
+        width: 35px;
 
-    .icon {
-        color: #002279cb;
+        .icon {
+            color: #002279cb;
 
-        g {
-            stroke: #002279cb;
+            g {
+                stroke: #002279cb;
 
-            path {
-                stroke: #002279cb !important;
+                path {
+                    stroke: #002279cb !important;
+                }
             }
         }
     }
-}
 
-.control-container {
-    width: 200px;
-    padding-top: 5px;
-
-
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-around;
-    .notification {
-        flex-basis: 100%;
-    }
-    .profile {
-        flex-basis: 100%;
+    .control-container {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        column-gap: 15px;
     }
 }
 </style>

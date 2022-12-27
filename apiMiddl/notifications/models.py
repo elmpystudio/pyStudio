@@ -14,5 +14,6 @@ class Notification(models.Model):
         db_table = "notifications"
 
     def __str__(self):
-        return "id: %s" % (self.message)
+        return "message: %s" % (self.message)
+
 
