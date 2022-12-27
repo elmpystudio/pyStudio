@@ -21,6 +21,7 @@ class DatasetSerializer(serializers.ModelSerializer):
             'uuid',
             'file',
             'user',
+            'is_public',
             'purchased'
         ]
 

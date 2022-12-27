@@ -48,7 +48,6 @@ export default {
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 2;
 
-
     display: none;
 
     &.active {
@@ -66,6 +65,7 @@ export default {
         overflow: hidden;
         border: 2px solid #2B81D6;
         box-shadow: 0 0 10px #719ECE;
+
 
 
         .container {
@@ -86,6 +86,7 @@ export default {
                 justify-content: center;
                 align-items: center;
                 background: #F2F2F2;
+
 
                 .mytitle {
                     flex-grow: 1;

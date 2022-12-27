@@ -4,6 +4,7 @@ from utils.minio import minio
 import uuid
 
 class Dataset(models.Model):
+
     name = models.CharField(max_length=200, blank=False, null=False,)
     description = models.CharField(max_length=1000, blank=True)
     filename = models.CharField(max_length=200, blank=True, null=False)
@@ -11,6 +12,8 @@ class Dataset(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="+", blank=True)
     file = models.FileField(blank=True)
+    is_public = models.BooleanField(default=False)
+
     purchased = models.ManyToManyField(get_user_model(), related_name="purchased", blank=True)
 
     bucket = "datasets"

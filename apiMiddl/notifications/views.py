@@ -5,12 +5,15 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from django.http import Http404
 from .models import Notification
+
 from .serializers import NotificationSerializerGet, NotificationSerializerPost
+
 
 class NotificationList(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
+
         notifications = Notification.objects.filter(to_user_id=request.user.id)
         serializer = NotificationSerializerGet(notifications, user=None, many=True)
         return Response(serializer.data)
@@ -21,6 +24,7 @@ class NotificationList(APIView):
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # class NotificationDetail(APIView):
 #     permission_classes = [IsAuthenticated]
@@ -53,11 +57,14 @@ class NotificationList(APIView):
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class NotificationAccept(APIView):
+
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         try:
+
             data = Notification.objects.filter(to_user_id=self.request.user.id, pk=pk)
+
             if len(data) > 0:
                 return data[0]
             raise Notification.DoesNotExist
@@ -86,4 +93,5 @@ class NotificationDeny(APIView):
         notification = self.get_object(pk)
         notification.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 

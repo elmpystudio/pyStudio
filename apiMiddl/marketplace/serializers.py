@@ -3,12 +3,15 @@ from utils.PandaWrapper import generate_science_data_html, generate_science_data
 from datasets.models import Dataset
 
 class MarketplaceSerializer(serializers.ModelSerializer):
+
     access = serializers.SerializerMethodField('_get_access')
+
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
         self.user = user
+
 
 
     def _get_access(self, dataset):
@@ -29,6 +32,7 @@ class MarketplaceSerializer(serializers.ModelSerializer):
             'user',
             'access'
         ]
+
 
 class MarketplaceDownloadSerializer(serializers.ModelSerializer):
     

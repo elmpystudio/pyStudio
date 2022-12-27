@@ -114,6 +114,7 @@ export const getMarketplace = (id) => axios.get(`${API_URL}/api/marketplace/${id
 });
 
 export const downloadMarketplace = (id) => axios.get(`${API_URL}/api/marketplace/download/${id}`, {
+
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
@@ -122,10 +123,13 @@ export const downloadMarketplace = (id) => axios.get(`${API_URL}/api/marketplace
 
 // START NOTIFICATION
 export const getNotifications = () => axios.get(`${API_URL}/api/notifications/`, {
+
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
 });
+// END MARKETPLACE
+
 
 export const createNotification = (payload) => axios.post(`${API_URL}/api/notifications/`, payload, {
     headers: {
@@ -133,13 +137,9 @@ export const createNotification = (payload) => axios.post(`${API_URL}/api/notifi
     }
 });
 
-export const acceptNotification = (id) => axios.get(`${API_URL}/api/notifications/accept/${id}`, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
 
-export const denyNotification = (id) => axios.get(`${API_URL}/api/notifications/deny/${id}`, {
+export const acceptNotification = (id) => axios.get(`${API_URL}/api/notifications/accept/${id}`, {
+
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
@@ -147,17 +147,30 @@ export const denyNotification = (id) => axios.get(`${API_URL}/api/notifications/
 // end NOTIFICATION
 
 
-export const getMarketplaceOfferings = () => axios.get(`${API_URL}/api/marketplace/offering/`, {
+export const denyNotification = (id) => axios.get(`${API_URL}/api/notifications/deny/${id}`, {
+
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
 });
+// end NOTIFICATION
+
+
+
+export const getMarketplaceOfferings = () => axios.get(`${API_URL}/api/marketplace/offering/`, {
+
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
 
 export const getMarketplaceOfferingById = (id) => axios.get(`${API_URL}/api/marketplace/offering/?id=${id}`, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
 });
+
 
 // export const getMyIP = () => axios.get('http://icanhazip.com/');
 
@@ -167,6 +180,7 @@ export const purchaseOffering = (data) => axios.post(`${API_URL}/api/marketplace
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
 });
+
 
 
 export const publishOffering = (data) => axios.post(`${API_URL}/api/marketplace/offering/`, { ...data }, {

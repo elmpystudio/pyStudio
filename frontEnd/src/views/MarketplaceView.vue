@@ -18,10 +18,12 @@
                         :date="'02.06.2020'" :rate="3.5" :access="marketplace.access"
                         :to="`/marketplace/${marketplace.type === 'Dataset' ? 'dataset' : 'va'}/${marketplace.item}`"
                         @action="handle_action">
+
                     </CCard>
                 </v-col>
             </v-row>
         </v-container>
+
 
         <CModal title="Request" :active="modalToggle" @close="handle_close()">
             <template #default>
@@ -32,6 +34,7 @@
                         <v-btn class="request_btn" @click="send_request()" color="primary"
                             style="width: 100px; height: 30px; font-size:12px" elevation="1">Send</v-btn>
                     </div>
+
                     <div v-if="status === true" class="status good">
                         <i class="fa fa-check-circle" aria-hidden="true"></i>
                         <div class="message">Request Sent Successfully</div>
@@ -39,6 +42,7 @@
                     <div v-else-if="status === false" class="status bad">
                         <i class="fa fa-times-circle" aria-hidden="true"></i>
                         <div class="message">Request Error</div>
+
                     </div>
                 </div>
             </template>
@@ -101,6 +105,7 @@ export default {
             this.data = data;
         },
 
+
         handle_close() {
             // close toggle window
             this.modalToggle = false;
@@ -136,6 +141,7 @@ export default {
                         this.status = true;
                     else
                         this.status = false;
+
                 })
                 .catch((erroe) => console.error(erroe))
         }
@@ -149,6 +155,7 @@ export default {
     height: 100%;
     position: relative;
     background-color: #F5F5F5;
+
 
     .modal-contaienr {
         width: 100%;
@@ -166,7 +173,6 @@ export default {
             flex-flow: column nowrap;
             align-items: center;
             row-gap: 10px;
-
             .message {
                 width: 80%;
                 min-height: 120px;
@@ -182,7 +188,6 @@ export default {
                     outline: none !important;
                     box-shadow: 0 0 10px #719ECE;
                 }
-
             }
 
             .request_btn {}
@@ -192,6 +197,7 @@ export default {
             flex: 1 1 50%;
 
             >i {
+
                 font-size: 40px;
             }
 
@@ -218,7 +224,6 @@ export default {
                     color: red;
                 }
             }
-
 
         }
     }
