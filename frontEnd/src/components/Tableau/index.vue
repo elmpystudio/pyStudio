@@ -49,7 +49,7 @@
 </template>
 
 <script>
-  import { getTableauToken, getWorkbooks, getMyIP } from '@/api_client.js';
+  // import { getTableauToken, getWorkbooks, getMyIP } from '@/api_client.js';
   export default {
     name: "Tableau",
     data() {
@@ -57,22 +57,22 @@
         workbooks: [],
       }
     },
-    mounted: function () {
-      getMyIP()
-        .then(response => {
-          getTableauToken(response.data)
-            .then(({ status, data }) => {
-              if (status === 200) {
-                data.key && localStorage.setItem('key', data.key);
-              }
-            });
-        })
-        .catch(error => console.error(error));
-      getWorkbooks()
-        .then(({ data }) => {
-          this.workbooks = data.workbooks || [];
-        });
-    }
+    // mounted: function () {
+    //   getMyIP()
+    //     .then(response => {
+    //       getTableauToken(response.data)
+    //         .then(({ status, data }) => {
+    //           if (status === 200) {
+    //             data.key && localStorage.setItem('key', data.key);
+    //           }
+    //         });
+    //     })
+    //     .catch(error => console.error(error));
+    //   getWorkbooks()
+    //     .then(({ data }) => {
+    //       this.workbooks = data.workbooks || [];
+    //     });
+    // }
   }
 </script>
 
