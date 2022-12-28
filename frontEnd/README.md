@@ -5,21 +5,29 @@
 ```bash
 npm install
 ```
+<img src="images/installation/1.gif" width="600" />
+
 
 ### Compiles and hot-reloads for development
 ```bash
 npm run serve
 ```
+<img src="images/installation/2.gif" width="600" />
+
 
 ### Compiles and minifies for production
 ```bash
 npm run build
 ```
+<img src="images/installation/3.gif" width="600" />
+
 
 ### Lints and fixes files
 ```bash
 npm run lint
 ```
+<img src="images/installation/4.gif" width="600" />
+
 
 # Project strucutre
 
