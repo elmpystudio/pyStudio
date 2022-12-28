@@ -6,22 +6,19 @@
 ```bash
 conda create -n {{ENV_NAME}} python=3.9
 ```
+<img src=".images/installation/1.gif" width="600" />
+
 2.Install required libraries:
 ```bash
 pip install -r requirements.txt
 ```
+<img src=".images/installation/2.gif" width="600" />
+
 3.Run server
 ```
 flask --app main run
 ```
-  * [OUTPUT]:
-    ```bash
-    * Serving Flask app 'main'
-    * Debug mode: off
-    WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
-    * Running on http://127.0.0.1:5000
-    Press CTRL+C to quit
-    ```
+<img src=".images/installation/3.gif" width="600" />
 
 # Setup Minio storage.
 ## Run minio docker:
