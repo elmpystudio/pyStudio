@@ -100,13 +100,13 @@ pip install -r requirements.txt
 ```bash
 python manage.py migrate
 ```
-<img src="images/installation/10.jpg" width="600" />
+<img src="images/installation/10.gif" width="600" />
 
 ### 11- Lastly running the server
 ```bash
 python manage.py runserver
 ```
-<img src="images/installation/11.jpg" width="600" />
+<img src="images/installation/11.gif" width="600" />
 
 ### 12- Now the restapi should be running and the frontend should be functional
 <img src="images/installation/12.jpg" width="600" />
