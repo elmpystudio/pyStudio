@@ -94,7 +94,7 @@ pip install -r requirements.txt
 ```bash
 ./helpers/reset_migrations.sh
 ```
-<img src="images/installation/9.jpg" width="600" />
+<img src="images/installation/9.gif" width="600" />
 
 ### 10- Migrating the project
 ```bash
