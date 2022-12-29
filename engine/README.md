@@ -6,19 +6,19 @@
 ```bash
 conda create -n {{ENV_NAME}} python=3.9
 ```
-<img src=".images/installation/1.gif" width="600" />
+<img src="../images/engine/1.gif" width="600" />
 
 2.Install required libraries:
 ```bash
 pip install -r requirements.txt
 ```
-<img src=".images/installation/2.gif" width="600" />
+<img src="../images/engine/2.gif" width="600" />
 
 3.Run server
 ```
 flask --app main run
 ```
-<img src=".images/installation/3.gif" width="600" />
+<img src="../images/engine/3.gif" width="600" />
 
 # Setup Minio storage.
 ## Run minio docker:
