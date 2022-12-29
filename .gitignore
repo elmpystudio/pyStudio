@@ -29,7 +29,6 @@ hyperd.log
 jupyterhub/data/jupyterhub-proxy.pid
 helpers/front/nginx/nginx/logs
 .persistant
-!.persistant/db.sqlite3
 migrations/*
 !migrations/__init__.py
 
