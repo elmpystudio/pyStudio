@@ -94,19 +94,19 @@ pip install -r requirements.txt
 ```bash
 ./helpers/reset_migrations.sh
 ```
-<img src="images/installation/9.jpg" width="600" />
+<img src="../images/api/1.gif" width="600" />
 
 ### 10- Migrating the project
 ```bash
 python manage.py migrate
 ```
-<img src="images/installation/10.jpg" width="600" />
+<img src="../images/api/2.gif" width="600" />
 
 ### 11- Lastly running the server
 ```bash
 python manage.py runserver
 ```
-<img src="images/installation/11.jpg" width="600" />
+<img src="../images/api/3.gif" width="600" />
 
 ### 12- Now the restapi should be running and the frontend should be functional
 <img src="images/installation/12.jpg" width="600" />
