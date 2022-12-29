@@ -3,7 +3,7 @@ import { getNodeOutputMetadata } from "./ApiClient.js";
 
 const GET_ALL_NODES_URL = `${API_URL}/api/ml/nodes/list`;
 const GET_ALL_NODES_URL_LOCAL = "json/get_nodes_list.json";
-const GET_DATASET_NAMES = "/api/items/dashboard/private/";
+const GET_DATASET_NAMES = "/api/datasets/";
 let nodesFromServer = [];
 
 //local
@@ -464,7 +464,6 @@ function loadNodes(instance, nodesList) {
                 },
                 cache: false,
                 success: function (datasetsList) {
-                    datasetsList = JSON.parse(datasetsList);
                     nodes['groups'][0]['nodes'][1]['proprties'][0]['lookup'] = datasetsList; //adding this in lookup for dataset
 
                 },
