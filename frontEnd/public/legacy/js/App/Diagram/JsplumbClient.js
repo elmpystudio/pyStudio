@@ -910,7 +910,7 @@ export default function run() {
                                         if (el.value === element['uuid']) {
                                             html += ' selected="selected"';
                                         }
-                                        html += '>' + element['title'] + '</option>'; //showing drop down
+                                        html += '>' + element['name'] + '</option>'; //showing drop down
                                     });
                                 } else {
                                     $.each(el.lookup, function (i, element) {
@@ -1080,7 +1080,7 @@ export default function run() {
         //onclick save, save on the side, save
         $("#propertiesBody").on("click", "#saveProperties", function () {
             // only for ReadCSV
-            if ($("div.jtk-node.selected")[0].type = "ReadCSV") {
+            if ($("div.jtk-node.selected")[0].type === "ReadCSV") {
                 let readcsv_input = $("#csv_path_value");
                 let files = readcsv_input.prop('files');
                 readcsv_input.attr("value", sendReadcsvFile(files[0]));
