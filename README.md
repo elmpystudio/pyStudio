@@ -29,6 +29,20 @@ The core of the machine learning studio build using Flask and [Dagster](https://
 
 We are open source and we ❤️ contributions big or small. [See our guide](https://github.com/elmpystudio/eps/blob/main/contribution.md) on how to get started.
 
+## Take a look
+
+Uploading a data set
+
+![](images/dataset.gif)
+
+Around our market place
+
+![](images/marketplace.gif)
+
+Running a workflow in the ML studio
+
+![](images/mlStudio.gif)
+
 
 ## Get in touch 
 
