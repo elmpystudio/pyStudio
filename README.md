@@ -32,12 +32,15 @@ We are open source and we ❤️ contributions big or small. [See our guide](htt
 ## Take a look
 
 Uploading a data set
+
 ![](images/dataset.gif)
 
 Around our market place
+
 ![](images/marketplace.gif)
 
 Running a workflow in the ML studio
+
 ![](images/mlStudio.gif)
 
 
