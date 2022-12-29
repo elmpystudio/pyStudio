@@ -32,7 +32,7 @@ We are open source and we ❤️ contributions big or small. [See our guide](htt
 ## Take a look
 
 Uploading a data set
-![](images/dataSet.gif)
+![](images/dataset.gif)
 
 Around our market place
 ![](images/marketplace.gif)
