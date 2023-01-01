@@ -43,6 +43,8 @@ We are open source and we ❤️ contributions big or small. [See our guide](htt
 ### Running a workflow in the ML studio
 <img src="images/mlStudio.gif" width="800" height="600" />
 
+### Running a Notebook
+<img src="images/jupyterhub.gif" width="800" height="600" />
 
 ## Get in touch 
 
