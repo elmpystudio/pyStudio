@@ -31,17 +31,17 @@ We are open source and we ❤️ contributions big or small. [See our guide](htt
 
 ## Take a look
 
-Uploading a data set
+### Register
+<img src="images/register.gif" width="800" height="600" />
 
-![](images/dataset.gif)
+### Uploading a data set
+<img src="images/dataset.gif" width="800" height="600" />
 
-Around our market place
+### Around our market place
+<img src="images/marketplace.gif" width="800" height="600" />
 
-![](images/marketplace.gif)
-
-Running a workflow in the ML studio
-
-![](images/mlStudio.gif)
+### Running a workflow in the ML studio
+<img src="images/mlStudio.gif" width="800" height="600" />
 
 
 ## Get in touch 
