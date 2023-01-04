@@ -55,7 +55,7 @@ urlpatterns = [
         # path('tableau/', include('tableau.urls')),
         path('marketplace/', include('marketplace.urls')),
         path('jupyterhub/', include('jupyterhub.urls')),
-        path('services/', include('services.urls')),
+        path('ml_models/', include('ml_models.urls')),
         path('notifications/', include('notifications.urls')),
 
 

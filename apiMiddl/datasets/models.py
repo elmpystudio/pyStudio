@@ -13,7 +13,6 @@ class Dataset(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="+", blank=True)
     file = models.FileField(blank=True)
     is_public = models.BooleanField(default=False)
-
     purchased = models.ManyToManyField(get_user_model(), related_name="purchased", blank=True)
 
     bucket = "datasets"

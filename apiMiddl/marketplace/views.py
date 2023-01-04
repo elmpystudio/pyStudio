@@ -6,63 +6,31 @@ from django.http import HttpResponse, Http404
 import random
 import string
 from datasets.models import Dataset
-from .serializers import MarketplaceSerializer, MarketplaceDownloadSerializer
+from ml_models.models import Ml_model
+from .serializers import DatasetSerializer, Ml_modelSerializer, DatasetDownloadSerializer
     
-class MarketplaceList(APIView):
+class DatasetList(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
         datasets = Dataset.objects.filter(user_id=request.user.id)
-
-        serializer = MarketplaceSerializer(datasets, user=request.user, many=True)
+        serializer = DatasetSerializer(datasets, user=request.user, many=True)
         return Response(serializer.data)
 
-# class MarketplaceDetail(APIView):
-#     permission_classes = [IsAuthenticated]
+class Ml_modelsList(APIView):
+    permission_classes = [IsAuthenticated]
 
-#     def get_object(self, pk):
-#         try:
-#             data = Dataset.objects.filter(user_id=self.request.user.id, pk=pk)
-#             if len(data) > 0:
-#                 return data[0]
-#             raise Dataset.DoesNotExist
-#         except Dataset.DoesNotExist:
-#             raise Http404
-
-#     def get(self, request, pk, format=None):
-#         dataset = self.get_object(pk)
-#         serializer = MarketplaceSerializer(dataset, user=None)
-#         return Response(serializer.data)
-
-        serializer = MarketplaceSerializer(datasets, user=None, many=True)
+    def get(self, request, format=None):
+        ml_models = Ml_model.objects.filter(user_id=request.user.id)
+        serializer = Ml_modelSerializer(ml_models, user=request.user, many=True)
         return Response(serializer.data)
 
-class MarketplaceDetail(APIView):
+class DatasetDownload(APIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         try:
-            data = Dataset.objects.filter(user_id=self.request.user.id, pk=pk)
-            if len(data) > 0:
-                return data[0]
-            raise Dataset.DoesNotExist
-        except Dataset.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        dataset = self.get_object(pk)
-        serializer = MarketplaceSerializer(dataset, user=None)
-        return Response(serializer.data)
-
-
-class MarketplaceDownload(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get_object(self, pk):
-        try:
-
             data = Dataset.objects.filter(pk=pk, purchased__id__exact=self.request.user.id)
-
             if len(data) > 0:
                 return data[0]
             raise Dataset.DoesNotExist
@@ -74,7 +42,5 @@ class MarketplaceDownload(APIView):
         file_name = dataset.name + ".csv"
         dataset.download('media/tmp_datasets/' + file_name)
         dataset.file = 'tmp_datasets/' + file_name
-        serializer = MarketplaceDownloadSerializer(dataset)
+        serializer = DatasetDownloadSerializer(dataset)
         return Response(serializer.data)
-
-

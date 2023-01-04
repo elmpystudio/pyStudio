@@ -83,13 +83,12 @@ INSTALLED_APPS = [
     'datasets',
     'notifications',
     'marketplace',
-    # 'tableau',
     'ml_studio',
     'corsheaders',
     'rest_framework',
     'oauth2_provider',
     'jupyterhub',
-    'services'
+    'ml_models'
 ]
 
 MIDDLEWARE = [
