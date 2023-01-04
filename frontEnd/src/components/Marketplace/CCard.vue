@@ -28,7 +28,7 @@
                     </v-chip>
                 </div>
 
-                <div class="pt-2">
+                <div class="pt-2" v-if="type === 'dataset'">
                     <v-btn v-if="access" @click="onClick({ type: 'download', id })" color="primary"
                         style="width: 100px; height: 30px; font-size:12px" elevation="1">Download</v-btn>
                     <v-btn v-else @click="onClick({ type: 'request', id })" color="primary"
@@ -45,7 +45,7 @@ export default {
 
     props: {
         id: { type: Number, required: true },
-        // type: { type: String, required: true },
+        type: { type: String, required: true },
         name: { type: String, required: true },
         description: { type: String, required: true },
         // tags: { type: Array, required: true },

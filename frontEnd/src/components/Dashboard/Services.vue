@@ -2,7 +2,7 @@
     <div class="contant">
         <div class="search-container">
             <SearchIcon class="search-icon" />
-            <input type="search" class="search" v-model="search" placeholder="Search for services" />
+            <input type="search" class="search" v-model="search" placeholder="Search for ml_models" />
         </div>
         <v-data-table :headers="headers" :items="data" class="elevation-1" :search="search" :loading="isLoading"
             show-select v-model="selected" @click:row="handle_click">
@@ -32,45 +32,45 @@
                             </div>
 
                             <div class="api">
-                                <div class="api_container" v-if="service.columns.length > 0">
+                                <div class="api_container" v-if="ml_model.columns.length > 0">
                                     <div class="api_container_form">
                                         <div class="name">Name:</div>
                                         <div class="value">
-                                            {{ service.name }}
+                                            {{ ml_model.name }}
                                         </div>
                                     </div>
 
                                     <div class="api_container_form">
                                         <div class="name">Model Name:</div>
                                         <div class="value">
-                                            {{ service.model_name }}
+                                            {{ ml_model.model_name }}
                                         </div>
                                     </div>
                                     <div class="api_container_form full">
                                         <div class="name">Access URL</div>
                                         <div class="value">
-                                            {{ `${access_url}/api/services/run` }}
+                                            {{ `${access_url}/api/ml_models/run` }}
                                         </div>
                                     </div>
 
                                     <div class="api_container_form">
                                         <div class="name">Version:</div>
                                         <div class="value">
-                                            {{ service.version }}
+                                            {{ ml_model.version }}
                                         </div>
                                     </div>
 
                                     <div class="api_container_form full">
                                         <div class="name">Description:</div>
                                         <div class="value">
-                                            {{ service.description }}
+                                            {{ ml_model.description }}
                                         </div>
                                     </div>
 
                                     <!-- eval_metrics -->
                                     <div class="api_container_form" v-for="(
                                             eval_metric, index
-                                        ) in service.eval_metrics" :key="index">
+                                        ) in ml_model.eval_metrics" :key="index">
                                         <div class="name">
                                             {{ eval_metric.name }}:
                                         </div>
@@ -94,10 +94,10 @@
                                 <div class="columns_container scroll">
                                     <div class="columns_container_column" v-for="(
                                             column, index
-                                        ) in filtered_columns(service.columns)" :key="index">
+                                        ) in filtered_columns(ml_model.columns)" :key="index">
                                         <div v-if="
-                                            column.hasOwnProperty('values')
-                                        ">
+    column.hasOwnProperty('values')
+">
                                             <div class="name">
                                                 {{ column.name }}
                                             </div>
@@ -105,10 +105,10 @@
                                             <div class="value">
                                                 <v-select :label="column.name" :item-color="'#2b468b'"
                                                     :color="'#2b468b'" :items="
-                                                        Object.keys(
-                                                            column.values
-                                                        )
-                                                    " outlined dense v-model="column.value"></v-select>
+    Object.keys(
+        column.values
+    )
+" outlined dense v-model="column.value"></v-select>
                                             </div>
                                         </div>
 
@@ -157,7 +157,7 @@
 <script>
 import CModal from "@/components/CModal.vue";
 import SearchIcon from "@/assets/icons/search.svg";
-import { get_services, post_service, delete_service, API_URL } from "@/api_client.js";
+import { get_mlModels, delete_mlModel, run_mlModels, API_URL } from "@/api_client.js";
 
 export default {
     name: "",
@@ -178,7 +178,7 @@ export default {
             access_url: API_URL,
 
             data: [],
-            service: {},
+            ml_model: {},
             modal_toggle: false,
 
             submit: {
@@ -189,25 +189,24 @@ export default {
     },
 
     mounted() {
-        this.fetch_services();
+        this.fetch_ml_models();
     },
 
     methods: {
 
-        fetch_services() {
-            get_services()
+        fetch_ml_models() {
+            get_mlModels()
                 .then(({ status, data }) => {
                     if (status === 200) {
                         // convert [columns] string to json object
-                        data.forEach((service) => {
-                            service.columns = JSON.parse(service.columns);
-                            // service.eval_metrics = JSON.parse(service.eval_metrics)
+                        data.forEach((ml_model) => {
+                            ml_model.columns = JSON.parse(ml_model.columns);
 
                             // eval_metrics
-                            if (service.eval_metrics !== null) {
-                                let tmp = JSON.parse(service.eval_metrics);
+                            if (ml_model.eval_metrics !== null) {
+                                let tmp = JSON.parse(ml_model.eval_metrics);
                                 if (tmp.model_type === "classification")
-                                    service.eval_metrics = [
+                                    ml_model.eval_metrics = [
                                         {
                                             name: "Accuracy Score",
                                             value: tmp.accuracy_score,
@@ -226,7 +225,7 @@ export default {
                                         },
                                     ];
                                 else if (tmp.model_type === "regression")
-                                    service.eval_metrics = [
+                                    ml_model.eval_metrics = [
                                         {
                                             name: "Mean Absolute Error",
                                             value: tmp.mean_absolute_error,
@@ -247,7 +246,7 @@ export default {
                     }
                 })
                 .catch(() => {
-                    console.error("service call");
+                    console.error("ml_model call");
                 })
                 .finally(() => {
                     this.isLoading = false;
@@ -255,8 +254,8 @@ export default {
 
         },
         handle_click(event) {
-            this.data.forEach((service) => {
-                if (service.name === event.name) this.service = service;
+            this.data.forEach((ml_model) => {
+                if (ml_model.name === event.name) this.ml_model = ml_model;
             });
             this.isActive = true;
         },
@@ -264,13 +263,13 @@ export default {
         handle_submit() {
             this.submit.isLoading = true;
             const payload = {
-                model_name: this.service.model_name,
-                username: this.service.username,
+                model_name: this.ml_model.model_name,
+                username: this.ml_model.username,
                 columns: {},
             };
             let run_model = null;
 
-            this.service.columns.forEach((column) => {
+            this.ml_model.columns.forEach((column) => {
                 if (column.hasOwnProperty("run_model"))
                     run_model = column;
                 else {
@@ -282,7 +281,7 @@ export default {
                 }
             });
 
-            post_service(payload)
+            run_mlModels(payload)
                 .then(({ status, data }) => {
                     if (status === 200) {
                         data = JSON.parse(data);
@@ -323,12 +322,12 @@ export default {
         },
 
         delete_action() {
-            this.selected.forEach(service => {
-                delete_service(service.id);
+            this.selected.forEach(ml_model => {
+                delete_mlModel(ml_model.id);
                 // update data
-                this.data = this.data.filter(this_service => {
+                this.data = this.data.filter(this_ml_model => {
 
-                    return this_service.id != service.id
+                    return this_ml_model.id != ml_model.id
                 });
             });
 

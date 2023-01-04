@@ -1,45 +1,49 @@
 <template>
     <div class="marketplace-view">
-        <div class="loading" v-if="!isLoaded">
+        <div class="loading" v-if="!datasets.isLoaded && !ml_models.isLoaded">
             <v-progress-circular :size="90" color="primary" indeterminate></v-progress-circular>
         </div>
 
         <v-container class="content pt-6" v-else>
-            <Filters :data="data" @onUpdate="update" />
+            <!-- <Filters :data="data" @onUpdate="update" /> -->
 
             <!--error message-->
-            <div class="red--text text--lighten-3" v-if="data.length === 0">
+            <div class="red--text text--lighten-3" v-if="datasets.data.length === 0 && ml_models.data.length === 0">
                 <h1>No Data Found</h1>
             </div>
 
             <v-row no-gutters>
-                <v-col v-for="(marketplace, index) in data" :key="index">
-                    <CCard :id="marketplace.id" :name="marketplace.name" :description="marketplace.description"
-                        :date="'02.06.2020'" :rate="3.5" :access="marketplace.access"
-                        :to="`/marketplace/${marketplace.type === 'Dataset' ? 'dataset' : 'va'}/${marketplace.item}`"
+                <v-col v-for="data in filtered_datasets" :key="`dataset_${data.id}`">
+                    <CCard :id="data.id" :name="data.name" :description="data.description" :date="data.date"
+                        :rate="data.rate" :access="data.access" :type="data.type" :to="'/marketplace/dataset'"
                         @action="handle_action">
+                    </CCard>
+                </v-col>
 
+                <v-col v-for="data in filtered_ml_models" :key="`ml_model_${data.id}`">
+                    <CCard :id="data.id" :name="data.name" :description="data.description" :date="data.date"
+                        :rate="data.rate" :access="data.access" :type="data.type" :to="'/marketplace/dataset'"
+                        @action="handle_action">
                     </CCard>
                 </v-col>
             </v-row>
         </v-container>
 
-
         <CModal title="Request" :active="modalToggle" @close="handle_close()">
             <template #default>
                 <div class="modal-contaienr">
                     <div class="message-container">
-                        <textarea class="message" placeholder="Your Message" v-model="request_message" />
+                        <textarea class="message" placeholder="Your Message" v-model="request.message" />
 
                         <v-btn class="request_btn" @click="send_request()" color="primary"
                             style="width: 100px; height: 30px; font-size:12px" elevation="1">Send</v-btn>
                     </div>
 
-                    <div v-if="status === true" class="status good">
+                    <div v-if="request.status === true" class="status good">
                         <i class="fa fa-check-circle" aria-hidden="true"></i>
                         <div class="message">Request Sent Successfully</div>
                     </div>
-                    <div v-else-if="status === false" class="status bad">
+                    <div v-else-if="request.status === false" class="status bad">
                         <i class="fa fa-times-circle" aria-hidden="true"></i>
                         <div class="message">Request Error</div>
 
@@ -51,42 +55,85 @@
 </template>
 
 <script>
-import Filters from '@/components/Marketplace/Filters';
+// import Filters from '@/components/Marketplace/Filters';
 import CCard from '@/components/Marketplace/CCard.vue';
 import CModal from '@/components/CModal.vue';
-
-import { mdiStar, mdiChevronDown, mdiChevronUp } from '@mdi/js'
-import { API_URL, getMarketplaces, downloadMarketplace, createNotification } from '@/api_client.js';
+import {
+    API_URL,
+    getMarketplaceDatasets,
+    getMarketplaceMlModels,
+    downloadDataset,
+    createNotification
+} from '@/api_client.js';
 
 export default {
     name: "MarketplaceView",
     components: {
-        Filters,
+        // Filters,
         CCard,
         CModal,
     },
 
     data() {
         return {
+            datasets: {
+                data: [],
+                selected: 0,
+                isLoaded: false
+            },
+            ml_models: {
+                data: [],
+                isLoaded: false
+            },
+            request: {
+                message: null,
+                status: null
+            },
             modalToggle: false,
-            status: null,
-            data: [],
-            selected_dataset_id: null,
-            request_message: '',
-            isLoaded: false,
-            icons: {
-                star: mdiStar,
-                arrowUp: mdiChevronUp,
-                arrowDown: mdiChevronDown,
-            }
+        }
+    },
+
+    computed: {
+        filtered_datasets() {
+            return this.datasets.data.map((dataset) => ({
+                id: dataset.id,
+                name: dataset.name,
+                description: dataset.description,
+                access: dataset.access,
+                type: 'dataset',
+
+                //fake
+                rate: 3.5,
+                date: '02.06.2020'
+            }));
+        },
+        filtered_ml_models() {
+            return this.ml_models.data.map((ml_model) => ({
+                id: ml_model.id,
+                name: ml_model.name,
+                description: ml_model.description,
+                access: ml_model.access,
+                type: 'ml_model',
+
+                //fake
+                rate: 3.5,
+                date: '02.06.2020'
+            }));
         }
     },
 
     created() {
-        getMarketplaces()
+        getMarketplaceDatasets()
             .then(({ data }) => {
-                this.data = data;
-                this.isLoaded = true;
+                this.datasets.data = data;
+                this.datasets.isLoaded = true;
+            })
+            .catch((error) => console.error(error))
+
+        getMarketplaceMlModels()
+            .then(({ data }) => {
+                this.ml_models.data = data;
+                this.ml_models.isLoaded = true;
             })
             .catch((error) => console.error(error))
     },
@@ -101,33 +148,26 @@ export default {
             document.body.removeChild(link);
         },
 
-        update(data) {
-            this.data = data;
-        },
-
-
         handle_close() {
             // close toggle window
             this.modalToggle = false;
 
             // reset
-            this.request_message = '';
-            this.status = null;
+            this.request.message = null;
+            this.request.status = null;
         },
 
         handle_action(data) {
-            this.selected_dataset_id = data.id;
-
+            this.datasets.selected = data.id;
             if (data.type === 'download')
-                this.download_marketplace();
+                this.download_dataset();
 
             else if (data.type === 'request')
                 this.modalToggle = true;
-
         },
 
-        download_marketplace() {
-            downloadMarketplace(this.selected_dataset_id)
+        download_dataset() {
+            downloadDataset(this.datasets.selected)
                 .then(({ data }) => {
                     this.download(API_URL + data.file)
                 })
@@ -135,13 +175,12 @@ export default {
         },
 
         send_request() {
-            createNotification({ dataset: this.selected_dataset_id, message: this.request_message })
+            createNotification({ dataset: this.datasets.selected, message: this.request.message })
                 .then((response) => {
                     if (response.status === 201)
-                        this.status = true;
+                        this.request.status = true;
                     else
-                        this.status = false;
-
+                        this.request.status = false;
                 })
                 .catch((erroe) => console.error(erroe))
         }
@@ -156,6 +195,11 @@ export default {
     position: relative;
     background-color: #F5F5F5;
 
+    .loading {
+        position: absolute;
+        top: 50%;
+        left: 45%;
+    }
 
     .modal-contaienr {
         width: 100%;
@@ -173,6 +217,7 @@ export default {
             flex-flow: column nowrap;
             align-items: center;
             row-gap: 10px;
+
             .message {
                 width: 80%;
                 min-height: 120px;
@@ -227,11 +272,5 @@ export default {
 
         }
     }
-}
-
-.loading {
-    position: absolute;
-    top: 50%;
-    left: 45%;
 }
 </style>
