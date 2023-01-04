@@ -1,18 +1,16 @@
 from rest_framework import serializers
 from utils.PandaWrapper import generate_science_data_html, generate_science_data_json
 from datasets.models import Dataset
+from ml_models.models import Ml_model
 
-class MarketplaceSerializer(serializers.ModelSerializer):
+class DatasetSerializer(serializers.ModelSerializer):
 
     access = serializers.SerializerMethodField('_get_access')
-
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
         self.user = user
-
-
 
     def _get_access(self, dataset):
         if Dataset.objects.filter(pk=dataset.id, purchased__id__exact=self.user.id):
@@ -33,8 +31,18 @@ class MarketplaceSerializer(serializers.ModelSerializer):
             'access'
         ]
 
+class Ml_modelSerializer(serializers.ModelSerializer):
 
-class MarketplaceDownloadSerializer(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    class Meta:
+        model = Ml_model
+        fields = '__all__'
+
+class DatasetDownloadSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Dataset
