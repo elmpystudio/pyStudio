@@ -96,8 +96,8 @@
                                             column, index
                                         ) in filtered_columns(ml_model.columns)" :key="index">
                                         <div v-if="
-    column.hasOwnProperty('values')
-">
+                                            column.hasOwnProperty('values')
+                                        ">
                                             <div class="name">
                                                 {{ column.name }}
                                             </div>
@@ -105,10 +105,10 @@
                                             <div class="value">
                                                 <v-select :label="column.name" :item-color="'#2b468b'"
                                                     :color="'#2b468b'" :items="
-    Object.keys(
-        column.values
-    )
-" outlined dense v-model="column.value"></v-select>
+                                                        Object.keys(
+                                                            column.values
+                                                        )
+                                                    " outlined dense v-model="column.value"></v-select>
                                             </div>
                                         </div>
 
@@ -630,7 +630,7 @@ export default {
         >button {
             width: 75px;
             height: 30px;
-            background-color: red;
+            background-color: rgb(209, 83, 83);
             border-radius: 5px;
             transition: all 300ms;
             color: white;

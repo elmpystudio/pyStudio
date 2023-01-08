@@ -292,7 +292,6 @@ export default {
     align-items: center;
     row-gap: 10px;
     
-
     > label {
         margin: 0;
         font-size: 13px;

@@ -22,15 +22,38 @@
             </div>
         </div>
 
+        <!-- Private Table -->
         <template v-if="selectedStatus === 'private'">
-            <v-data-table :headers="headers" :items="tablePrivateItems" item-value="value" item-text="label"
+            <!-- <v-data-table :headers="headers" :items="tablePrivateItems" item-value="value" item-text="label"
                 class="elevation-1" :search="search" :loading="privateItems.isLoading"
-                loading-text="Loading... Please wait" @click:row="handleOpenItem"></v-data-table>
+                loading-text="Loading... Please wait" @click:row="handleOpenItem">
+            </v-data-table> -->
+
+            <v-data-table :headers="headers" :items="tablePrivateItems" class="elevation-1" :search="search"
+                :loading="privateItems.isLoading" show-select v-model="selected" @click:row="handleOpenItem">
+                <template v-slot:footer>
+                    <div class="actions-container">
+                        <button @click="delete_action">Delete</button>
+                    </div>
+                </template>
+            </v-data-table>
         </template>
+
+        <!-- Purchased Table -->
         <template v-if="selectedStatus === 'purchased'">
-            <v-data-table :headers="headers" :items="tablePurchasedItems" item-value="value" item-text="label"
+            <!-- <v-data-table :headers="headers" :items="tablePurchasedItems" item-value="value" item-text="label"
                 class="elevation-1" :search="search" :loading="purchasedItems.isLoading"
-                @click:row="handleOpenItem"></v-data-table>
+                @click:row="handleOpenItem"></v-data-table> -->
+
+
+            <v-data-table :headers="headers" :items="tablePurchasedItems" class="elevation-1" :search="search"
+                :loading="tablePurchasedItems.isLoading" show-select v-model="selected" @click:row="handleOpenItem">
+                <template v-slot:footer>
+                    <div class="actions-container">
+                        <button @click="delete_action">Delete</button>
+                    </div>
+                </template>
+            </v-data-table>
         </template>
 
         <v-dialog v-model="dialog" max-width="600">
@@ -74,7 +97,7 @@
                                 <v-progress-circular :size="30" color="primary" indeterminate v-if="isLoading">
                                 </v-progress-circular>
                                 <button class="button cancel" @click="handleClose">Cancel</button>
-                                <button class="button submit" @click="handleFileSubmit"
+                                <button class="button submit" @click="handleSubmit"
                                     :disabled="!datasetName || isLoading">
                                     <span v-if="isLoading">Loading...</span>
                                     <span v-else>Submit</span>
@@ -93,8 +116,7 @@ import moment from 'moment';
 import PlusIcon from '@/assets/icons/plus.svg';
 import SearchIcon from '@/assets/icons/search.svg';
 import DoneIcon from '@/assets/icons/done.svg';
-import { mdiClose } from "@mdi/js";
-import { createDataset, getDatasets } from '@/api_client.js';
+import { createDataset, getDatasets, deleteDataset } from '@/api_client.js';
 
 export default {
     name: "Items",
@@ -112,9 +134,6 @@ export default {
                 { label: 'VA from tableau', value: 'VA from tableau' },
                 { label: 'All', value: '' },
             ],
-            icons: {
-                close: mdiClose,
-            },
             headers: [
                 { text: 'ID', value: 'id' },
                 { text: 'Name', value: 'name' },
@@ -143,6 +162,7 @@ export default {
             datasetName: '',
             description: '',
             isLoading: false,
+            selected: []
         }
     },
     computed: {
@@ -170,10 +190,8 @@ export default {
             this.uploadStep += 1;
             this.isUploadingFile = false;
         },
-
-        handleFileSubmit() {
+        handleSubmit() {
             this.isLoading = true;
-
             createDataset({
                 file: this.file,
                 name: this.datasetName,
@@ -208,13 +226,23 @@ export default {
                 purchased: []
             }
             datasets.forEach(dataset => {
-                if(dataset.purchased.length !== 0 && !dataset.is_public)
+                if (dataset.purchased.length !== 0 && !dataset.is_public)
                     filtered_data.purchased.push(dataset);
                 if (!dataset.is_public)
                     filtered_data.private.push(dataset);
             });
             return filtered_data;
-        }
+        },
+
+        delete_action() {
+            this.selected.forEach((dataset) => {
+                deleteDataset(dataset.id);
+                // update privateItems
+                this.privateItems.data = this.privateItems.data.filter(this_dataset => {
+                    return this_dataset.id != dataset.id
+                });
+            });
+        },
     },
     created() {
         this.privateItems.isLoading = true;
@@ -398,5 +426,32 @@ export default {
     min-height: 160px;
     justify-content: center;
     align-items: center;
+}
+
+.actions-container {
+    width: 100%;
+    height: 100%;
+    padding-top: 20px;
+    padding-left: 15px;
+
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    >button {
+        width: 75px;
+        height: 30px;
+        background-color: rgb(209, 83, 83);
+        border-radius: 5px;
+        transition: all 300ms;
+        color: white;
+        font-size: 15px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
 }
 </style>

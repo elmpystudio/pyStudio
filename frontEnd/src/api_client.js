@@ -81,6 +81,12 @@ export const getDataset = (id) => axios.get(`${API_URL}/api/datasets/${id}`, {
     }
 });
 
+export const deleteDataset = (id) => axios.delete(`${API_URL}/api/datasets/${id}`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
 export const getDatasetsPublic = () => axios.get(`${API_URL}/api/datasets/public`, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`

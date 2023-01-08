@@ -359,7 +359,6 @@ export default function run() {
             }
 
             fr.readAsText(files.item(0));
-
         });
 
         // $("#clearWorkflow").click(function () { //Save file locally
@@ -1042,7 +1041,7 @@ export default function run() {
                                     html += `
                                         <div class=uploadcsv-container>
                                             <label for="${el.name}_value" class="btn">
-                                                <i class="fa fa-cloud-upload"></i>Choose a file...
+                                                <i class="fa fa-cloud-upload"></i>Choose a file... 
                                             </label>
                                             <input
                                                 type="file"
@@ -1093,6 +1092,13 @@ export default function run() {
 
             workFlowExecution(flowDiagramJson);
         });
+
+        $("#propertiesBody").on("change", "#csv_path_value", function () {
+            const FILES = $(this).prop('files');
+            if(FILES.length !== 0){
+                $('.uploadcsv-container label').text(FILES[0].name)
+            }
+        })
 
         $("#propertiesBody").on("click", "#addColumnWithType", function () {
             let nodeId = $("div.jtk-node.selected")[0].id;
