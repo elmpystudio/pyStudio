@@ -1,5 +1,21 @@
 # The easier way to do machine learning with Python without coding!
 
+<h1 align="center">
+    <span>ELM's pyStudio</span>
+</h1>
+
+# Table of Contents
+
+- [Intro](#intro)
+- [Front End](#front-end)
+- [API](#api)
+- [Engine](#engine)
+- [I’m in! How do I contribute?](#contribute)
+- [Take a look](#contemplate)
+
+---
+
+
 ### Intro
 
 While developing our platform, we will like to use a Microservices architecture, for now as you can find in the different folders (apiMiddl, frontEnd, engine) we have made 3 and we are using [JupyterHub](https://jupyterhub.readthedocs.io/en/stable/) and [Minio](https://min.io/) services too, platform  can work without Minio but you will be only able to use your local CSV files in the Machine Learning Studio feature.
@@ -29,7 +45,7 @@ The core of the machine learning studio build using Flask and [Dagster](https://
 
 We are open source and we ❤️ contributions big or small. [See our guide](https://github.com/elmpystudio/eps/blob/main/contribution.md) on how to get started.
 
-## Take a look
+### Contemplate
 
 ### Register
 <img src="images/register.gif" width="800" height="600" />
@@ -46,7 +62,7 @@ We are open source and we ❤️ contributions big or small. [See our guide](htt
 ### Running a Notebook
 <img src="images/jupyterhub.gif" width="800" height="600" />
 
-## Get in touch 
+### Get in touch 
 
 We are working in our social networks and website, our commintment is focused on the code just [check our commintment statement](https://github.com/elmpystudio/eps/blob/main/COMMINTMENT.md).
 For now you can contact directly to egomiciamur@elm.sa and if you want to know more about us [Check our division website](https://elm.sa/en/research-and-innovation/Pages/overview.aspx) 
