@@ -119,8 +119,13 @@ export const getMarketplaceMlModels = () => axios.get(`${API_URL}/api/marketplac
     }
 });
 
-export const downloadDataset = (id) => axios.get(`${API_URL}/api/marketplace/download/${id}`, {
+export const downloadDataset = (id) => axios.get(`${API_URL}/api/marketplace/datasets/download/${id}`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
 
+export const downloadMlModel = (id) => axios.get(`${API_URL}/api/marketplace/ml_models/download/${id}`, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }

@@ -1,4 +1,5 @@
 from django.db import models
+from utils.minio import minio
 from django.contrib.auth import get_user_model
 
 class Ml_model(models.Model):
@@ -16,3 +17,6 @@ class Ml_model(models.Model):
         
     def __str__(self):
         return self.name
+
+    def download(model_name, path):
+        return minio.download('deployed-objects', model_name, path)
