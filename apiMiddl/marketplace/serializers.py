@@ -31,6 +31,14 @@ class DatasetSerializer(serializers.ModelSerializer):
             'access'
         ]
 
+class DatasetDownloadSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Dataset
+        fields = [
+           'file'
+        ]
+
 class Ml_modelSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
@@ -42,10 +50,10 @@ class Ml_modelSerializer(serializers.ModelSerializer):
         model = Ml_model
         fields = '__all__'
 
-class DatasetDownloadSerializer(serializers.ModelSerializer):
+class Ml_modelDownloadSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Dataset
+        model = Ml_model
         fields = [
            'file'
         ]

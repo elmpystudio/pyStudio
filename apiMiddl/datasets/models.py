@@ -44,9 +44,6 @@ class Dataset(models.Model):
     # def get_science_data(self):
     #     return minio.get(self.bucket, str(self.uuid))
 
-    # def download_models(model_name, path):
-    #     return minio.download('deployed-objects', model_name, path)
-
     # def upload_db(self):
     #     sql = build_sql_for_dataset(self.name, self)
     #     exec_in_pg(sql)
