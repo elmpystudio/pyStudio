@@ -898,6 +898,11 @@ export default function run() {
                     if (val.proprties.length > 0) {
                         html += '<form>';
                         $.each(val.proprties, function (i, el) {
+
+                            // Replace display_name
+                            if (el.display_name === "CSV Path")
+                                el.display_name = "CSV"
+
                             html += '<div class="form-group">';
                             html += '<label for="' + el.name + '">' + el.display_name + '</label>';
 
@@ -1079,7 +1084,7 @@ export default function run() {
         //onclick save, save on the side, save
         $("#propertiesBody").on("click", "#saveProperties", function () {
             // only for ReadCSV
-            if ($("div.jtk-node.selected")[0].type === "ReadCSV") {
+            if ($("div.jtk-node.selected")[0].attributes[2].nodeValue === "ReadCSV") {
                 let readcsv_input = $("#csv_path_value");
                 let files = readcsv_input.prop('files');
                 readcsv_input.attr("value", sendReadcsvFile(files[0]));
@@ -1095,7 +1100,7 @@ export default function run() {
 
         $("#propertiesBody").on("change", "#csv_path_value", function () {
             const FILES = $(this).prop('files');
-            if(FILES.length !== 0){
+            if (FILES.length !== 0) {
                 $('.uploadcsv-container label').text(FILES[0].name)
             }
         })
