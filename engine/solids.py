@@ -74,6 +74,7 @@ def ReadCSV(context, csv_path: str) -> DataFrame:
     context.log.info(
         'Dataset {named}'.format(named=csv_path)
     )
+    print("theeee pathhh" + csv_path)
     if not context.mode_def.name == 'heavy':
         df = pd.read_csv(csv_path)
         yield Output([df, tasks], 'BottomLeft')
@@ -1176,9 +1177,8 @@ def XGBClassifier(context, booster) -> PipelineType:
     required_resource_keys={'pyspark'}
 )
 def LGBMClassifier(context, random_state) -> PipelineType:
-    
     from lightgbm import LGBMClassifier
-    model = LModeling(context.run_id, LGBMClassifier(learning_rate=0.09, max_depth=-5, random_state=random_state),
+    model = LModeling(context.run_id, LGBMClassifier(learning_rate=0.09, max_depth=3, random_state=random_state),
                       model_name='LGBMClassifier')
     yield Output([model, []], 'BottomLeft')
 
@@ -1197,7 +1197,6 @@ def LGBMClassifier(context, random_state) -> PipelineType:
     required_resource_keys={'pyspark'}
 )
 def LGBMRegressor(context, num_leaves, learning_rate, n_estimators) -> PipelineType:
-    
     from lightgbm import LGBMRegressor
     model = LModeling(context.run_id, LGBMRegressor(num_leaves=31, learning_rate=0.05, n_estimators=20),
                       model_name='LGBMRegressor')
@@ -1214,7 +1213,6 @@ def LGBMRegressor(context, num_leaves, learning_rate, n_estimators) -> PipelineT
     required_resource_keys={'pyspark'}
 )
 def CatBoost(context, iterations, task_type) -> PipelineType:
-    
     from catboost import CatBoostClassifier
     model = LModeling(context.run_id,
                       CatBoostClassifier(iterations=iterations, learning_rate=1, depth=2, task_type="CPU"),

@@ -180,6 +180,7 @@ def status(wf_unique_id):
     pipe = sorted(pipe, key=lambda x: x[2], reverse=False)
 
     wf_start_time = pipe[0][2]
+    print("start time" + str(wf_start_time))
     wf_status = pipe[-1][1].split('_')[1]
     if wf_status == 'SUCCESS':
         old_wf = ""
@@ -396,10 +397,11 @@ def run_model_as_service(model_name):
         return jsonify({label: str(rs)})
 
 
-CSVS = ""
+CSVS = "./engine/user/csvs/"
 @app.route('/uploader', methods = ['POST'])
 def upload_file():
     f = request.files['file']
     csv_file = CSVS + f.filename
-    f.save(secure_filename(csv_file))
+    f.save(csv_file)
+    f.close()
     return csv_file
