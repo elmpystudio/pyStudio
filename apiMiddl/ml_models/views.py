@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework import status
 from django.http import HttpResponse, Http404
@@ -57,7 +57,7 @@ class Ml_modelsDetail(APIView):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def uploadcsv(request):
     file = request.FILES['file']
     url = settings.ML_ROOT_URL + "uploader"
@@ -65,7 +65,7 @@ def uploadcsv(request):
     return Response(response.text, status=response.status_code)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def run(request):
     request_data = json.loads(request.body)
     url = settings.ML_ROOT_URL + "run/" + request_data['username'] + "_" + request_data["model_name"]

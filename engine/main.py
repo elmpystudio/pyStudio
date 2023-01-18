@@ -402,8 +402,6 @@ CSVS = "./engine/user/csvs/"
 def upload_file():
     f = request.files['file']
     csv_file = CSVS + f.filename
-    f.save(secure_filename(csv_file))
-    print("hellow4")
+    f.save(csv_file)
     f.close()
-    print("hellow5")
     return csv_file
