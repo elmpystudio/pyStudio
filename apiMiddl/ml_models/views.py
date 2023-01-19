@@ -57,7 +57,7 @@ class Ml_modelsDetail(APIView):
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def uploadcsv(request):
     file = request.FILES['file']
     url = settings.ML_ROOT_URL + "uploader"
@@ -65,7 +65,7 @@ def uploadcsv(request):
     return Response(response.text, status=response.status_code)
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def run(request):
     request_data = json.loads(request.body)
     url = settings.ML_ROOT_URL + "run/" + request_data['username'] + "_" + request_data["model_name"]
