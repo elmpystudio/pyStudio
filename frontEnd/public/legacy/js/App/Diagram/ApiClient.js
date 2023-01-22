@@ -205,6 +205,9 @@ function sendReadcsvFile(file) {
         enctype: 'multipart/form-data',
         data: formData,
         async: false,
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
         success: function (response) {
             path = response;
         },
@@ -282,6 +285,9 @@ function saveDeployedWorkflow(request) {
         data: request,
         cache: false,
         dataType: "json",
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
         beforeSend: function () {
             // $("#deploy_modal_loader").css("display", "block");
         },
