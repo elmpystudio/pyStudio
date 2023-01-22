@@ -1,5 +1,4 @@
 env
-db.sqlite3
 !**/__pycache__/
 hyperd.log
 *.hyper
@@ -7,9 +6,10 @@ hyperd.log
 jupyterhub/data/jupyterhub-proxy.pid
 helpers/front/nginx/nginx/logs
 rest/settings.py
-.backup
+**/fixtures/
+**/migrations/
+./db.sqlite3
+
 # Editor directories and files
 .idea
 .vscode
-
-

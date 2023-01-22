@@ -16,14 +16,14 @@
                 <v-col v-for="data in filtered_datasets" :key="`dataset_${data.id}`">
                     <CCard :id="data.id" :name="data.name" :description="data.description" :date="data.date"
                         :rate="data.rate" :access="data.access" :type="data.type" :to="'/marketplace/dataset'"
-                        @action="handle_action">
+                        @action="handle_card">
                     </CCard>
                 </v-col>
 
                 <v-col v-for="data in filtered_ml_models" :key="`ml_model_${data.id}`">
                     <CCard :id="data.id" :name="data.name" :description="data.description" :date="data.date"
                         :rate="data.rate" :access="data.access" :type="data.type" :to="'/marketplace/dataset'"
-                        @action="handle_action">
+                        @action="handle_card">
                     </CCard>
                 </v-col>
             </v-row>
@@ -63,6 +63,7 @@ import {
     getMarketplaceDatasets,
     getMarketplaceMlModels,
     downloadDataset,
+    downloadMl_model,
     createNotification
 } from '@/api_client.js';
 
@@ -78,13 +79,13 @@ export default {
         return {
             datasets: {
                 data: [],
-                selected: 0,
                 isLoaded: false
             },
             ml_models: {
                 data: [],
                 isLoaded: false
             },
+            selected: null,
             request: {
                 message: null,
                 status: null
@@ -139,7 +140,7 @@ export default {
     },
 
     methods: {
-        // staic function
+        // static function
         download(url) {
             let link = document.createElement("a");
             link.href = url;
@@ -147,27 +148,40 @@ export default {
             link.click();
             document.body.removeChild(link);
         },
-
         handle_close() {
             // close toggle window
             this.modalToggle = false;
-
             // reset
             this.request.message = null;
             this.request.status = null;
         },
 
-        handle_action(data) {
-            this.datasets.selected = data.id;
-            if (data.type === 'download')
-                this.download_dataset();
-
-            else if (data.type === 'request')
+        handle_card(data) {
+            this.selected = {
+                id: data.id,
+                type: data.type
+            }
+            if (data.action_type === 'download') {
+                if (data.type === 'dataset')
+                    this.download_dataset();
+                else
+                    this.download_ml_model();
+            }
+            else if (data.action_type === 'request')
                 this.modalToggle = true;
         },
 
         download_dataset() {
-            downloadDataset(this.datasets.selected)
+            downloadDataset(this.selected.id)
+                .then(({ data }) => {
+                    this.download(API_URL + data.file)
+                })
+                .catch((error) => console.error(error))
+        },
+
+        download_ml_model() {
+            // console.log('333333333333333', this.selected)
+            downloadMl_model(this.selected.id)
                 .then(({ data }) => {
                     this.download(API_URL + data.file)
                 })
@@ -175,7 +189,12 @@ export default {
         },
 
         send_request() {
-            createNotification({ dataset: this.datasets.selected, message: this.request.message })
+            const data = {
+                message: this.request.message,
+            };
+            data[this.selected.type] = this.selected.id;
+
+            createNotification(data)
                 .then((response) => {
                     if (response.status === 201)
                         this.request.status = true;

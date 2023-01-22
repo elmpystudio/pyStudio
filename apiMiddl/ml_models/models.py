@@ -11,6 +11,7 @@ class Ml_model(models.Model):
     eval_metrics = models.TextField(blank=False, null=True)
     columns = models.TextField(blank=False, null=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="+", blank=True)
+    purchased = models.ManyToManyField(get_user_model(), blank=True)
 
     class Meta:
         db_table = "ml_models"
