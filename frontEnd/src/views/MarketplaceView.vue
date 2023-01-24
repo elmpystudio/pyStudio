@@ -180,7 +180,6 @@ export default {
         },
 
         download_ml_model() {
-            // console.log('333333333333333', this.selected)
             downloadMl_model(this.selected.id)
                 .then(({ data }) => {
                     this.download(API_URL + data.file)
