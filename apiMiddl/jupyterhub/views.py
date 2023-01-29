@@ -2,17 +2,28 @@ from django.shortcuts import redirect
 import urllib.request
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import permission_classes
-
 from .models import Jupyter, Jupyter_history
 from django.utils.crypto import get_random_string
 from accounts.models import CustomUser
+from datasets.models import Dataset
+import os
 
+def upload_datasets(user):
+    container_name = "jupyter-"+user.username
+    datasets = Dataset.objects.filter(user=user)
+    tmp = "/tmp/api/jupyterhub/"+user.username
+    os.system("mkdir -p "+tmp)
+    for dataset in datasets:
+        file = tmp+"/"+dataset.filename
+        dataset.download(file)
+        os.system("docker cp " + file + " " + container_name + ":/home/jovyan")
+
+    # clean server /tmp
+    os.system("rm -r " + tmp)
 
 @api_view(['GET'])
 @permission_classes((AllowAny, ))   
@@ -28,7 +39,12 @@ def startView(request):
     jupyter.is_open = True
     jupyter.save()
 
-    return redirect("http://localhost:8888/hub/login")
+    try:
+        upload_datasets(user)
+    except Exception as e:
+        print(e)
+
+    return redirect("http://localhost:9000/hub/login")
 
     # debugging zone
     # print('Start!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!') # test

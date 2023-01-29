@@ -28,10 +28,10 @@
                     </v-chip>
                 </div>
 
-                <div class="pt-2" v-if="type === 'dataset'">
-                    <v-btn v-if="access" @click="onClick({ type: 'download', id })" color="primary"
+                <div class="pt-2">
+                    <v-btn v-if="access" @click="onClick('download')" color="primary"
                         style="width: 100px; height: 30px; font-size:12px" elevation="1">Download</v-btn>
-                    <v-btn v-else @click="onClick({ type: 'request', id })" color="primary"
+                    <v-btn v-else @click="onClick('request')" color="primary"
                         style="width: 120px; height: 30px; font-size:12px" elevation="1">Send Request</v-btn>
                 </div>
             </div>
@@ -56,8 +56,12 @@ export default {
     },
 
     methods: {
-        onClick(data) {
-            this.$emit('action', data)
+        onClick(action_type) {
+            this.$emit('action', {
+                action_type,
+                id: this.id,
+                type: this.type
+            })
         },
     }
 }

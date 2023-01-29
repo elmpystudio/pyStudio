@@ -5,9 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from django.http import Http404
 from .models import Notification
-
+from ml_models.models import Ml_model
 from .serializers import NotificationSerializerGet, NotificationSerializerPost
-
 
 class NotificationList(APIView):
     permission_classes = [IsAuthenticated]
@@ -62,9 +61,7 @@ class NotificationAccept(APIView):
 
     def get_object(self, pk):
         try:
-
             data = Notification.objects.filter(to_user_id=self.request.user.id, pk=pk)
-
             if len(data) > 0:
                 return data[0]
             raise Notification.DoesNotExist
@@ -73,7 +70,12 @@ class NotificationAccept(APIView):
 
     def get(self, request, pk):
         notification = self.get_object(pk)
-        notification.dataset.purchased.add(notification.from_user)
+
+        if notification.dataset:
+            notification.dataset.purchased.add(notification.from_user)
+        elif notification.ml_model: 
+            notification.ml_model.purchased.add(notification.from_user)
+
         notification.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -93,5 +95,4 @@ class NotificationDeny(APIView):
         notification = self.get_object(pk)
         notification.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
+        

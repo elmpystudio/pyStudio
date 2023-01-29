@@ -1,16 +1,27 @@
 <template>
     <div class="notifications" v-if="data.length > 0">
-        <div class="content" v-for="notification in data" :key="notification.id" :id="`notification_${notification.id}`">
+        <div class="content" v-for="notification in data" :key="notification.id"
+            :id="`notification_${notification.id}`">
             <div class="message-container">
-                <h6 class="title">Dataset Request</h6>
+                <h6 class="title">
+                    <span v-if="notification.dataset">Dataset</span>
+                    <span v-else-if="notification.ml_model">ML_Model</span>
+                    Request
+                </h6>
                 <p class="message">{{ short_message(notification.message) }}</p>
                 <div class="more-container">
+
                     <div class="more">
                         <div class="name">
-                            Dataset:
+                            Name:
                         </div>
-                        <div class="value">
+                        <!-- Dataset -->
+                        <div class="value" v-if="notification.dataset">
                             {{ notification.dataset.name }}
+                        </div>
+                        <!-- Ml_model -->
+                        <div class="value" v-else-if="notification.ml_model">
+                            {{ notification.ml_model.name }}
                         </div>
                     </div>
 
@@ -57,7 +68,7 @@ export default {
             if (type === 'accept')
                 this.$store.dispatch('ACCEPT_NOTIFICATION', id);
             else if (type === 'deny')
-                this.$store.dispatch('DENY_NOTIFICATION', id); 
+                this.$store.dispatch('DENY_NOTIFICATION', id);
 
             $(`#notification_${id}`).addClass("hide");
             this.$store.dispatch('GET_NOTIFICATIONS');
@@ -83,7 +94,7 @@ export default {
 
     display: flex;
     flex-flow: column nowrap;
-    row-gap: 5px; 
+    row-gap: 5px;
 
     /* width */
     &::-webkit-scrollbar {
@@ -114,7 +125,7 @@ export default {
         align-items: center;
         border-radius: 5px;
         column-gap: 10px;
-        
+
 
         &.hide {
             display: none;

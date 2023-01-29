@@ -2,9 +2,7 @@ from rest_framework import serializers
 from utils.PandaWrapper import generate_science_data_html, generate_science_data_json
 from .models import Dataset
 
-
 class DatasetSerializer(serializers.ModelSerializer):
-
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
@@ -21,7 +19,6 @@ class DatasetSerializer(serializers.ModelSerializer):
             'uuid',
             'file',
             'user',
-            'is_public',
             'purchased'
         ]
 

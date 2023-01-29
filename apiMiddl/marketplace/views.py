@@ -17,6 +17,14 @@ class DatasetList(APIView):
         serializer = DatasetSerializer(datasets, user=request.user, many=True)
         return Response(serializer.data)
 
+class Ml_modelsList(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        ml_models = Ml_model.objects.filter(user_id=request.user.id)
+        serializer = Ml_modelSerializer(ml_models, user=request.user, many=True)
+        return Response(serializer.data)
+
 class DatasetDownload(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -32,17 +40,9 @@ class DatasetDownload(APIView):
     def get(self, request, pk, format=None):
         dataset = self.get_object(pk)
         file_name = dataset.name + ".csv"
-        dataset.download('media/tmp_datasets/' + file_name)
-        dataset.file = 'tmp_datasets/' + file_name
+        dataset.download('media/tmp/' + file_name)
+        dataset.file = 'tmp/' + file_name
         serializer = DatasetDownloadSerializer(dataset)
-        return Response(serializer.data)
-
-class Ml_modelsList(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, format=None):
-        ml_models = Ml_model.objects.filter(user_id=request.user.id)
-        serializer = Ml_modelSerializer(ml_models, user=request.user, many=True)
         return Response(serializer.data)
 
 class Ml_modelDownload(APIView):
@@ -60,7 +60,7 @@ class Ml_modelDownload(APIView):
     def get(self, request, pk, format=None):
         ml_model = self.get_object(pk, request)
         file_name = ml_model.name + ".csv"
-        ml_model.download('media/tmp_ml_models/' + file_name)
-        ml_model.file = 'tmp_ml_models/' + file_name
+        ml_model.download('media/tmp/' + file_name)
+        ml_model.file = 'tmp/' + file_name
         serializer = Ml_modelDownloadSerializer(ml_model)
         return Response(serializer.data)
