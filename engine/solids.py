@@ -103,7 +103,7 @@ def ReadCSVSample(context, csv_path: str) -> DataFrame:
     # df=pipe.transform('')
     if not context.mode_def.name == 'heavy':
         df = pd.read_csv(csv_path,
-                         encoding='utf8', dtype=data_types, header=0,
+                         encoding='utf8', dtype=None, header=0,
                          skiprows=lambda i: i > 0 and random.random() > 0.01)
         yield Output([df, tasks], 'BottomLeft')
     else:
