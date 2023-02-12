@@ -4,8 +4,6 @@ numpy==1.22.3
 joblib==1.1.0
 scikit-learn==1.1.2
 torch==1.12.1
-dagster==0.7.6
-dagster-aws==0.7.6
 s3fs==0.4.2
 pyarrow==5.0.0
 Flask==2.2.2
@@ -19,3 +17,10 @@ psycopg2==2.8.4
 minio==5.0.7
 botocore==1.12.253
 dill==0.3.3
+imblearn==0.0
+dagster==0.7.6
+dagster-aws==0.7.6
+dagster-cron==0.7.6
+dagster-postgres==0.7.6
+dagster-pyspark==0.7.6
+dagster-spark==0.7.6

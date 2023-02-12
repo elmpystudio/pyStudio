@@ -30,7 +30,6 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=False, null=True)
     creation_ts = models.DateTimeField(default=datetime.now, blank=True, null=True)
     organization = models.ForeignKey(Organization, models.DO_NOTHING, blank=True, null=True)
-    jhub_token = models.TextField(blank=False, null=True)
     roles = models.ManyToManyField(Role, related_name = '+')
     tableau_user = models.CharField(max_length=15, blank=True, null=True)
     tableau_password = models.CharField(max_length=15, blank=True, null=True)

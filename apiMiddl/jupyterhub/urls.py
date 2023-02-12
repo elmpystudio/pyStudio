@@ -1,10 +1,12 @@
 from django.urls import path, include
-from .views import authorizeView, loginView, userView, startView
+from . import views
 
 urlpatterns = [
-    path("start/", startView),
+    path("open", views.open),
+    path("sync", views.sync),
 
-    path("authorize/", authorizeView),
-    path("token/", loginView),
-    path("user/", userView)
+    # for Jupyterhub only
+    path("auth_step1/", views.auth_step1),
+    path("auth_step2/", views.auth_step2),
+    path("auth_step3/", views.auth_step3)
 ]
