@@ -1,23 +1,22 @@
-# This file is a template, and might need editing before it works on your project.
-FROM python:3.6
+FROM ubuntu:20.04
 
-# Edit with mysql-client, postgresql-client, sqlite3, etc. for your needs.
-# Or delete entirely if not needed.
-#RUN apt-get update \
-#    && apt-get install -y --no-install-recommends \
-#        postgresql-client \
-#    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
 
-WORKDIR /usr/src/app
+ADD . /app
 
-#COPY requirements.txt /usr/src/app/
-#RUN pip install --no-cache-dir -r requirements.txt
+# set the timezone for make
+RUN ln -snf "/usr/share/zoneinfo/America/Los_Angeles" /etc/localtime && \
+echo "America/Los_Angeles" > /etc/timezone
 
-COPY . /usr/src/app
+# Add python3.9 repo, Install python3.9
+RUN apt-get update && \
+apt-get install software-properties-common -y && \
+add-apt-repository ppa:deadsnakes/ppa --yes && \
+apt-get install python3.9 python3.9-dev python3-pip -y
 
-# For Django
+RUN python3.9 -m pip install -r requirements.txt
+
+RUN bash ./helpers/full_reset.sh
+
 EXPOSE 8000
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-# For some other command
-# CMD ["python", "app.py"]
+CMD ["python3.9", "manage.py", "runserver", "0.0.0.0:8000"]

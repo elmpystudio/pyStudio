@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .users import UserSerializer
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
-from django.utils.crypto import get_random_string
 
 User = get_user_model()
 
@@ -47,7 +46,6 @@ class InputRegisterSerializer(serializers.Serializer):
             'email': self.validated_data.get('email', ''),
             'about': self.validated_data.get('about', ''),
             'avatar': self.validated_data.get('avatar', ''),
-            'jhub_token': get_random_string(length=60),
             # 'is_staff': True,
             # 'is_superuser': True
         }

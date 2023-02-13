@@ -134,7 +134,6 @@ export const downloadMl_model = (id) => axios.get(`${API_URL}/api/marketplace/ml
 
 // START NOTIFICATION
 export const getNotifications = () => axios.get(`${API_URL}/api/notifications/`, {
-
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
@@ -150,7 +149,6 @@ export const createNotification = (payload) => axios.post(`${API_URL}/api/notifi
 
 
 export const acceptNotification = (id) => axios.get(`${API_URL}/api/notifications/accept/${id}`, {
-
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
@@ -159,7 +157,6 @@ export const acceptNotification = (id) => axios.get(`${API_URL}/api/notification
 
 
 export const denyNotification = (id) => axios.get(`${API_URL}/api/notifications/deny/${id}`, {
-
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
@@ -169,7 +166,6 @@ export const denyNotification = (id) => axios.get(`${API_URL}/api/notifications/
 
 
 export const getMarketplaceOfferings = () => axios.get(`${API_URL}/api/marketplace/offering/`, {
-
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
@@ -241,6 +237,19 @@ export const delete_mlModel = (id) => axios.delete(`${API_URL}/api/ml_models/${i
 });
 
 export const run_mlModels = (payload) => axios.post(`${API_URL}/api/ml_models/run`, payload, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+// jupyterhub
+export const jupyterhub_open = () => axios.get(`${API_URL}/api/jupyterhub/open`, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+export const jupyterhub_sync = () => axios.get(`${API_URL}/api/jupyterhub/sync`, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }

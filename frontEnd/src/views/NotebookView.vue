@@ -1,17 +1,15 @@
 <template>
     <div class="content">
-        <div class="notebook" id="notebook">
-            <!-- Loader -->
+        <div class="notebook">
             <CLoader v-if="isLoading" id="loader" />
-            <iframe v-else name="myFrame" :src="url + jhub_token"></iframe>
+            <iframe v-else :src="url"></iframe>
         </div>
     </div>
 </template>
 
 <script>
-import { getUser } from "@/api_client.js";
+import { jupyterhub_open, jupyterhub_sync } from "@/api_client.js";
 import CLoader from "@/components/CLoader.vue";
-// import $ from "jquery";
 
 export default {
     name: "NotebookViwe",
@@ -21,28 +19,31 @@ export default {
 
     data: () => ({
         isLoading: true,
-
-        url: "http://localhost:8000/api/jupyterhub/start/?token=",
-        jhub_token: "",
+        url: "http://localhost:9000/hub/oauth_login?next=",
     }),
 
     mounted() {
-        if (this.isLoading) this.getData();
+        if (this.isLoading) this.open();
     },
 
     methods: {
-        getData() {
-            getUser()
-                .then(({ status, data }) => {
+        open() {
+            jupyterhub_open()
+                .then(({ status }) => {
                     if (status === 200) {
-                        if (data.jhub_token !== null)
-                            this.jhub_token = data.jhub_token;
                         this.isLoading = false;
+                        this.sync();
                     }
                 })
-                .catch(() => {
-                    console.error("Invalid credential");
-                });
+        },
+        sync() {
+            jupyterhub_sync()
+                .then(({ status }) => {
+                    if (status !== 200)
+                        setTimeout(() => {
+                            this.sync();
+                        }, 1000)
+                })
         },
     },
 };
@@ -55,7 +56,7 @@ export default {
     position: relative;
 
     .notebook {
-        > #loader {
+        >#loader {
             background-color: rgb(242 242 242);
         }
     }

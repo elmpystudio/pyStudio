@@ -1,0 +1,12 @@
+#!/bin/bash
+
+rm -rf */migrations/0*.py 
+rm -f ./db.sqlite3
+cp ./helpers/settings.py.backup ./rest/settings.py
+python3.9 manage.py makemigrations
+python3.9 manage.py migrate
+python3.9 manage.py loaddata */fixtures/*
+
+# Marketplace downloads tmp folder
+rm -r /tmp/api/
+mkdir -p /tmp/api/jupyterhub

@@ -47,7 +47,6 @@
             "organization": 1,
             "tableau_user": "api-user",
             "tableau_password": "Aa123456",
-            "jhub_token": "root_token",
             "groups": [],
             "user_permissions": [],
             "roles": []
@@ -74,7 +73,6 @@
             "organization": 1,
             "tableau_user": "analytics",
             "tableau_password": "w2w2w2W@",
-            "jhub_token": "analytic_token",
             "groups": [],
             "user_permissions": [],
             "roles": [
@@ -103,7 +101,6 @@
             "organization": 1,
             "tableau_user": "manager",
             "tableau_password": "w2w2w2W@",
-            "jhub_token": "manager_token",
             "groups": [],
             "user_permissions": [],
             "roles": [
