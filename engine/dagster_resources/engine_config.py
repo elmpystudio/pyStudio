@@ -12,7 +12,7 @@ FS_HANDLER_CONFIG = {
 
 DB_HANDLER_CONFIG = {
         'user': "dev" if "AP_PG_USER" not in os.environ else os.environ['AP_PG_USER'],
-        "password": "xxxxxxx" if "AP_PG_PASS" not in os.environ else os.environ['AP_PG_PASS'],
+        "password": "Aa123456" if "AP_PG_PASS" not in os.environ else os.environ['AP_PG_PASS'],
         'host': "localhost" if "AP_PG_HOST" not in os.environ else os.environ['AP_PG_HOST'],
         'port': 5432
 }
@@ -27,9 +27,9 @@ FLASK_CONFIG = {
 # minio
 
 OBJECT_STORAGE_HANDLER = {
-    'connection_string': "x.x.x.x:9000" if "AP_MINIO_URL" not in os.environ else os.environ['AP_MINIO_URL'],
+    'connection_string': "34.91.137.119:9000" if "AP_MINIO_URL" not in os.environ else os.environ['AP_MINIO_URL'],
     'access_key': 'minio' if "AP_MINIO_ACCESS_KEY" not in os.environ else os.environ['AP_MINIO_ACCESS_KEY'],
-    'secret_key': 'xxxxx' if "AP_MINIO_SECRET_KEY" not in os.environ else os.environ['AP_MINIO_SECRET_KEY'] ,
+    'secret_key': 'Aa123456' if "AP_MINIO_SECRET_KEY" not in os.environ else os.environ['AP_MINIO_SECRET_KEY'] ,
     'region_name': "us-east-1",
     'use_unsigned_session': False
 }

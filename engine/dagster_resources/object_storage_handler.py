@@ -71,10 +71,14 @@ def read_dataset_sample(dataset_name, data_types=None, delimiter=','):
 
 
 def read_dataframe(run_id, node_name, output_seq):
-    s3 = S3FileSystem(client_kwargs={'endpoint_url': "http://" + conf.OBJECT_STORAGE_HANDLER['connection_string']})
+    url = "http://" + conf.OBJECT_STORAGE_HANDLER['connection_string']
+    s3 = S3FileSystem(client_kwargs={'endpoint_url': url})
+    s3Ulr = "s3://dagster-test/dagster/storage/{run_id}/intermediates/{node_name}.compute/{output_seq}".format(
+        run_id=run_id,
+        node_name=node_name, output_seq=output_seq)
+    print(url)
+    print(s3Ulr)
     dataset = pq.ParquetDataset(
-        "s3://dagster-test/dagster/storage/{run_id}/intermediates/{node_name}.compute/{output_seq}".format(
-            run_id=run_id,
-            node_name=node_name, output_seq=output_seq), filesystem=s3)
+        s3Ulr, filesystem=s3)
     df = dataset.read_pandas().to_pandas()
     return df
