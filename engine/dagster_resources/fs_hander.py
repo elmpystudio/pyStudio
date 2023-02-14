@@ -106,11 +106,12 @@ def read_port_meta_data(wf_unique_id, node_name, output_port_id):
 
     with open(generate_path(wf_unique_id, node_name, "task_meta_data.json")) as json_data:
         node_meta_data = json.load(json_data)
-        for output_port in node_meta_data['outputs']:
-            if output_port['output_sequence'] == int(output_port_id):
-                port_meta_data = output_port
-                break
-    return port_meta_data
+        return node_meta_data['outputs'][int(output_port_id) - 1]
+    #     for output_port in node_meta_data['outputs']:
+    #         if output_port['output_sequence'] == int(output_port_id):
+    #             port_meta_data = output_port
+    #             break
+    # return port_meta_data
 
 
 def read_model(run_id, task_id):

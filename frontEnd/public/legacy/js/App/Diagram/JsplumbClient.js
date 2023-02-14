@@ -1252,7 +1252,11 @@ export default function run() {
         function prepareDataSummaryTable(jsonData) {
 
             if (isSummaryTableRan) {
-                $('#outputDataSummaryTable').DataTable().destroy();
+                try {
+                    $('#outputDataSummaryTable').DataTable().destroy();
+                } catch (error) {
+                    console.log("you are trying something silly")
+                }
                 $('#outputDataSummaryTable').empty();
             }
             // For horizontal columns
