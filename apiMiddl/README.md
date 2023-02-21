@@ -39,7 +39,7 @@ Bellow are the module related folders with tipicall django structure urls, views
 - media, this is the storage for user images.
 - ml_studio, integration with our aplication engine for the ML studio.
 - rest, this is the default Django REST.
-- services, this integrate the engine ability to execute models as service.
+- ml_models, this integrate the engine ability to execute models as service.
 - static, just some static data.
 - tableau, project's endpoints with tableau definitions.
 - templates, Django inherited admin page with our modifications.
