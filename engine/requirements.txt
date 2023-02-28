@@ -25,3 +25,5 @@ dagster-cron==0.7.6
 dagster-postgres==0.7.6
 dagster-pyspark==0.7.6
 dagster-spark==0.7.6
+plotly==4.8.1
+matplotlib==3.7.0
