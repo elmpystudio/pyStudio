@@ -57,6 +57,7 @@ urlpatterns = [
         path('jupyterhub/', include('jupyterhub.urls')),
         path('ml_models/', include('ml_models.urls')),
         path('notifications/', include('notifications.urls')),
+        path('otp/', include('email_otp.urls')),
 
 
         # django browsable api, probably will be deleted
