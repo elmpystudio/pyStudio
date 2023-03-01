@@ -7,6 +7,8 @@ SECRET_KEY = 'your key'
 
 DEBUG = True
 
+JUPYTERHUB_CLIENT_ID = 'QmS4c2KSGvU$45OwlYV2JshEuUG0TO0XTzr1hB3E7'
+
 ALLOWED_HOSTS = ["*"]
 
 ROOT_URLCONF = 'rest.urls'

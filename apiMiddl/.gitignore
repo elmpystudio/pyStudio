@@ -5,7 +5,6 @@ hyperd.log
 *.pyc
 jupyterhub/data/jupyterhub-proxy.pid
 helpers/front/nginx/nginx/logs
-rest/settings.py
 **/fixtures/
 **/migrations/
 ./db.sqlite3
