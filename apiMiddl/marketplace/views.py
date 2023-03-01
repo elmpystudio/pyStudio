@@ -13,7 +13,7 @@ class DatasetList(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        datasets = Dataset.objects.filter(user_id=request.user.id)
+        datasets = Dataset.objects.all()
         serializer = DatasetSerializer(datasets, user=request.user, many=True)
         return Response(serializer.data)
 
@@ -21,7 +21,7 @@ class Ml_modelsList(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        ml_models = Ml_model.objects.filter(user_id=request.user.id)
+        ml_models = Ml_model.objects.all()
         serializer = Ml_modelSerializer(ml_models, user=request.user, many=True)
         return Response(serializer.data)
 
@@ -30,8 +30,12 @@ class DatasetDownload(APIView):
 
     def get_object(self, pk):
         try:
-            data = Dataset.objects.filter(pk=pk, purchased__id__exact=self.request.user.id)
-            if len(data) > 0:
+            # Owner
+            data = Dataset.objects.filter(pk=pk, user=self.request.user)
+            if not data:
+                # Others
+                data = Dataset.objects.filter(pk=pk, purchased__id__exact=self.request.user.id)
+            if data:
                 return data[0]
             raise Dataset.DoesNotExist
         except Dataset.DoesNotExist:
@@ -50,8 +54,12 @@ class Ml_modelDownload(APIView):
 
     def get_object(self, pk, request):
         try:
-            data = Ml_model.objects.filter(pk=pk, user_id=request.user.id)
-            if len(data) > 0:
+            # Owner
+            data = Ml_model.objects.filter(pk=pk, user=self.request.user)
+            if not data:
+                # Others
+                data = Ml_model.objects.filter(pk=pk, user=self.request.user)
+            if data:
                 return data[0]
             raise Ml_model.DoesNotExist
         except Ml_model.DoesNotExist:

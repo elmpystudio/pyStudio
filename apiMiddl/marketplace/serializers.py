@@ -12,6 +12,10 @@ class DatasetSerializer(serializers.ModelSerializer):
         self.user = user
 
     def _get_access(self, dataset):
+        # Owner
+        if Dataset.objects.filter(pk=dataset.id, user=self.user):
+            return True
+        # Others
         if Dataset.objects.filter(pk=dataset.id, purchased__id__exact=self.user.id):
             return True
         return False
@@ -30,14 +34,6 @@ class DatasetSerializer(serializers.ModelSerializer):
             'access'
         ]
 
-class DatasetDownloadSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Dataset
-        fields = [
-           'file'
-        ]
-
 class Ml_modelSerializer(serializers.ModelSerializer):
     access = serializers.SerializerMethodField('_get_access')
 
@@ -47,6 +43,10 @@ class Ml_modelSerializer(serializers.ModelSerializer):
         self.user = user
 
     def _get_access(self, ml_model):
+        # Owner
+        if Ml_model.objects.filter(pk=ml_model.id, user=self.user):
+            return True
+        # Others
         if Ml_model.objects.filter(pk=ml_model.id, purchased__id__exact=self.user.id):
             return True
         return False
@@ -65,10 +65,11 @@ class Ml_modelSerializer(serializers.ModelSerializer):
             'access'
         ]
 
-class Ml_modelDownloadSerializer(serializers.ModelSerializer):
+
+class DatasetDownloadSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Ml_model
+        model = Dataset
         fields = [
            'file'
         ]
