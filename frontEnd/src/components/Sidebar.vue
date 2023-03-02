@@ -148,7 +148,7 @@ export default {
     },
     methods: {
         isAdmin() {
-            if (localStorage.getItem('userEmail') === 'root')
+            if (localStorage.getItem("username") === 'root')
                 return true;
             return false;
         }
