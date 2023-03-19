@@ -80,4 +80,4 @@ class MinioWrapper:
         else: 
             return self.minioClient.put_object(bucket, name, data, length=length)
 
-minio = MinioWrapper()
+minio = 'cofta' #MinioWrapper()

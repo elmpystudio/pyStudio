@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from accounts.models import CustomUser as User
 from datasets.models import Dataset
 from ml_models.models import Ml_model
+
+User = get_user_model()
 
 class Notification(models.Model):
     message = models.CharField(max_length=255, null=False, blank=False)

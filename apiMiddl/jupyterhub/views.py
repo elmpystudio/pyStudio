@@ -8,7 +8,6 @@ from django.http import JsonResponse
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import permission_classes
 from .models import Jupyter_queue
-from accounts.models import CustomUser
 from datasets.models import Dataset
 from django.utils.crypto import get_random_string
 from django.conf import settings

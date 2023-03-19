@@ -15,7 +15,7 @@ axios.interceptors.response.use(function (response) {
 
 //@TODO use single instance for api calls
 
-export const login = ({ username, password }) => axios.post(`${API_URL}/api/token/`, { username, password });
+export const login = ({ username, password }) => axios.post(`${API_URL}/api/users/login/`, { username, password });
 
 export const register = ({ username, email, password, about, image }) => {
     //axios.post(`${API_URL}/api/register/`, { username, email, password, about, avatar });
@@ -31,7 +31,7 @@ export const register = ({ username, email, password, about, image }) => {
 
     return axios({
         method: 'post',
-        url: `${API_URL}/api/register/`,
+        url: `${API_URL}/api/users/register/`,
         data: formData,
     });
 };
@@ -178,17 +178,11 @@ export const getMarketplaceOfferingById = (id) => axios.get(`${API_URL}/api/mark
     }
 });
 
-
-// export const getMyIP = () => axios.get('http://icanhazip.com/');
-
-
 export const purchaseOffering = (data) => axios.post(`${API_URL}/api/marketplace/purchase/`, { ...data }, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
 });
-
-
 
 export const publishOffering = (data) => axios.post(`${API_URL}/api/marketplace/offering/`, { ...data }, {
     headers: {
@@ -196,25 +190,26 @@ export const publishOffering = (data) => axios.post(`${API_URL}/api/marketplace/
     }
 });
 
-export const hubLogin = () => axios.get(`${API_URL}/hub/login/`, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
+// export const hubLogin = () => axios.get(`${API_URL}/hub/login/`, {
+//     headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`
+//     }
+// });
 
-export const getSession = () => axios.get(`${API_URL}/api/ses/`, {
+// export const getSession = () => axios.get(`${API_URL}/api/ses/`, {
+//     headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`
+//     },
+// });
+
+// users
+export const getUser = () => axios.get(`${API_URL}/api/users/`, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     },
 });
 
-export const getUser = () => axios.get(`${API_URL}/api/accounts/users/`, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    },
-});
-
-export const updateUser = (payload) => axios.put(`${API_URL}/api/accounts/users/`, payload, {
+export const updateUser = (payload) => axios.put(`${API_URL}/api/users/`, payload, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }

@@ -52,7 +52,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-
 MINIO_SERVER = {
     "IP": "34.91.137.119",
     "PORT": 9000,
@@ -79,17 +78,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'drf_yasg',
-    'accounts',
-    'datasets',
-    'notifications',
-    'marketplace',
-    'ml_studio',
+    'oauth2_provider',
     'corsheaders',
     'rest_framework',
-    'oauth2_provider',
+    'drf_yasg',
+
+    # MAIN APPS
+    'users',
+    'datasets',
+    'ml_models',
+    'notifications',
+    'marketplace',
     'jupyterhub',
-    'ml_models'
+    'ml_studio',
 ]
 
 MIDDLEWARE = [
@@ -103,17 +104,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
-
-#############################
-# Tableau Settings
-#############################
-TABLEAU_SERVER = {
-    "URL": "http://x.x.x.x:8999",
-    "DEFAULT_SITE": "API",
-    "ADMIN_LOGIN": "xxxxxx",
-    "ADMIN_PASS": "xxxxxxx"
-}
-
 
 TEMPLATES = [
     {
@@ -135,7 +125,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 WSGI_APPLICATION = 'rest.wsgi.application'
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'users.User'
 
 DATABASES = {
     'default': {

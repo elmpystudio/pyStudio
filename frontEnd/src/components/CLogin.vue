@@ -81,8 +81,7 @@ export default {
             login({ username: this.username.value, password: this.password.value })
                 .then(({ status, data }) => {
                     if (status === 200) {
-                        data.access &&
-                            localStorage.setItem("token", data.access);
+                            localStorage.setItem("token", data.token);
                             localStorage.setItem("username", this.username.value);
                         this.$router.push("/");
                     }
