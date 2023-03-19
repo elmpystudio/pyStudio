@@ -53,10 +53,10 @@ REST_FRAMEWORK = {
 }
 
 MINIO_SERVER = {
-    "IP": "34.91.137.119",
+    "IP": "localhost",
     "PORT": 9000,
     "ACCESS_KEY": "minio",
-    "SECRET_KEY": "Aa123456",
+    "SECRET_KEY": "yourPassword",
 }
 
 OAUTH2_PROVIDER = {
