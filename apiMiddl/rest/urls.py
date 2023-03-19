@@ -30,48 +30,56 @@ swagger_schema_info = {
 #    ), **swagger_schema_info)
 
 
-@protected_resource()
-def get_user(request):
-    user = request.user
-    return HttpResponse(
-        json.dumps({
-            'username': user.username,
-            # 'email': user.email
-        }),
-        content_type='application/json')
+# @protected_resource()
+# def get_user(request):
+#     user = request.user
+#     return HttpResponse(
+#         json.dumps({
+#             'username': user.username,
+#             # 'email': user.email
+#         }),
+#         content_type='application/json')
 
 
 urlpatterns = [
 
-    path("oauth/", include('oauth2_provider.urls', namespace='oauth2_provider')),
+    # path("oauth/", include('oauth2_provider.urls', namespace='oauth2_provider')),
 
     path("api/", include([
+        path('users/', include('users.urls')),
 
-        path('ml/', include('ml_studio.urls')),
-        path('whoami/', get_user),
         path('datasets/', include('datasets.urls')),
-        path('', include('accounts.urls')),
-        # no tableu licence then no need
-        # path('tableau/', include('tableau.urls')),
         path('marketplace/', include('marketplace.urls')),
-        path('jupyterhub/', include('jupyterhub.urls')),
         path('ml_models/', include('ml_models.urls')),
         path('notifications/', include('notifications.urls')),
-        path('otp/', include('email_otp.urls')),
+        path('jupyterhub/', include('jupyterhub.urls')),
+
+        path('ml/', include('ml_studio.urls')),
+
+
+
+        # path('whoami/', get_user),
+        path("admin/", admin.site.urls),
+
+
+        # path('otp/', include('email_otp.urls')),
+
+
+        # no tableu licence then no need
+        # path('tableau/', include('tableau.urls')),
 
 
         # django browsable api, probably will be deleted
-        path('api/', include('rest_framework.urls', namespace='rest_framework')),
+        # path('api/', include('rest_framework.urls', namespace='rest_framework')),
 
         # jwt tokens
-        path('token/', jwt_views.TokenObtainPairView.as_view(),
-             name='token_obtain_pair'),
-        path('token/refresh/', jwt_views.TokenRefreshView.as_view(),
-             name='token_refresh'),
+        # path('token/', jwt_views.TokenObtainPairView.as_view(),
+        #      name='token_obtain_pair'),
+        # path('token/refresh/', jwt_views.TokenRefreshView.as_view(),
+        #      name='token_refresh'),
 
         # django admin
-        path("admin/", admin.site.urls),
-
+        
         # # swagger
         # url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
         # url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

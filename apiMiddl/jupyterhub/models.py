@@ -1,8 +1,10 @@
 from django.db import models
-from accounts.models import CustomUser
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class Jupyter_queue(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.TextField(blank=False, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

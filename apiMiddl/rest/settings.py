@@ -4,7 +4,6 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'your key'
-
 DEBUG = True
 
 JUPYTERHUB_CLIENT_ID = 'QmS4c2KSGvU$45OwlYV2JshEuUG0TO0XTzr1hB3E7'
@@ -13,7 +12,7 @@ ALLOWED_HOSTS = ["*"]
 
 ROOT_URLCONF = 'rest.urls'
 
-ML_ROOT_URL = 'http://127.0.0.1:5000/'
+ML_ROOT_URL = 'http://localhost:5000/'
 
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
@@ -53,12 +52,11 @@ REST_FRAMEWORK = {
     ],
 }
 
-
 MINIO_SERVER = {
-        "IP": "x.x.x.x",
-        "PORT": 9000,
-        "ACCESS_KEY": "xxxx",
-        "SECRET_KEY": "xxxx",
+    "IP": "34.91.137.119",
+    "PORT": 9000,
+    "ACCESS_KEY": "minio",
+    "SECRET_KEY": "Aa123456",
 }
 
 OAUTH2_PROVIDER = {
@@ -80,18 +78,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'drf_yasg',
-    'accounts',
-    'datasets',
-    'notifications',
-    'marketplace',
-    'ml_studio',
+    'oauth2_provider',
     'corsheaders',
     'rest_framework',
-    'oauth2_provider',
-    'jupyterhub',
+    'drf_yasg',
+
+    # MAIN APPS
+    'users',
+    'datasets',
     'ml_models',
-    'email_otp'
+    'notifications',
+    'marketplace',
+    'jupyterhub',
+    'ml_studio',
 ]
 
 MIDDLEWARE = [
@@ -105,17 +104,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
-
-#############################
-# Tableau Settings
-#############################
-TABLEAU_SERVER = {
-    "URL": "http://x.x.x.x:8999",
-    "DEFAULT_SITE": "API",
-    "ADMIN_LOGIN": "xxxxxx",
-    "ADMIN_PASS": "xxxxxxx"
-}
-
 
 TEMPLATES = [
     {
@@ -137,7 +125,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 WSGI_APPLICATION = 'rest.wsgi.application'
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'users.User'
 
 DATABASES = {
     'default': {

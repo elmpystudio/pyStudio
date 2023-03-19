@@ -4,7 +4,7 @@ hyperd.log
 *.hyper
 *.pyc
 jupyterhub/data/jupyterhub-proxy.pid
-helpers/front/nginx/nginx/logs
+.helpers/front/nginx/nginx/logs
 **/fixtures/
 **/migrations/
 ./db.sqlite3

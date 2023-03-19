@@ -23,7 +23,7 @@ python manage.py runserver
 Here you will find our project strucutre explanation, this will help you to understand better the application.
 As you may know as a Django applciation we have two main folders, rest and the static.
 
-![](images/api/1.png) ![](images/api/2.png)
+![](.github_images/api/1.png) ![](.github_images/api/2.png)
 
 ### Root
 At root level:
@@ -64,31 +64,31 @@ At main levels static folder:
 if you are a pycharm fan you can use bellow guide to set up your project.
 
 ### 1- Open the project
-<img src="images/installation/1.jpg" width="600" /> 
+<img src=".github_images/installation/1.jpg" width="600" /> 
 
 ### 2- Go to settings and add an interpreter
-<img src="images/installation/2.jpg" width="600" />
+<img src=".github_images/installation/2.jpg" width="600" />
 
 ### 3- In my case I will add a new conda environment as my interpreter
-<img src="images/installation/3.jpg" width="600" />
+<img src=".github_images/installation/3.jpg" width="600" />
 
 ### 4- After adding the interpreter press ok
-<img src="images/installation/4.jpg" width="600" />
+<img src=".github_images/installation/4.jpg" width="600" />
 
 ### 5- Now go to edit configurations
-<img src="images/installation/5.jpg" width="600" />
+<img src=".github_images/installation/5.jpg" width="600" />
 
 ### 6- Add a Django server with these settings specified in the figure below and press ok
-<img src="images/installation/6.jpg" width="600" />
+<img src=".github_images/installation/6.jpg" width="600" />
 
 ### 7- Now that our Django server is setup we need to install all of the packages specified in requirements.txt by pressing install requirements, or by opening a terminal and writing
 ```
 pip install -r requirements.txt
 ```
-<img src="images/installation/7.jpg" width="600" />
+<img src=".github_images/installation/7.jpg" width="600" />
 
 ### 8- Installing packages
-<img src="images/installation/8.jpg" width="600" />
+<img src=".github_images/installation/8.jpg" width="600" />
 
 ### 9- Now that all of the packages its time to open a terminal and setup the project, by writing 
 ```bash
@@ -109,4 +109,4 @@ python manage.py runserver
 <img src="../images/api/3.gif" width="600" />
 
 ### 12- Now the restapi should be running and the frontend should be functional
-<img src="images/installation/12.jpg" width="600" />
+<img src=".github_images/installation/12.jpg" width="600" />
