@@ -4,6 +4,7 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'your key'
+
 DEBUG = True
 
 JUPYTERHUB_CLIENT_ID = 'QmS4c2KSGvU$45OwlYV2JshEuUG0TO0XTzr1hB3E7'
@@ -12,7 +13,7 @@ ALLOWED_HOSTS = ["*"]
 
 ROOT_URLCONF = 'rest.urls'
 
-ML_ROOT_URL = 'http://localhost:5000/'
+ML_ROOT_URL = 'http://127.0.0.1:5000/'
 
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
@@ -52,12 +53,20 @@ REST_FRAMEWORK = {
     ],
 }
 
+
 MINIO_SERVER = {
-    "IP": "localhost",
-    "PORT": 9000,
-    "ACCESS_KEY": "minio",
-    "SECRET_KEY": "yourPassword",
+        "IP": "localhost",
+        "PORT": 9000,
+        "ACCESS_KEY": "xxxxx",
+        "SECRET_KEY": "xxxxx",
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'hi@pystudio.org'
+EMAIL_HOST_PASSWORD = 'xxxx'
 
 OAUTH2_PROVIDER = {
     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}

@@ -11,6 +11,7 @@ import random
 from .models import User
 from .serializers import CustomTokenObtainPairSerializer
 
+
 class Login(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
@@ -27,11 +28,12 @@ class Login(TokenObtainPairView):
         user_dict = user.to_dict()
         if not user_dict['verified']:
             raise AuthenticationFailed('User account not verified')
-        
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         token = serializer.validated_data['access']
         return Response({'token': str(token)})
+
 
 @csrf_exempt
 def register(request):
@@ -44,11 +46,11 @@ def register(request):
 
         if not (username and email and password):
             return JsonResponse({'error': 'Please provide [username, email, password] required fields.'}, status=400)
-        
+
         try:
             user = User.objects.create_user(
-                username=username, 
-                email=email, 
+                username=username,
+                email=email,
                 password=password,
                 about=about,
                 image=image
@@ -61,6 +63,7 @@ def register(request):
         return JsonResponse({'message': 'User account created successfully.'}, status=201)
 
     return JsonResponse({'error': 'Invalid request method.'}, status=405)
+
 
 @csrf_exempt
 def verify(request):
@@ -90,15 +93,21 @@ def verify(request):
     return JsonResponse({'error': 'Invalid request method.'}, status=405)
 
 
-def send_otp(user):    
-    from_email = 'noreply@pystudio.com'
-    subject = 'Account Verification OTP'
-    otp = '1111' #random.randint(1000, 9999)
+from_email = 'hi@pystudio.org'
+subject = 'Account Verification OTP'
+
+
+def send_otp(user):
+    otp = random.randint(1000, 9999)
     message = 'Your OTP for account verification is: {}'.format(otp)
 
     user_dict = user.to_dict()
     setattr(user, 'otp_code', otp)
     user.save()
 
-    # send_mail(subject, message, from_email, [user_dict['email']], fail_silently=False)
+    try:
+        send_mail(subject, message, from_email, [user_dict['email']], fail_silently=False)
+    except Exception as e:
+        print(e)
+
     return True
