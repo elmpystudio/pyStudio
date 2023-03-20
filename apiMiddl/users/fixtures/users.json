@@ -1,0 +1,17 @@
+[
+    {
+        "model": "users.User",
+        "pk": 1,
+        "fields": {
+            "username": "root",
+            "is_superuser": true,
+            "name": null,
+            "email": "root",
+            "about": null,
+            "password": "pbkdf2_sha256$180000$oLVWDMgWVswK$7wVUSosLvrLOCPnOVHwOsGUc85tZpqzK+Z/PszbitX8=",
+            "image": "w2w2w2W@",
+            "created_at": "2020-02-13T11:18:08.036Z",
+            "verified": true
+        }
+    }
+]

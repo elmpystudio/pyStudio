@@ -8,9 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.core.mail import send_mail
 import random
+import json
 from .models import User
 from .serializers import CustomTokenObtainPairSerializer
-
 
 class Login(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
@@ -28,12 +28,11 @@ class Login(TokenObtainPairView):
         user_dict = user.to_dict()
         if not user_dict['verified']:
             raise AuthenticationFailed('User account not verified')
-
+        
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         token = serializer.validated_data['access']
         return Response({'token': str(token)})
-
 
 @csrf_exempt
 def register(request):
@@ -46,11 +45,11 @@ def register(request):
 
         if not (username and email and password):
             return JsonResponse({'error': 'Please provide [username, email, password] required fields.'}, status=400)
-
+        
         try:
             user = User.objects.create_user(
-                username=username,
-                email=email,
+                username=username, 
+                email=email, 
                 password=password,
                 about=about,
                 image=image
@@ -64,12 +63,13 @@ def register(request):
 
     return JsonResponse({'error': 'Invalid request method.'}, status=405)
 
-
 @csrf_exempt
 def verify(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        otp = request.POST.get('otp')
+        data = json.loads(request.body)
+        
+        email = data['email']
+        otp = data['otp']
 
         if not (email and otp):
             return JsonResponse({'error': 'Please provide [email, otp] required fields.'}, status=400)

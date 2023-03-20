@@ -1,6 +1,6 @@
 <template>
     <div v-if="!isLoading">
-        <Profile :fullName="fullName" :jobTitle="jobTitle" :email="email" :about="about" :skills="skills" :avatar="avatar" :jhub_token="jhub_token" @jupyterClick="jupyter_update"/>
+        <Profile :fullName="fullName" :jobTitle="jobTitle" :email="email" :about="about" :skills="skills" :avatar="image" :jhub_token="jhub_token" @jupyterClick="jupyter_update"/>
     </div>
 </template>
 
@@ -50,11 +50,8 @@ export default {
                     if(data.email !== null)
                             this.email = data.email;
                     
-                    if(data.avatar !== null)
-                        this.avatar = `${API_URL}${data.avatar}`;
-
-                    if(data.jhub_token !== null)
-                        this.jhub_token = data.jhub_token;
+                    if(data.image !== null)
+                        this.image = `${API_URL}${data.image}`;
                 }
 
                 this.isLoading = false;

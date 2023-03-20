@@ -15,8 +15,6 @@ axios.interceptors.response.use(function (response) {
 
 //@TODO use single instance for api calls
 
-export const login = ({ username, password }) => axios.post(`${API_URL}/api/users/login/`, { username, password });
-
 export const register = ({ username, email, password, about, image }) => {
     //axios.post(`${API_URL}/api/register/`, { username, email, password, about, avatar });
 
@@ -35,6 +33,10 @@ export const register = ({ username, email, password, about, image }) => {
         data: formData,
     });
 };
+
+export const login = ({ username, password }) => axios.post(`${API_URL}/api/users/login/`, { username, password });
+
+export const verify = ({ email, otp }) => axios.post(`${API_URL}/api/users/verify/`, { email, otp });
 
 // export const getDashboarddatasets = (type) => axios.get(`${API_URL}/api/datasets/dashboard/${type}/`, {
 //     headers: {
