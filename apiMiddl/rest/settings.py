@@ -53,11 +53,18 @@ REST_FRAMEWORK = {
 }
 
 MINIO_SERVER = {
-    "IP": "34.91.137.119",
+    "IP": "localhost",
     "PORT": 9000,
-    "ACCESS_KEY": "minio",
-    "SECRET_KEY": "Aa123456",
+    "ACCESS_KEY": "xxxxx",
+    "SECRET_KEY": "xxxxx",
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'hi@pystudio.org'
+EMAIL_HOST_PASSWORD = 'xxxx'
 
 OAUTH2_PROVIDER = {
     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}

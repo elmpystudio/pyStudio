@@ -56,7 +56,7 @@ MINIO_SERVER = {
     "IP": "localhost",
     "PORT": 9000,
     "ACCESS_KEY": "minio",
-    "SECRET_KEY": "Aa123456",
+    "SECRET_KEY": "yourPassword",
 }
 
 OAUTH2_PROVIDER = {
