@@ -11,20 +11,30 @@
 
             <div class="form-container">
                 <div class="tab">
-                    <button class="tab-link" @click="openTab('login')">
-                        Login
-                    </button>
-                    <button class="tab-link" @click="openTab('register')">
-                        Sign Up
-                    </button>
-                </div>
 
-                <div id="login" class="tab-content">
-                    <CLogin />
+                    <button class="tab-link" @click="openTab('register')">
+                        1-Register
+                    </button>
+
+                    <button class="tab-link" @click="openTab('verify')">
+                        2-Verify
+                    </button>
+
+                    <button class="tab-link" @click="openTab('login')">
+                        3-Login
+                    </button>
                 </div>
 
                 <div id="register" class="tab-content">
-                    <CRegister @switch="handleRegister" />
+                    <Register @go="openTab('verify')" />
+                </div>
+
+                <div id="verify" class="tab-content">
+                    <Verify @go="openTab('login')" />
+                </div>
+
+                <div id="login" class="tab-content">
+                    <Login @go="openTab('verify')" />
                 </div>
             </div>
         </div>
@@ -32,20 +42,23 @@
 </template>
 
 <script>
-import CLogin from "@/components/CLogin.vue";
-import CRegister from "@/components/CRegister.vue";
+import Login from "@/components/Login/Login.vue";
+import Register from "@/components/Login/Register.vue";
+import Verify from "@/components/Login/Verify.vue";
 
 export default {
     name: "UserView",
     components: {
-        CLogin,
-        CRegister,
+        Login,
+        Register,
+        Verify
     },
 
-    date() {
+    data() {
         return {
             tabLinks: null,
             tabContents: null,
+            step: 1
         };
     },
 
@@ -73,9 +86,14 @@ export default {
             //acrive this
             document.getElementById(tabID).style.display = "block";
 
-            if (tabID === "login") this.tabLinks[0].classList.add("active");
-            else if (tabID === "register")
+            if (tabID === "register")
+                this.tabLinks[0].classList.add("active");
+
+            else if (tabID === "verify")
                 this.tabLinks[1].classList.add("active");
+
+            else if (tabID === "login")
+                this.tabLinks[2].classList.add("active");
         },
 
         //handles
@@ -159,7 +177,7 @@ export default {
                 .tab-link {
                     background-color: #364150;
                     color: #f1f1f1;
-                    
+
                     width: 100%;
                     border: none;
                     outline: none;
@@ -179,7 +197,7 @@ export default {
                     opacity: 1 !important;
                     background-color: #e3e3e3;
                     color: #364150;
-                    
+
                 }
             }
 

@@ -1,27 +1,13 @@
 <template>
     <div class="my-container">
-        <div class="name">Login</div>
-        <CInput
-            :id="username.id"
-            :type="username.type"
-            :placeholder="username.placeholder"
-            :iconName="username.iconName"
-            :value="username.value"
-            :rules="username.rules"
-            @onChange="handleInput"
-        />
+        <div class="name">Verify Your Account</div>
+        <CInput :id="email.id" :type="email.type" :placeholder="email.placeholder" :iconName="email.iconName"
+            :value="email.value" :rules="email.rules" @onChange="handleInput" />
 
-        <CInput
-            :id="password.id"
-            :type="password.type"
-            :placeholder="password.placeholder"
-            :iconName="password.iconName"
-            :value="password.value"
-            :rules="password.rules"
-            @onChange="handleInput"
-        />
+        <CInput :id="otp.id" :type="otp.type" :placeholder="otp.placeholder" :iconName="otp.iconName" :value="otp.value"
+            :rules="otp.rules" @onChange="handleInput" />
 
-        <CButton name="Login" @onClick="handleSubmit" :disabled="!isValid" />
+        <CButton name="Verify" @onClick="handleSubmit" :disabled="!isValid" />
 
         <div class="error_message">{{ error }}</div>
     </div>
@@ -30,32 +16,32 @@
 <script>
 import CInput from "@/components/CInput.vue";
 import CButton from "@/components/CButton.vue";
-import { login } from "@/api_client.js";
+import { verify } from "@/api_client.js";
 
 export default {
-    name: "CLogin",
+    name: "Verify",
     components: {
         CInput,
         CButton,
     },
     data() {
         return {
-            username: {
-                id: "username", //pass
-                type: "text", //pass
-                placeholder: "Username", //pass
-                iconName: "fa-user", //pass
+            email: {
+                id: "email", //pass
+                type: "email", //pass
+                placeholder: "Email", //pass
+                iconName: "fa-envelope", //pass
                 value: "", //pass
                 rules: { required: true, min: 4 }, //pass
                 isValid: false,
             },
-            password: {
-                id: "password", //pass
-                type: "password", //pass
-                placeholder: "Password", //pass
-                iconName: "fa-key", //pass
+            otp: {
+                id: "otp", //pass
+                type: "text", //pass
+                placeholder: "OTP", //pass
+                iconName: "fa-barcode", //pass
                 value: "", //pass
-                rules: { required: true, min: 8 }, //pass
+                rules: { required: true, min: 4 }, //pass
                 isValid: false,
             },
 
@@ -65,26 +51,23 @@ export default {
 
     computed: {
         isValid() {
-            if (this.username.isValid && this.password.isValid) return true;
+            if (this.email.isValid && this.otp.isValid) return true;
             return false;
         },
     },
 
     methods: {
-
         //handles
         handleInput(data) {
             this[data.id].value = data.value;
             this[data.id].isValid = data.isValid;
         },
+
         handleSubmit() {
-            login({ username: this.username.value, password: this.password.value })
-                .then(({ status, data }) => {
-                    if (status === 200) {
-                            localStorage.setItem("token", data.token);
-                            localStorage.setItem("username", this.username.value);
-                        this.$router.push("/");
-                    }
+            verify({ email: this.email.value, otp: this.otp.value })
+                .then(({ status }) => {
+                    if (status === 200)
+                        this.$emit("go");
                 })
                 .catch(() => {
                     this.error = "Invalid credentials";

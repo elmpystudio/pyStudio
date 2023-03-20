@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.core.mail import send_mail
 import random
+import json
 from .models import User
 from .serializers import CustomTokenObtainPairSerializer
 
@@ -65,8 +66,10 @@ def register(request):
 @csrf_exempt
 def verify(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        otp = request.POST.get('otp')
+        data = json.loads(request.body)
+        
+        email = data['email']
+        otp = data['otp']
 
         if not (email and otp):
             return JsonResponse({'error': 'Please provide [email, otp] required fields.'}, status=400)

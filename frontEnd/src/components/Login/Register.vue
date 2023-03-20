@@ -1,62 +1,24 @@
 <template>
     <div class="my-container">
-        <div class="name">Sign Up</div>
-        <CInput
-            :id="username.id"
-            :type="username.type"
-            :placeholder="username.placeholder"
-            :iconName="username.iconName"
-            :value="username.value"
-            :rules="username.rules"
-            @onChange="handleInput"
-        />
-        <CInput
-            :id="email.id"
-            :type="email.type"
-            :placeholder="email.placeholder"
-            :iconName="email.iconName"
-            :value="email.value"
-            :rules="email.rules"
-            @onChange="handleInput"
-        />
-        <CInput
-            :id="about.id"
-            :type="about.type"
-            :placeholder="about.placeholder"
-            :iconName="about.iconName"
-            :value="about.value"
-            :rules="about.rules"
-            @onChange="handleInput"
-        />
+        <div class="name">Register</div>
+        <CInput :id="username.id" :type="username.type" :placeholder="username.placeholder" :iconName="username.iconName"
+            :value="username.value" :rules="username.rules" @onChange="handleInput" />
+        <CInput :id="email.id" :type="email.type" :placeholder="email.placeholder" :iconName="email.iconName"
+            :value="email.value" :rules="email.rules" @onChange="handleInput" />
+        <CInput :id="about.id" :type="about.type" :placeholder="about.placeholder" :iconName="about.iconName"
+            :value="about.value" :rules="about.rules" @onChange="handleInput" />
         <div class="password-form">
-            <CInput
-                :id="password.id"
-                :type="password.type"
-                :placeholder="password.placeholder"
-                :iconName="password.iconName"
-                :value="password.value"
-                :rules="password.rules"
-                @onChange="handleInput"
-            />
-            <CInput
-                :id="password_confirm.id"
-                :type="password_confirm.type"
-                :placeholder="password_confirm.placeholder"
-                :iconName="password_confirm.iconName"
-                :value="password_confirm.value"
-                :rules="password_confirm.rules"
-                @onChange="handleInput"
-            />
+            <CInput :id="password.id" :type="password.type" :placeholder="password.placeholder"
+                :iconName="password.iconName" :value="password.value" :rules="password.rules" @onChange="handleInput" />
+            <CInput :id="password_confirm.id" :type="password_confirm.type" :placeholder="password_confirm.placeholder"
+                :iconName="password_confirm.iconName" :value="password_confirm.value" :rules="password_confirm.rules"
+                @onChange="handleInput" />
         </div>
-        <CInputFile
-            :id="image.id"
-            :rules="image.rules"
-            @onChange="handleInputFile"
-        />
+        <CInputFile :id="image.id" :rules="image.rules" @onChange="handleInputFile" />
 
-        <CButton name="Sign Up" @onClick="handleSubmit" :disabled="!isValid" />
+        <CButton name="Register" @onClick="handleSubmit" :disabled="!isValid" />
 
-        <div class="error_message">{{`${password_error} ${error}`}}</div>
+        <div class="error_message">{{ `${password_error} ${error}` }}</div>
     </div>
 </template>
 
@@ -67,7 +29,7 @@ import CButton from "@/components/CButton.vue";
 import { register } from "@/api_client.js";
 
 export default {
-    name: "CRegister",
+    name: "Register",
     components: {
         CInput,
         CInputFile,
@@ -87,7 +49,7 @@ export default {
             },
             email: {
                 id: "email", //pass
-                type: "text", //pass
+                type: "email", //pass
                 placeholder: "Email", //pass
                 iconName: "fa-envelope", //pass
                 value: "", //pass
@@ -181,8 +143,7 @@ export default {
                 image: this.image.file
             })
                 .then(() => {
-                    this.$emit("switch");
-                    //data.result && this.$router.push("/");
+                    this.$emit("go");
                 })
                 .catch((error) => {
                     this.error = error;
@@ -190,8 +151,6 @@ export default {
         },
 
         handleInputFile(data) {
-            console.log(data.file);
-
             this[data.id].file = data.file;
         },
     },
