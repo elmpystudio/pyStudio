@@ -75,7 +75,7 @@ export default {
                 .catch((error) => {
                     if (error.response.status === 401)
                         if (error.response.data.detail === "User account not verified")
-                            this.$emit("go")
+                            this.$emit("done", error.response)
 
                     this.error = "Invalid credentials";
                 });

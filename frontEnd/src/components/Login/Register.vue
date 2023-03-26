@@ -135,6 +135,8 @@ export default {
         },
 
         handleSubmit() {
+            this.$emit("onClick");
+
             register({
                 username: this.username.value,
                 email: this.email.value,
@@ -143,9 +145,15 @@ export default {
                 image: this.image.file
             })
                 .then(() => {
-                    this.$emit("go");
+                    this.$emit("done", {
+                        good: true,
+                        email: this.email.value
+                    });
                 })
                 .catch((error) => {
+                    this.$emit("done", {
+                        good: false,
+                    });
                     this.error = error;
                 });
         },
