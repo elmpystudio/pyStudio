@@ -11,33 +11,32 @@
 
             <div class="form-container">
                 <div class="tab">
+                    <button class="tab-link" @click="openTab('login')">
+                        Login
+                    </button>
 
                     <button class="tab-link" @click="openTab('register')">
-                        1-Register
+                        Register
                     </button>
-
-                    <button class="tab-link" @click="openTab('verify')">
-                        2-Verify
-                    </button>
-
-                    <button class="tab-link" @click="openTab('login')">
-                        3-Login
-                    </button>
-                </div>
-
-                <div id="register" class="tab-content">
-                    <Register @go="openTab('verify')" />
-                </div>
-
-                <div id="verify" class="tab-content">
-                    <Verify @go="openTab('login')" />
                 </div>
 
                 <div id="login" class="tab-content">
-                    <Login @go="openTab('verify')" />
+                    <Login @done="handle_login"/>
                 </div>
+
+                <div id="register" class="tab-content">
+                    <Register @done="handle_register" @onClick="loader_toggle = true"/>
+                </div>                
             </div>
         </div>
+
+        <Modal :active="modal_toggle" @close="modal_toggle = false">
+            <template #default>
+                <Verify :email_value="email" @done="handle_verify"/>
+            </template>
+        </Modal>
+
+        <CLoader v-if="loader_toggle"/>
     </div>
 </template>
 
@@ -45,20 +44,26 @@
 import Login from "@/components/Login/Login.vue";
 import Register from "@/components/Login/Register.vue";
 import Verify from "@/components/Login/Verify.vue";
+import Modal from "@/components/Login/Modal.vue";
+import CLoader from "@/components/CLoader.vue";
 
 export default {
-    name: "UserView",
+    name: "Login-view",
     components: {
         Login,
         Register,
-        Verify
+        Verify,
+        Modal,
+        CLoader
     },
 
     data() {
         return {
             tabLinks: null,
             tabContents: null,
-            step: 1
+            modal_toggle: false,
+            loader_toggle: false,
+            email: null
         };
     },
 
@@ -73,6 +78,23 @@ export default {
     },
 
     methods: {
+        // handles
+        handle_login() {
+            this.modal_toggle = true
+        },
+
+        handle_register(response) {
+            if (response.good){
+                this.email = response.email;
+                this.modal_toggle = true;
+            }
+            this.loader_toggle = false;
+        },
+
+        handle_verify() {
+            this.modal_toggle = false;
+        },
+
         openTab(tabID) {
             //hide all
             for (let i = 0; i < this.tabContents.length; i++) {
@@ -86,20 +108,12 @@ export default {
             //acrive this
             document.getElementById(tabID).style.display = "block";
 
-            if (tabID === "register")
+            if (tabID === "login")
                 this.tabLinks[0].classList.add("active");
 
-            else if (tabID === "verify")
+            else if (tabID === "register")
                 this.tabLinks[1].classList.add("active");
-
-            else if (tabID === "login")
-                this.tabLinks[2].classList.add("active");
-        },
-
-        //handles
-        handleRegister() {
-            this.openTab("login");
-        },
+        }
     },
 };
 </script>

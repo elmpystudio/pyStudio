@@ -9,7 +9,7 @@ class User(AbstractUser):
     image = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=False, null=True)
     otp_code = models.TextField(blank=False, null=True)
     verified = models.BooleanField(default=False)
-    created_at = models.DateTimeField(default=datetime.now, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     # organization = models.ForeignKey(Organization, models.DO_NOTHING, blank=True, null=True)
     # roles = models.ManyToManyField(Role, related_name = '+')
 

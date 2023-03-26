@@ -9,6 +9,7 @@
                 :placeholder="placeholder"
                 :value="value"
                 @input="onChange"
+                :readonly="readonly"
             />
         </div>
         <span class="error-message">{{ error }}</span>
@@ -24,8 +25,8 @@ export default {
         iconName: { type: String, required: true },
         value: { type: String, required: true },
         rules: { type: Object, required: true },
-
         placeholder: { type: String, required: false },
+        readonly: { type: Boolean, default: false }
     },
     data() {
         return {};

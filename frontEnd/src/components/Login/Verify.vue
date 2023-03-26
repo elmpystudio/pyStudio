@@ -1,8 +1,10 @@
 <template>
     <div class="my-container">
-        <div class="name">Verify Your Account</div>
+        <div class="name">
+            Hey there! Please check your email (including your spam folder) for your OTP. We've sent it your way. Thanks!
+        </div>
         <CInput :id="email.id" :type="email.type" :placeholder="email.placeholder" :iconName="email.iconName"
-            :value="email.value" :rules="email.rules" @onChange="handleInput" />
+            :value="email_value" :rules="email.rules" @onChange="handleInput" />
 
         <CInput :id="otp.id" :type="otp.type" :placeholder="otp.placeholder" :iconName="otp.iconName" :value="otp.value"
             :rules="otp.rules" @onChange="handleInput" />
@@ -24,6 +26,11 @@ export default {
         CInput,
         CButton,
     },
+
+    props: {
+        email_value: { type: String, required: true }
+    },
+
     data() {
         return {
             email: {
@@ -51,7 +58,7 @@ export default {
 
     computed: {
         isValid() {
-            if (this.email.isValid && this.otp.isValid) return true;
+            if ((this.email.isValid || this.email_value) && this.otp.isValid) return true;
             return false;
         },
     },
@@ -64,10 +71,13 @@ export default {
         },
 
         handleSubmit() {
+            if (this.email.value === "")
+                this.email.value = this.email_value;
+
             verify({ email: this.email.value, otp: this.otp.value })
                 .then(({ status }) => {
                     if (status === 200)
-                        this.$emit("go");
+                        this.$emit("done");
                 })
                 .catch(() => {
                     this.error = "Invalid credentials";
@@ -80,23 +90,20 @@ export default {
 <style lang="scss" scoped>
 .my-container {
     width: 100%;
-    height: 90%;
-    padding: 20px 10%;
+    height: 100%;
 
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
-    row-gap: 30px;
+    row-gap: 20px;
     animation: play 500ms linear forwards;
 
     .name {
         width: 100%;
         height: auto;
-        margin: -20px 0;
 
-        font-size: 23px;
+        font-size: 20px;
         text-align: center;
-        letter-spacing: 2px;
         color: #364150;
     }
 
