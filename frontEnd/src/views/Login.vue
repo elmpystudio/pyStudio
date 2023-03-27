@@ -2,7 +2,7 @@
     <div class="mycontainer">
         <div class="content">
             <div class="info-container">
-                <div class="welcome">Welcome to Analytics Platform</div>
+                <div class="welcome">Welcome to PyStudio</div>
                 <div class="description">
                     We provide most of the tools that data scientists need to
                     carry out their tasks
@@ -87,6 +87,7 @@ export default {
             if (response.good){
                 this.email = response.email;
                 this.modal_toggle = true;
+                this.openTab('login');
             }
             this.loader_toggle = false;
         },

@@ -67,7 +67,6 @@ def register(request):
 def verify(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        
         email = data['email']
         otp = data['otp']
 
@@ -82,13 +81,12 @@ def verify(request):
                     setattr(user, 'otp_code', None)
                     setattr(user, 'verified', True)
                     user.save()
-            else:
-                return JsonResponse({'error': "User not found"}, status=401)
+                    return JsonResponse({'message': "User account verified successfully"}, status=200)
 
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
 
-        return JsonResponse({'message': "User account verified successfully"}, status=200)
+        return JsonResponse({'error': "Invalid data"}, status=401)
 
     return JsonResponse({'error': 'Invalid request method.'}, status=405)
 

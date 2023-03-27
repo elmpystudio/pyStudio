@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 
 class User(AbstractUser):
-    name = models.CharField(max_length=100, blank=True, null=True)
     email = models.EmailField(unique=True)
     about = models.TextField(blank=False, null=True)
     image = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=False, null=True)
@@ -17,11 +16,11 @@ class User(AbstractUser):
         db_table = "users"
 
     def __str__(self):
-        return str(self.name)
+        return str(self.username)
 
     def to_dict(self):
         return {
-            'name': self.name,
+            'name': self.username,
             'email': self.email,
             'about': self.about,
             'image': self.image,
