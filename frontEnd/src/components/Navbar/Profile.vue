@@ -28,7 +28,7 @@ export default {
 
     methods: {
         load_handler() {
-            this.$router.push({ name: "login" });
+            this.$router.push({ name: "landing" });
             clearToken();
             this.clicked = false;
         },

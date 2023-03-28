@@ -5,7 +5,6 @@
         "fields": {
             "username": "root",
             "is_superuser": true,
-            "name": null,
             "email": "root",
             "about": null,
             "password": "pbkdf2_sha256$180000$oLVWDMgWVswK$7wVUSosLvrLOCPnOVHwOsGUc85tZpqzK+Z/PszbitX8=",

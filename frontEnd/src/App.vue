@@ -116,5 +116,6 @@ export default {
 
 html, body {
     font-family: 'Roboto Condensed', sans-serif;
+    scroll-behavior: smooth;
 }
 </style>

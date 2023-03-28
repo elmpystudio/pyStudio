@@ -2,10 +2,11 @@
     <div class="mycontainer">
         <div class="content">
             <div class="info-container">
-                <div class="welcome">Welcome to Analytics Platform</div>
+                <div class="welcome">Welcome to PyStudio</div>
                 <div class="description">
-                    We provide most of the tools that data scientists need to
-                    carry out their tasks
+                    <p>PyStudio is an open-source machine learning platform to train and deploy ML models in a workflow environment.</p>
+                    <p>It allows you to go from preparing data to deploying a model within seconds.</p>
+                    <p>PyStudio is designed to avoid coding in ML experiments just drag and drop</p>
                 </div>
             </div>
 
@@ -41,10 +42,10 @@
 </template>
 
 <script>
-import Login from "@/components/Login/Login.vue";
-import Register from "@/components/Login/Register.vue";
-import Verify from "@/components/Login/Verify.vue";
-import Modal from "@/components/Login/Modal.vue";
+import Login from "./Login.vue";
+import Register from "./Register.vue";
+import Verify from "./Verify.vue";
+import Modal from "./Modal.vue";
 import CLoader from "@/components/CLoader.vue";
 
 export default {
@@ -87,6 +88,7 @@ export default {
             if (response.good){
                 this.email = response.email;
                 this.modal_toggle = true;
+                this.openTab('login');
             }
             this.loader_toggle = false;
         },
@@ -122,17 +124,18 @@ export default {
 .mycontainer {
     width: 100%;
     height: 100%;
-    background-color: #f1f1f1;
+
+    background-color: white;
+
+    position: relative;
 
     .content {
         height: 100%;
         width: 100%;
-        padding: 10px;
 
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;
-        align-items: center;
 
         animation: play 800ms linear forwards;
 
@@ -140,9 +143,6 @@ export default {
             background-color: #384352;
             width: 420px;
             height: 505px;
-            /*.form-container + .top*/
-
-            padding: 0 20px;
 
             /*flex*/
             display: flex;
@@ -152,15 +152,17 @@ export default {
             .welcome {
                 text-align: center;
                 font-weight: bold;
-                font-size: 22px;
+                font-size: 24px;
                 letter-spacing: 1.2px;
                 color: #f1f1f1;
             }
 
             .description {
                 text-align: center;
-                font-size: 18px;
+                font-size: 20px;
                 color: #f1f1f1;
+                padding: 5px 30px;
+
             }
         }
 
