@@ -16,7 +16,7 @@ apt-get install python3.9 python3.9-dev python3-pip -y
 
 RUN python3.9 -m pip install -r requirements.txt
 
-RUN bash ./helpers/install.sh
+RUN bash ./.helpers/install.sh
 
 EXPOSE 8000
 CMD ["python3.9", "manage.py", "runserver", "0.0.0.0:8000"]
