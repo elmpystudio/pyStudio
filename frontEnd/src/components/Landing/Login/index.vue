@@ -1,12 +1,13 @@
 <template>
-    <div class="mycontainer">
-        <div class="content">
+    <div class="login-container">
+        <div class="login-content">
             <div class="info-container">
-                <div class="welcome">Welcome to PyStudio</div>
                 <div class="description">
-                    <p>PyStudio is an open-source machine learning platform to train and deploy ML models in a workflow environment.</p>
-                    <p>It allows you to go from preparing data to deploying a model within seconds.</p>
-                    <p>PyStudio is designed to avoid coding in ML experiments just drag and drop</p>
+                    <ul>
+                        <li>PyStudio is an open-source machine learning platform to train and deploy ML models in a workflow environment.</li>
+                        <li>It allows you to go from preparing data to deploying a model within seconds.</li>
+                        <li>PyStudio is designed to avoid coding in ML experiments just drag and drop.</li>
+                    </ul>
                 </div>
             </div>
 
@@ -121,18 +122,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mycontainer {
+.login-container {
     width: 100%;
     height: 100%;
-
-    background-color: white;
-
     position: relative;
 
-    .content {
-        height: 100%;
-        width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
 
+   
+    .login-content {
+        width: 1200px;
+        height: 600px;
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;
@@ -140,28 +142,23 @@ export default {
         animation: play 800ms linear forwards;
 
         .info-container {
-            background-color: #384352;
-            width: 420px;
-            height: 505px;
+            background-color: rgba(0, 0, 0, 0.2);
+            width: 50%;
+            padding: 35px;
 
-            /*flex*/
             display: flex;
             flex-flow: column nowrap;
             justify-content: center;
 
-            .welcome {
-                text-align: center;
-                font-weight: bold;
-                font-size: 24px;
-                letter-spacing: 1.2px;
-                color: #f1f1f1;
-            }
-
             .description {
-                text-align: center;
+                text-align: start;
                 font-size: 20px;
-                color: #f1f1f1;
-                padding: 5px 30px;
+                color: white;
+
+                ul>li {
+                    margin: 0;
+                    margin-bottom: 10px;
+                }
 
             }
         }
@@ -170,12 +167,10 @@ export default {
 
         .form-container {
             position: relative;
-            background-color: #e3e3e3;
+            background-color: white;
             margin-top: 55px;
-            /* because ".tab" top */
 
-            width: 550px;
-            height: 450px;
+            width: 50%;
             min-width: 300px;
 
             .tab {
@@ -191,8 +186,8 @@ export default {
                 align-items: center;
 
                 .tab-link {
-                    background-color: #364150;
-                    color: #f1f1f1;
+                    background-color: rgba(0, 0, 0, 0.2);
+                    color: white;
 
                     width: 100%;
                     border: none;
@@ -211,7 +206,7 @@ export default {
 
                 .active {
                     opacity: 1 !important;
-                    background-color: #e3e3e3;
+                    background-color: white;
                     color: #364150;
 
                 }

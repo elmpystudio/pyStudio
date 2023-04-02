@@ -12,7 +12,7 @@ export default {
 
 <style lang="scss" scoped>
 .loader-container {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.1);
     position: absolute;
     top: 0;
     left: 0;

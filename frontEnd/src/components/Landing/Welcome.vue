@@ -1,7 +1,8 @@
 <template>
-    <div class="mycontainer">
-        <div class="mycontent">
+    <div class="welcome-container">
+        <div class="welcome-content">
             <div class="mytitle">
+                <div class="welcome-text">Welcome to PyStudio</div>
                 Get the max of your data with the easiest way to do machine learning without coding!
             </div>
 
@@ -10,7 +11,8 @@
             </div>
 
             <div class="buttons-container">
-                <a href="https://github.com/elmpystudio/pyStudio" target="_blank" class="button">Vist our project in Github</a>
+                <a href="https://github.com/elmpystudio/pyStudio" target="_blank" class="button">Vist our project in
+                    Github</a>
             </div>
         </div>
     </div>
@@ -24,36 +26,51 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mycontainer {
+.welcome-container {
     width: 100%;
     height: 100%;
-    background: rgb(56, 67, 82);
-    background: linear-gradient(306deg, rgba(56, 67, 82, 1) 0%, rgba(106, 44, 145, 1) 50%, rgba(15, 108, 182, 1) 100%);
+    padding: 50px 150px;
 
-    .mycontent {
+    background-color: rgba(0, 0, 0, 0.2);
+
+
+    .welcome-content {
         width: 100%;
         height: 100%;
-        padding: 0 100px;
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
 
         .mytitle {
-            color: white;
-            font-size: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 40px;
             text-align: center;
+
+            @media screen and (max-width: 1280px) {
+                font-size: 30px;
+            }
+
+            .welcome-text {
+                color: white;
+            }
         }
 
         .message {
-            color: white;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 30px;
             text-align: center;
+            margin-top: 20px;
+
+            @media screen and (max-width: 1280px) {
+                font-size: 20px;
+            }
         }
 
         .buttons-container {
             padding-top: 10px;
+
             .button {
-                color: rgb(199, 199, 199);
+                color: white;
                 font-size: 20px;
                 text-decoration: underline;
                 transition: all 300ms;
