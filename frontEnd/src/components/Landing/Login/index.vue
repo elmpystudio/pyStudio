@@ -4,7 +4,8 @@
             <div class="info-container">
                 <div class="description">
                     <ul>
-                        <li>PyStudio is an open-source machine learning platform to train and deploy ML models in a workflow environment.</li>
+                        <li>PyStudio is an open-source machine learning platform to train and deploy ML models in a workflow
+                            environment.</li>
                         <li>It allows you to go from preparing data to deploying a model within seconds.</li>
                         <li>PyStudio is designed to avoid coding in ML experiments just drag and drop.</li>
                     </ul>
@@ -23,22 +24,22 @@
                 </div>
 
                 <div id="login" class="tab-content">
-                    <Login @done="handle_login"/>
+                    <Login @done="handle_login" />
                 </div>
 
                 <div id="register" class="tab-content">
-                    <Register @done="handle_register" @onClick="loader_toggle = true"/>
-                </div>                
+                    <Register @done="handle_register" @onClick="loader_toggle = true" />
+                </div>
             </div>
         </div>
 
         <Modal :active="modal_toggle" @close="modal_toggle = false">
             <template #default>
-                <Verify :email_value="email" @done="handle_verify"/>
+                <Verify :email_value="email" @done="handle_verify" />
             </template>
         </Modal>
 
-        <CLoader v-if="loader_toggle"/>
+        <CLoader v-if="loader_toggle" />
     </div>
 </template>
 
@@ -86,7 +87,7 @@ export default {
         },
 
         handle_register(response) {
-            if (response.good){
+            if (response.good) {
                 this.email = response.email;
                 this.modal_toggle = true;
                 this.openTab('login');
@@ -131,7 +132,7 @@ export default {
     flex-flow: row nowrap;
     justify-content: center;
 
-   
+
     .login-content {
         width: 1200px;
         height: 600px;

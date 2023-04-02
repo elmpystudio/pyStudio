@@ -27,7 +27,6 @@ import Welcome from "@/components/Landing/Welcome.vue";
 import Login from "@/components/Landing/Login/index.vue";
 
 
-
 export default {
     name: "Landing",
     components: {
