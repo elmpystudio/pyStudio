@@ -38,7 +38,7 @@ export default {
     width: 100%;
     height: 100%;
     min-width: 750px;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
     z-index: 2;
     display: none;
 

@@ -1,6 +1,6 @@
 <template>
-    <div class="mycontainer">
-        <div class="mycontent">
+    <div class="header-container">
+        <div class="header-content">
             <div class="logo">
                 <img src="@/assets/logo_no_background.png" />
             </div>
@@ -25,15 +25,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mycontainer {
+.header-container {
     width: 100%;
     height: 100%;
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0.2);
 
-    .mycontent {
+    .header-content {
         width: 100%;
         height: 100%;
-        padding: 0 50px;
+        padding: 5px 70px;
 
         display: flex;
         flex-flow: row nowrap;
@@ -42,17 +42,18 @@ export default {
 
         .logo {
             img {
-                width: 60px;
+                width: 70px;
             }
         }
 
         .buttons-container {
             .button {
                 padding: 6px 10px;
-                background: #384352;
+                // background: #384352;
                 color: white;
-                font-size: 14px;
+                font-size: 16px;
                 transition: all 300ms;
+                text-decoration: none;
 
                 &:hover {
                     opacity: 0.8;
