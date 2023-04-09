@@ -1,6 +1,6 @@
 <template>
     <div class="input-component">
-        <input class="input" type="file" accept="image/*" @change="onChange" />
+        <input class="input" type="file" accept="image/*" @change="onChange" color/>
 
         <span class="error_message">{{ error }}</span>
     </div>
@@ -12,6 +12,7 @@ export default {
     props: {
         id: { type: String, required: true },
         rules: { type: Object, required: true },
+        color: { type: Object, required: false },
     },
     data() {
         return {};
