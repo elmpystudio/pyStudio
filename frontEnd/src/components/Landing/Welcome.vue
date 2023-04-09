@@ -12,7 +12,7 @@
 
             <div class="buttons-container">
                 <a href="https://github.com/elmpystudio/pyStudio" target="_blank" class="button">Vist our project in
-                    Github</a>
+                    GitHub</a>
             </div>
         </div>
     </div>
