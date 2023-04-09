@@ -2,7 +2,7 @@
     <div class="footer-container">
         <div class="fotter-content">
             <div class="message">
-                This is a demo environment not a ELM production level application, please if you find any issues or you have suggestion feel free to add on GitHub <a target="_blank" href="https://github.com/elmpystudio/pyStudio/issues/new/choose">issues</a>.
+                This is a demo environment not an ELM production level application, please if you find any issues or you have suggestion feel free to add on GitHub <a target="_blank" href="https://github.com/elmpystudio/pyStudio/issues/new/choose">issues</a>.
             </div>
         </div>
     </div>
