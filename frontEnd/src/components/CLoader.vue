@@ -24,7 +24,7 @@ export default {
 .loader {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 300px;
     width: 150px;
     height: 150px;
     margin: -75px 0 0 -75px;
