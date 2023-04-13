@@ -12,7 +12,7 @@ echo "America/Los_Angeles" > /etc/timezone
 RUN apt-get update && \
 apt-get install software-properties-common -y && \
 add-apt-repository ppa:deadsnakes/ppa --yes && \
-apt-get install python3.9 python3.9-dev python3-pip -y
+apt-get install python3.9 python3.9-dev python3-pip libpq-dev -y
 
 RUN python3.9 -m pip install -r requirements.txt
 
