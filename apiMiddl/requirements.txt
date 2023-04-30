@@ -17,3 +17,4 @@ drf_yasg==1.21.4
 jinja2-utilities==0.1
 Jinja2==3.1.2
 docker==6.0.1
+psycopg2==2.9.6
