@@ -32,7 +32,7 @@
                             </v-list-item-icon>
                             <!--names-->
                             <v-list-item-content>
-                                <v-list-item-title class="name" v-text="route.name"></v-list-item-title>
+                                <v-list-item-title class="name" v-text="route.title"></v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                     </router-link>
@@ -90,29 +90,22 @@ export default {
         routes: [
             {
                 name: 'Dashboard', 
+                title: 'Workspace', 
                 path: '/',
                 disabled: false
             },
             {
                 name: 'Marketplace',
+                title: 'Marketplace',
                 path: '/marketplace',
                 disabled: false
             },
             { 
                 name: 'Notebooks',
+                title: 'Notebooks',
                 path: '/notebook',
                 disabled: false
             },
-            /*{ 
-                name: 'Administration',
-                path: '/administration',
-                disabled: false
-            },*/
-            /*{ 
-                name: 'Machine Learning',
-                path: '/ml',
-                disabled: false
-            },*/
         ],
     }),
 

@@ -426,9 +426,7 @@ function addNodeToCanvasFromWorkflow(nodeObj, nodesList, instance) {
     let node = getNodeDetailsByType(nodesFromServer, nodeObj.task_name);
     let nodeNumber = nodeObj.task_id.split('Node')[1];
 
-    $("#canvas").append("<div class='window jtk-node' id='" + nodeObj.task_id + "' type='" + node.type + "' style='" + nodeObj.position + ";'>" + ` <span class='` + node.iconName + ` iconStyle'></span>` + "<strong>" + node.name + "</strong></div>");
-
-    /*$("#" + nodeObj.task_id + "_icon").append(`<svg style="position:absolute;left:0px;top:0px" width="40" height="40" pointer-events="all" position="absolute" version="1.1" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="19" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="` + node.backgroundColor + `" stroke="#a5a5a5" style="" stroke-width="1"></circle></svg> <span class='` + node.iconName + ` iconStyle'></span>`);*/
+    $("#canvas").append("<div class='window jtk-node' id='" + nodeObj.task_id + "' type='" + node.type + "' style='" + nodeObj.position + "; background-color: #ffffff'>" + ` <span class='` + node.iconName + ` iconStyle'></span>` + "<strong>" + node.name + "</strong></div>");
 
     let portsList = separatePortsList(node.ports);
     let listOfSources = portsList.listOfSources;
