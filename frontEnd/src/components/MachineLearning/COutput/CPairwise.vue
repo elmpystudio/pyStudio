@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-    margin: 30px 150px;
+    padding: 30px 150px;
 
     .form-container {
         border: 2px solid #364150;

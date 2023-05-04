@@ -4,100 +4,45 @@
 
         <template v-slot:body>
             <div role="tabpanel">
-                <!--tabs-->
-                <ul
-                    class="nav nav-tabs navbar"
-                    id="outputModalTabs"
-                    role="tablist"
-                >
-                    <li role="presentation" class="nav-link">
-                        <a href="#data-summary" data-toggle="tab" role="tab"
-                            >Data Summary</a
-                        >
-                    </li>
+                <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
+                    <v-tab v-for="item in items" :key="item">
+                        {{ item }}
+                    </v-tab>
+                </v-tabs>
 
-                    <li role="presentation" class="nav-link">
-                        <a href="#data-sample" data-toggle="tab" role="tab"
-                            >Data Sample</a
-                        >
-                    </li>
+                <v-tabs-items v-model="tab">
+                    <v-tab-item v-for="item in items" :key="item">
+                        <div v-if="item === 'data-summary'">
+                            <div id="data-summary">
+                                <CDataSummary />
+                            </div>
+                        </div>
 
-                    <li role="presentation" id="histogram_tab" class="nav-link">
-                        <a
-                            href="#histogram-div"
-                            data-toggle="tab"
-                            role="tab"
-                            aria-controls="histogram-div"
-                            >Histogram</a
-                        >
-                    </li>
+                        <div v-else-if="item === 'data-sample'">
+                            <div id="data-sample">
+                                <CDataSample />
+                            </div>
+                        </div>
 
-                    <li role="presentation" id="pairwise_tab" class="nav-link">
-                        <a href="#pairwise-div" data-toggle="tab" role="tab"
-                            >Pairwise</a
-                        >
-                    </li>
+                        <div v-else-if="item === 'histogram'">
+                            <div id="histogram-div">
+                                <CHistogram />
+                            </div>
+                        </div>
 
-                    <li
-                        role="presentation"
-                        id="correlation_tab"
-                        class="nav-link"
-                    >
-                        <a href="#correlation-div" data-toggle="tab" role="tab"
-                            >Correlation Matrix</a
-                        >
-                    </li>
-                </ul>
+                        <div v-else-if="item === 'pairwise'">
+                            <div id="pairwise-div">
+                                <CPairwise />
+                            </div>
+                        </div>
 
-                <!--content-->
-                <div class="tab-content" id="tab-content">
-                    <!--content 1-->
-                    <div
-                        role="tabpanel"
-                        class="tab-pane fade in active show"
-                        id="data-summary"
-                    >
-                        <CDataSummary />
-                    </div>
-
-                    <!--content 2-->
-                    <div role="tabpanel" class="tab-pane fade" id="data-sample">
-                        <CDataSample />
-                    </div>
-
-                    <!--content 3-->
-                    <div
-                        nodeId="X"
-                        outputId="Y"
-                        role="tabpanel"
-                        class="tab-pane fade"
-                        id="histogram-div"
-                    >
-                        <CHistogram />
-                    </div>
-
-                    <!--content 4-->
-                    <div
-                        nodeId="X"
-                        outputId="Y"
-                        role="tabpanel"
-                        class="tab-pane fade"
-                        id="pairwise-div"
-                    >
-                        <CPairwise />
-                    </div>
-
-                    <!--content 5-->
-                    <div
-                        nodeId="X"
-                        outputId="Y"
-                        role="tabpanel"
-                        class="tab-pane fade"
-                        id="correlation-div"
-                    >
-                        <CCorrelation />
-                    </div>
-                </div>
+                        <div v-else-if="item === 'correlation'">
+                            <div id="correlation-div">
+                                <CCorrelation />
+                            </div>
+                        </div>
+                    </v-tab-item>
+                </v-tabs-items>
             </div>
         </template>
 
@@ -129,6 +74,10 @@ export default {
     data() {
         return {
             tab: null,
+            items: [
+                'data-summary', 'data-sample', 'histogram', 'pairwise', 'correlation',
+            ],
+
         };
     },
 };

@@ -84,7 +84,6 @@ export default {
 
     .modal-body {
         position: relative;
-        background: #e3e3e3;
         overflow: auto;
         padding: 0;
     }

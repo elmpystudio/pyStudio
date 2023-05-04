@@ -21,7 +21,7 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-    margin: 0 30px;
+    padding: 0 30px;
 }
 
 //overflow
