@@ -3,46 +3,44 @@
         <template v-slot:title>Data Output</template>
 
         <template v-slot:body>
-            <div role="tabpanel">
-                <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
-                    <v-tab v-for="item in items" :key="item">
-                        {{ item }}
-                    </v-tab>
-                </v-tabs>
+            <!--tabs-->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#data-summary">Data Summary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#data-sample">Data Sample</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#histogram-div">Histogram</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#pairwise-div">Pairwise</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#correlation-div">Correlation Matrix</a>
+                    </li>
+                </ul>
+            </nav>
 
-                <v-tabs-items v-model="tab">
-                    <v-tab-item v-for="item in items" :key="item">
-                        <div v-if="item === 'data-summary'">
-                            <div id="data-summary">
-                                <CDataSummary />
-                            </div>
-                        </div>
-
-                        <div v-else-if="item === 'data-sample'">
-                            <div id="data-sample">
-                                <CDataSample />
-                            </div>
-                        </div>
-
-                        <div v-else-if="item === 'histogram'">
-                            <div id="histogram-div">
-                                <CHistogram />
-                            </div>
-                        </div>
-
-                        <div v-else-if="item === 'pairwise'">
-                            <div id="pairwise-div">
-                                <CPairwise />
-                            </div>
-                        </div>
-
-                        <div v-else-if="item === 'correlation'">
-                            <div id="correlation-div">
-                                <CCorrelation />
-                            </div>
-                        </div>
-                    </v-tab-item>
-                </v-tabs-items>
+            <!--content-->
+            <div class="tab-content">
+                <div id="data-summary" class="tab-pane fade show active">
+                    <CDataSummary />
+                </div>
+                <div id="data-sample" class="tab-pane fade">
+                    <CDataSample />
+                </div>
+                <div id="histogram-div" class="tab-pane fade">
+                    <CHistogram />
+                </div>
+                <div id="pairwise-div" class="tab-pane fade">
+                    <CPairwise />
+                </div>
+                <div id="correlation-div" class="tab-pane fade">
+                    <CCorrelation />
+                </div>
             </div>
         </template>
 
@@ -69,38 +67,30 @@ export default {
         CHistogram,
         CPairwise,
         CCorrelation,
-    },
-
-    data() {
-        return {
-            tab: null,
-            items: [
-                'data-summary', 'data-sample', 'histogram', 'pairwise', 'correlation',
-            ],
-
-        };
-    },
+    }
 };
 </script>
 
 <style lang="scss" scoped>
-.navbar {
-    background: #616975;
+.custom-navbar {
     padding: 0;
-    justify-content: space-between;
 
-    a {
-        text-decoration: none;
-        color: #bbbbbb;
-    }
+    ul {
+        display: flex;
+        width: 100%;
+        flex-flow: row nowrap;
+        justify-content: center;
 
-    .active {
-        color: inherit;
-    }
+        li {
+            a {
+                color: #364150;
 
-    li {
-        color: white;
-        border: 0;
+                &.active {
+                    background-color: #364150;
+                    color: white;
+                }
+            }
+        }
     }
 }
 
