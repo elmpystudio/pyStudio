@@ -1,4 +1,5 @@
 import numpy as np
+import csv
 import sys
 import time
 from multiprocessing import Process
@@ -9,7 +10,7 @@ from dagster import DagsterInstance, PipelineDefinition, ModeDefinition, execute
     DependencyDefinition, SolidInvocation
 from dagster_aws.s3 import s3_resource
 from dagster_aws.s3.system_storage import s3_plus_default_storage_defs
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, jsonify, request, abort, make_response, Response
 from joblib import load
 
 from dagster_resources import engine_config as conf
@@ -328,17 +329,6 @@ def get_node_output_corr_matrix_req():
     return corr_matrix
 
 
-@app.route('/get_prediction_from_prebuilt', methods=['POST'])
-def get_prediction_from_prebuilt_req():
-    wf = request.get_json(True)
-    if not wf:
-        abort(400)
-
-    model_name = wf['model_name']
-    observation = wf['observation']
-    result = inference(model_name, pd.DataFrame(observation))
-    return jsonify(result.tolist())
-
 @app.route('/show', methods=['GET'])
 def show():
     return jsonify({'status': 'see'})
@@ -375,26 +365,49 @@ def run_model_as_service(model_name):
     data = request.get_json(True)
     aux = []
     print(len(data))
-    for key in data:
-        aux2 = data[key]
-        aux.append(aux2)
 
-    print(aux)
-    print(len(aux))
-    test = np.array([aux])
-    label = 'classification'
-    if 'gress' in model_name:
-        label = 'result'
+    if ('isBulk' in data) and data['isBulk']:
+        print("cool")
+        f = request.files['file']
+        csv_file = CSVS + f.filename
+        reader = csv.reader(csv_file)
+        header = next(reader)
+        header.append("Result")
+        csv_output = ""
+        csv_output += ','.join(header) + '\n'
 
-    try:
-        rs = loaded_model.predict(test)
-    except ValueError as e:
-        return jsonify({'Failed to classify because': str(e)})
-    try:
-        # this is just a beautification of some kind of results
-        return jsonify({'model name': model_name, 'solver': loaded_model.solver, 'classification': str(rs)})
-    except Exception as e:
-        return jsonify({label: str(rs)})
+        for row in reader:
+            classification = loaded_model.predict(row)
+            row.append(classification)
+            csv_output += ','.join(row) + '\n'
+
+        response = Response(csv_output, mimetype='text/csv')
+        response.headers['Content-Disposition'] = 'attachment; filename=resul.csv'
+        return response
+
+    else:
+        for key in data:
+            aux2 = data[key]
+            aux.append(aux2)
+
+        print(aux)
+        print(len(aux))
+        test = np.array([aux])
+        label = 'classification'
+        if 'gress' in model_name:
+            label = 'result'
+
+        try:
+            rs = loaded_model.predict(test)
+        except ValueError as e:
+            return jsonify({'Failed to classify because': str(e)})
+        try:
+            # this is just a beautification of some kind of results
+            return jsonify({'model name': model_name, 'solver': loaded_model.solver, 'classification': str(rs)})
+        except Exception as e:
+            return jsonify({label: str(rs)})
+
+    return jsonify({'Lot ot stuff now': 'yea'})
 
 
 CSVS = "./engine/user/csvs/"

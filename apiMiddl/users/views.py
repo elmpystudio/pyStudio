@@ -32,6 +32,8 @@ class Login(TokenObtainPairView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         token = serializer.validated_data['access']
+        user.last_login = timezone.now()
+        user.save()
         return Response({'token': str(token)})
 
 @csrf_exempt
