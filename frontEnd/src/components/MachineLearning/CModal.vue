@@ -86,6 +86,7 @@ export default {
         position: relative;
         overflow: auto;
         padding: 0;
+        background-color: #e3e3e3;
     }
 
     .modal-footer {
