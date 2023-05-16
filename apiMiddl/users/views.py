@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 import random
 import json
 from .models import User
+from django.utils import timezone
 from .serializers import CustomTokenObtainPairSerializer
 
 class Login(TokenObtainPairView):
