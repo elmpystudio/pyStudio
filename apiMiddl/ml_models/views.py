@@ -79,12 +79,9 @@ def run1(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def run2(request):
-    file = request.FILES.get('file')
     url = settings.ML_ROOT_URL + "run/" + request.POST.get('username') + "_" + request.POST.get('model_name')
-    headers = {'Content-Type': 'multipart/form-data'}
-    data = {
-        'isPulk': request.POST.get('isPulk'),
-    }
-    response = requests.post(url, headers=headers, data=data, files={'file': file})
-    return JsonResponse({'message': 'Request successfully redirected'})
+    file = request.FILES['file']
+    response = requests.post(url, files={'file': file})
+    return Response(response.text, status=response.status_code)
+
     
