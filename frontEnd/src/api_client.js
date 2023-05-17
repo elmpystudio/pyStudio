@@ -233,11 +233,24 @@ export const delete_mlModel = (id) => axios.delete(`${API_URL}/api/ml_models/${i
     }
 });
 
-export const run_mlModels = (payload) => axios.post(`${API_URL}/api/ml_models/run`, payload, {
+export const run_mlModels1 = (payload) => axios.post(`${API_URL}/api/ml_models/run1`, payload, {
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
 });
+
+export const run_mlModels2 = (payload) => {
+    const formdata = new FormData();
+    for (var key in payload)
+        formdata.append(key, payload[key]);
+
+    return axios.post(`${API_URL}/api/ml_models/run2`, formdata, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+};
 
 // jupyterhub
 export const jupyterhub_open = () => axios.get(`${API_URL}/api/jupyterhub/open`, {

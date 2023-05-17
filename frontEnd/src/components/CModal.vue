@@ -63,10 +63,7 @@ export default {
 
         border-radius: 10px;
         overflow: hidden;
-        border: 2px solid #2B81D6;
-        box-shadow: 0 0 10px #719ECE;
-
-
+        box-shadow: 0 0 10px #2b468b;
 
         .container {
             padding: 0;
@@ -94,7 +91,7 @@ export default {
                     font-size: 20px;
                     text-transform: uppercase;
                     letter-spacing: 2px;
-                    color: #2B81D6;
+                    color: #2b468b;
                 }
             }
 
@@ -108,7 +105,7 @@ export default {
                 button {
                     width: 100%;
                     height: 100%;
-                    background: #2B81D6;
+                    background: #2b468b;
                     color: white;
                     font-size: 20px;
                     letter-spacing: 1px;
