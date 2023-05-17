@@ -33,7 +33,7 @@
 <script>
 import Items from "./Items";
 import Projects from "./Projects";
-import Services from "./Services.vue";
+import Services from "./Services/index.vue";
 // import { getMyIP, getTableauToken } from "@/api_client.js";
 
 export default {

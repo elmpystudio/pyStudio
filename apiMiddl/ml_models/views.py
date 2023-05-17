@@ -9,6 +9,7 @@ import json
 from django.conf import settings
 from .models import Ml_model
 from .serializers import ml_modelSerializer
+from django.http import JsonResponse
 
 AUTH_METHOD = IsAuthenticated
 
@@ -68,9 +69,22 @@ def uploadcsv(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def run(request):
+def run1(request):
     request_data = json.loads(request.body)
     url = settings.ML_ROOT_URL + "run/" + request_data['username'] + "_" + request_data["model_name"]
     response = requests.post(url, json.dumps(request_data['columns']))
     return Response(response.text, status=response.status_code)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def run2(request):
+    file = request.FILES.get('file')
+    url = settings.ML_ROOT_URL + "run/" + request.POST.get('username') + "_" + request.POST.get('model_name')
+    headers = {'Content-Type': 'multipart/form-data'}
+    data = {
+        'isPulk': request.POST.get('isPulk'),
+    }
+    response = requests.post(url, headers=headers, data=data, files={'file': file})
+    return JsonResponse({'message': 'Request successfully redirected'})
     
