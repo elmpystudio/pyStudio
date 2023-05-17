@@ -83,5 +83,3 @@ def run2(request):
     file = request.FILES['file']
     response = requests.post(url, files={'file': file})
     return Response(response.text, status=response.status_code)
-
-    
