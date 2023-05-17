@@ -3,6 +3,7 @@ import csv
 import sys
 import time
 from multiprocessing import Process
+from io import TextIOWrapper
 
 from dagster.core.definitions import resource
 from werkzeug.utils import secure_filename
@@ -362,30 +363,53 @@ def run_model_as_service(model_name):
         models_cash[model_name] = loaded_model
 
     # data in request
-    data = request.get_json(True)
-    aux = []
-    print(len(data))
+    if len(request.files) > 0:
+        file = request.files['file']
+        output_rows = []
+        if file:
+            with TextIOWrapper(file, encoding='utf-8') as stream:
+                reader = csv.reader(stream, delimiter=',')
+                header = next(reader)
+                header.append("Result")
+                csv_output = ""
+                csv_output += ','.join(header) + '\n'
+                output_rows.append(header)
 
-    if ('isBulk' in data) and data['isBulk']:
-        print("cool")
-        f = request.files['file']
-        csv_file = CSVS + f.filename
-        reader = csv.reader(csv_file)
-        header = next(reader)
-        header.append("Result")
-        csv_output = ""
-        csv_output += ','.join(header) + '\n'
+                for row in reader:
+                    pepe_column_index = header.index("TAX") if "TAX" in header else -1
 
-        for row in reader:
-            classification = loaded_model.predict(row)
-            row.append(classification)
-            csv_output += ','.join(row) + '\n'
+                    for row in reader:
+                        if pepe_column_index >= 0 and pepe_column_index < len(row):
+                            del row[pepe_column_index]  # Skip the "PEPE" column
 
-        response = Response(csv_output, mimetype='text/csv')
-        response.headers['Content-Disposition'] = 'attachment; filename=resul.csv'
-        return response
+                        converted_row = []
+                        for value in row:
+                            try:
+                                converted_value = float(value)
+                            except ValueError:
+                                converted_value = 0
+                            converted_row.append(converted_value)
+
+                        test = np.array([converted_row])
+                        try:
+                            classification = loaded_model.predict(test)
+                        except Exception as e:
+                            print(e)
+                            print(test)
+                            classification = "null"
+
+                        row.append(str(classification[0].item()))
+                        csv_output += ','.join(row) + '\n'
+
+            response = Response(csv_output, mimetype='text/csv')
+            response.headers['Content-Disposition'] = 'attachment; filename=result.csv'
+            return response
 
     else:
+        data = request.get_json(True)
+        aux = []
+        print(len(data))
+
         for key in data:
             aux2 = data[key]
             aux.append(aux2)
