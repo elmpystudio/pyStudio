@@ -371,35 +371,38 @@ def run_model_as_service(model_name):
                 reader = csv.reader(stream, delimiter=',')
                 header = next(reader)
                 header.append("Result")
+                print(header)
+                # pending get columns from database and use them here below to remove the not used ones
+                pepe_column_index = header.index("TAX") if "TAX" in header else -1
+                header.remove("TAX")
+                print(header)
+
                 csv_output = ""
                 csv_output += ','.join(header) + '\n'
-                output_rows.append(header)
 
                 for row in reader:
-                    pepe_column_index = header.index("TAX") if "TAX" in header else -1
+                    if 0 <= pepe_column_index < len(row):
+                        del row[pepe_column_index]  # Skip the "PEPE" column
 
-                    for row in reader:
-                        if pepe_column_index >= 0 and pepe_column_index < len(row):
-                            del row[pepe_column_index]  # Skip the "PEPE" column
-
-                        converted_row = []
-                        for value in row:
-                            try:
-                                converted_value = float(value)
-                            except ValueError:
-                                converted_value = 0
-                            converted_row.append(converted_value)
-
-                        test = np.array([converted_row])
+                    converted_row = []
+                    for value in row:
+                        # if value is category get the numeric value from databse
                         try:
-                            classification = loaded_model.predict(test)
-                        except Exception as e:
-                            print(e)
-                            print(test)
-                            classification = "null"
+                            converted_value = float(value)
+                        except ValueError:
+                            converted_value = 0
+                        converted_row.append(converted_value)
 
-                        row.append(str(classification[0].item()))
-                        csv_output += ','.join(row) + '\n'
+                    test = np.array([converted_row])
+                    try:
+                        classification = loaded_model.predict(test)
+                    except Exception as e:
+                        print(e)
+                        print(test)
+                        classification = "null"
+
+                    row.append(str(classification[0].item()))
+                    csv_output += ','.join(row) + '\n'
 
             response = Response(csv_output, mimetype='text/csv')
             response.headers['Content-Disposition'] = 'attachment; filename=result.csv'
