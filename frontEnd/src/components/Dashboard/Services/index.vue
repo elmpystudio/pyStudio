@@ -194,6 +194,17 @@ export default {
             return found_key;
         },
 
+        download(data, filename, mimeType) {
+            const blob = new Blob([data], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+
+            link.click();
+        },
+
         handle_run1() {
             this.run1.isLoading = true;
             const payload = {
@@ -246,10 +257,8 @@ export default {
                 isBulk: true
             })
                 .then(({ status, data }) => {
-                    if (status === 200) {
-                        data = JSON.parse(data);
-                        this.run2.response = JSON.stringify(data);
-                    }
+                    if (status === 200) 
+                        this.download(data, 'data.csv', 'text/csv');
                 })
                 .catch(error => {
                     this.run2.response = error;
