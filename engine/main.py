@@ -371,11 +371,9 @@ def run_model_as_service(model_name):
                 reader = csv.reader(stream, delimiter=',')
                 header = next(reader)
                 header.append("Result")
-                print(header)
                 # pending get columns from database and use them here below to remove the not used ones
                 pepe_column_index = header.index("TAX") if "TAX" in header else -1
                 header.remove("TAX")
-                print(header)
 
                 csv_output = ""
                 csv_output += ','.join(header) + '\n'
