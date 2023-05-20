@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="actions-container">
-                        <button class="btn btn-primary" @click="click('run1')">
+                        <button class="btn btn-primary" @click="run1">
                             Send
                         </button>
                     </div>
@@ -55,7 +55,7 @@
 
 
                         <div class="actions-container">
-                            <button class="btn btn-primary" @click="click('run2')">
+                            <button class="btn btn-primary" @click="run2">
                                 Send
                             </button>
                         </div>
@@ -97,17 +97,13 @@ export default {
             return new_columns;
         },
 
-        click(who) {
-            if (who === "run1")
-                this.$emit("onClick", {
-                    name: "run1"
-                });
-            else if (who == "run2")
-                this.$emit("onClick", {
-                    name: "run2",
-                    file: this.file
-                });
+        run1() {
+            this.$emit("handle_run1");
         },
+
+        run2() {
+            this.$emit("handle_run2", this.file);
+        }
     }
 }
 </script>

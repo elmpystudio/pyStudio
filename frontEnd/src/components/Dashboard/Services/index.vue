@@ -24,7 +24,7 @@
             </template>
 
             <template #part2>
-                <Online_Interaction :ml_model="ml_model" @onClick="handle_action" />
+                <Online_Interaction :ml_model="ml_model" @handle_run1="handle_run1" @handle_run2="handle_run2" />
             </template>
         </DetailsPage>
 
@@ -67,7 +67,7 @@ import SearchIcon from "@/assets/icons/search.svg";
 import CModal from "@/components/CModal.vue";
 import DetailsPage from "./DetailsPage.vue";
 import API_info from "./API_info.vue";
-import Online_Interaction from "./ Online_Interaction.vue";
+import Online_Interaction from "./Online_Interaction.vue";
 import { get_mlModels, delete_mlModel, run_mlModels1, run_mlModels2 } from "@/api_client.js";
 
 export default {
@@ -269,12 +269,12 @@ export default {
                 });
         },
 
-        handle_action(who) {
-            if (who.name === "run1")
-                this.handle_run1();
-            else
-                this.handle_run2(who.file);
-        }
+        // handle_action(who) {
+        //     if (who.name === "run1")
+        //         this.handle_run1();
+        //     else
+        //         this.handle_run2(who.file);
+        // }
     },
 };
 </script>
