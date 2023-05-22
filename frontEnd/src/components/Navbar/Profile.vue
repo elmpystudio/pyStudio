@@ -3,7 +3,7 @@
         <router-link class="profile" :to="{ name: 'profile' }">
             {{ username }}
         </router-link>
-        <div class="logout" @click="handleLogout">Logouttt</div>
+        <div class="logout" @click="handleLogout">Logout</div>
 
         <iframe
             v-if="clicked"
