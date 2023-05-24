@@ -2,6 +2,7 @@ import axios from 'axios';
 import router from '@/router';
 
 export const API_URL = 'http://localhost:8000';
+export const JUPYTERHUP_URL = 'http://localhost:9000';
 
 axios.interceptors.response.use(function (response) {
     return response

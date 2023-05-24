@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { jupyterhub_open, jupyterhub_sync } from "@/api_client.js";
+import { jupyterhub_open, jupyterhub_sync, JUPYTERHUP_URL } from "@/api_client.js";
 import CLoader from "@/components/CLoader.vue";
 
 export default {
@@ -19,7 +19,7 @@ export default {
 
     data: () => ({
         isLoading: true,
-        url: "http://localhost:9000/hub/oauth_login?next=",
+        url: `http://${JUPYTERHUP_URL}/hub/oauth_login?next=`,
     }),
 
     mounted() {

@@ -95,7 +95,7 @@ export default {
         width: 100%;
         display: flex;
         flex-flow: row nowrap;
-        justify-content: start;
+        justify-content: flex-start;
 
         .title-container {
             background-color: #2b468b;
