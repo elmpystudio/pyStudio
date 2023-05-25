@@ -19,7 +19,7 @@ export default {
 
     data: () => ({
         isLoading: true,
-        url: `http://${JUPYTERHUP_URL}/hub/oauth_login?next=`,
+        url: `${JUPYTERHUP_URL}/hub/oauth_login?next=`,
     }),
 
     mounted() {
