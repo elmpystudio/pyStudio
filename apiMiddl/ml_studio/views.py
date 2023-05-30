@@ -18,6 +18,7 @@ from django.conf import settings
 import kaggle
 
 
+
 @login_required(login_url=reverse_lazy('accounts:login'), redirect_field_name=None)
 def index(request):
     current_user_id = request.user.id
@@ -162,3 +163,7 @@ def get_kaggle_datasets_list(request):
                  "value": dataset['id']}
         kaggleDataSets.append(aux)
     return HttpResponse(kaggleDataSets, content_type="application/json")
+  
+  
+  
+

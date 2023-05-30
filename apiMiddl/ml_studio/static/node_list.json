@@ -67,23 +67,6 @@
                     ],
                     "type": "SelectDataset",
                     "kind": "noInput"
-                },
-                {
-                    "desc": "Kaggle Dataset",
-                    "name": "Kaggle Dataset",
-                    "ports": [{
-                        "is_output": true,
-                        "type": "data"
-                    }],
-                    "proprties": [{
-                        "display_name": "Dataset Name",
-                        "lookup": [],
-                        "name": "kaggle_dataset",
-                        "type": "string",
-                        "value": ""
-                    }],
-                    "type": "KaggleDataset",
-                    "kind": "noInput"
                 }
             ]
         },
