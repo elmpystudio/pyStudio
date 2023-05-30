@@ -12,6 +12,12 @@ from .services import service as service
 from .services.ExperimentService import ExperimentService as experiment_service
 from timeit import default_timer as timer
 import json
+import requests
+from django.http import JsonResponse
+from django.conf import settings
+
+import kaggle
+
 
 
 @login_required(login_url=reverse_lazy('accounts:login'), redirect_field_name=None)
@@ -145,3 +151,31 @@ def deploy_workflow(request):
     deployment_json['experimentName'] = experimentName
     response = experiment_service.save_deployed_workflow(deployment_json)
     return HttpResponse(response, content_type="application/json")
+
+@csrf_exempt
+def get_kaggle_datasets_list(request):
+    kaggle.api.authenticate()
+
+    # Set the download directory for datasets
+    download_dir = '/home/jameel/D'
+
+    # Create the download directory if it doesn't exist
+    os.makedirs(download_dir, exist_ok=True)
+
+    # Get a list of all available datasets
+    datasets = kaggle.api.dataset_list()
+
+    # Download each dataset
+    for dataset in kaggle.api.datasets_list():
+        # Access dataset attributes
+        dataset_id = dataset.id
+        dataset_title = dataset.title
+        dataset_file_size = dataset.fileSize
+
+        # Print dataset information
+        print(f"Dataset ID: {dataset_id}")
+        print(f"Title: {dataset_title}")
+        print(f"File Size: {dataset_file_size}")
+
+    # Print success message
+    print('All Kaggle datasets have been downloaded successfully.')

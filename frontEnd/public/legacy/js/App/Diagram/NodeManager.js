@@ -2,7 +2,6 @@ import { API_URL } from "../env.js";
 import { getNodeOutputMetadata } from "./ApiClient.js";
 
 const GET_ALL_NODES_URL = `${API_URL}/api/ml/nodes/list`;
-const GET_ALL_NODES_URL_LOCAL = "json/get_nodes_list.json";
 const GET_DATASET_NAMES = "/api/datasets/";
 let nodesFromServer = [];
 
@@ -443,11 +442,7 @@ function addNodeToCanvasFromWorkflow(nodeObj, nodesList, instance) {
 //jsplumbClient
 function loadNodes(instance, nodesList) {
     $.ajax({
-        //server
-        //url: GET_ALL_NODES_URL,
-        //local
-        url: GET_ALL_NODES_URL_LOCAL,
-        
+        url: GET_ALL_NODES_URL,
         method: "GET",
         dataType: "json",
         cache: false,

@@ -56,11 +56,8 @@ urlpatterns = [
 
         path('ml/', include('ml_studio.urls')),
 
-
-
         # path('whoami/', get_user),
         path("admin/", admin.site.urls),
-
 
         # path('otp/', include('email_otp.urls')),
 
