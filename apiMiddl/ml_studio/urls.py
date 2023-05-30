@@ -5,6 +5,7 @@ app_name = 'machine_learning_app'
 urlpatterns = [
 
     # ok
+    re_path(r'^nodes/get_kaggle_datasets_list', views.get_kaggle_datasets_list, name='get_kaggle_datasets_list'),
     re_path(r'^nodes/list', views.get_nodes_list, name='get_nodes_list'),
     re_path(r'^workflow/execute/', views.execute_workflow, name='execute_workflow'),
     re_path(r'^workflow/progress/(?P<workflow_id>\w+)/$', views.get_workflow_progress, name='get_workflow_progress'),
