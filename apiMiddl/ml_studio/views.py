@@ -15,9 +15,7 @@ import json
 import requests
 from django.http import JsonResponse
 from django.conf import settings
-
 import kaggle
-
 
 
 @login_required(login_url=reverse_lazy('accounts:login'), redirect_field_name=None)
@@ -155,27 +153,12 @@ def deploy_workflow(request):
 @csrf_exempt
 def get_kaggle_datasets_list(request):
     kaggle.api.authenticate()
-
-    # Set the download directory for datasets
-    download_dir = '/home/jameel/D'
-
-    # Create the download directory if it doesn't exist
-    os.makedirs(download_dir, exist_ok=True)
-
-    # Get a list of all available datasets
     datasets = kaggle.api.dataset_list()
-
-    # Download each dataset
+    kaggleDataSets = []
     for dataset in kaggle.api.datasets_list():
-        # Access dataset attributes
-        dataset_id = dataset.id
-        dataset_title = dataset.title
-        dataset_file_size = dataset.fileSize
-
-        # Print dataset information
-        print(f"Dataset ID: {dataset_id}")
-        print(f"Title: {dataset_title}")
-        print(f"File Size: {dataset_file_size}")
-
-    # Print success message
-    print('All Kaggle datasets have been downloaded successfully.')
+        aux = {"display_name": dataset['title'],
+                "name": dataset['url'],
+                "type": "string",
+                 "value": dataset['id']}
+        kaggleDataSets.append(aux)
+    return HttpResponse(kaggleDataSets, content_type="application/json")
