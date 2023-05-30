@@ -1,3 +1,6 @@
+import zipfile
+
+import kaggle
 from minio import Minio
 from dagster_resources import engine_config as conf
 import pickle as pkl
@@ -57,6 +60,18 @@ def get_prebuilt_model(model_name):
 def read_dataset_metadata(dataset_name):
     return ast.literal_eval(
         minioClient.get_object('datasets', dataset_name.replace('.csv', '.json')).read().decode("utf-8"))
+
+
+def read_kaggle_dataset(dataset_name, data_types=None, delimiter=','):
+    dataset_bytes = kaggle.api.dataset_download_files(dataset_name, unzip=False)
+    dataset_file = io.BytesIO(dataset_bytes)
+
+    with zipfile.ZipFile(dataset_file, 'r') as zip_ref:
+        csv_filename = zip_ref.namelist()[0]
+        csv_content = zip_ref.read(csv_filename)
+
+    return pd.read_csv(io.BytesIO(csv_content),
+                       encoding='utf8', dtype=data_types, header=0)
 
 
 def read_dataset(dataset_name, data_types=None, delimiter=','):
