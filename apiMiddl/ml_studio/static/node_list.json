@@ -48,6 +48,27 @@
                     "kind": "noInput"
                 },
                 {
+                    "desc": "Task Name: Select Kaggle<br>DESC: Select a Kaggle datasets<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- Dataset Name<br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbspOutput1:a Data frame containing the data",
+                    "name": "Select Kaggle",
+                    "ports": [
+                        {
+                            "is_output": true,
+                            "type": "data"
+                        }
+                    ],
+                    "proprties": [
+                        {
+                            "display_name": "Dataset Name",
+                            "lookup": [],
+                            "name": "dataset_name",
+                            "type": "string",
+                            "value": ""
+                        }
+                    ],
+                    "type": "SelectDataset",
+                    "kind": "noInput"
+                },
+                {
                     "desc": "Kaggle Dataset",
                     "name": "Kaggle Dataset",
                     "ports": [{
