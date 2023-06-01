@@ -29,7 +29,8 @@ import {
     giveMeMyDATA,
     getNodeOutputMetadata,
     GET_NODES_DATA,
-    sendReadcsvFile
+    sendReadcsvFile,
+    getKaggleDatasetsList
 } from "./ApiClient.js";
 
 import {
@@ -511,24 +512,60 @@ export default function run() {
         //click box, onclick box, box
         function handleSingleNodeSelection(node) {
 
-
-            //sample execution for node metadata
-            sampleExecuteWorkflow(node['id']);
             //remove highlight from any highlighted nodes
             unHighlightAllNodes();
             //Highlight selected node onle
             highlightSelectedNode(node);
-            //reflect selection changes
 
-            //get node attributes        
-            let windowBody = getPropertiesAsHtml($(node).attr("id"), $(node).attr("kind"));
-            //replace properties window
-            $("#propertiesBody").html(windowBody);
-            // incase we have Multi select element needs to be prepared
-            $("#propertiesBody").find('.multiselect-ui').multiselect({
-                includeSelectAllOption: true
-            });
-            // showPanel("propertiesWindow", "propertiesBody", windowBody);
+            if($(node).attr("type") === "KaggleDataset"){
+                const datasets = getKaggleDatasetsList();
+
+                const startHTML = 
+                `
+                <form> 
+                    <div class="form-group">
+                        <label for="kaggle_dataset">Kaggle Dataset</label>
+                        <select id="kaggle_dataset" class="form-control" style="background-color: #8080805c  ; margin-left: 8px;">
+                `
+                const endHTML = 
+                `
+                        </select>
+                    </div>
+                </form>
+                <a id="kaggle_save" href="#" class="btn btn-primary">Set value</a>
+                `
+
+                let middleHTML = ''
+
+                $.each(datasets, function(i, dataset) {
+                    middleHTML += `<option value="${dataset.url}"> ${dataset.name}</option>`
+                });
+
+                $("#propertiesBody").on("click", "#kaggle_save", function () {
+                    let nodeId = $("#kaggle_dataset").val()
+                    updateNodeProperties(nodeId);
+                    let workflowJson = formatFlowDiagramAsJson(instance.getAllConnections());
+                    let asjson = JSON.parse(workflowJson);
+                    asjson.wf_body.nodes[0].parameters[0].value = nodeId;
+                    workflowJson = JSON.stringify(asjson) 
+                    let flowDiagramJson = workflowJson.replace('SelectDataset', 'SelectDatasetSample').replace('ReadCSV', 'ReadCSVSample')
+                    workFlowExecution(flowDiagramJson);
+                });
+
+                $("#propertiesBody").html(startHTML+middleHTML+endHTML);
+            }
+
+            else {
+                sampleExecuteWorkflow(node['id']);
+                //get node attributes        
+                let windowBody = getPropertiesAsHtml($(node).attr("id"), $(node).attr("kind"));
+                //replace properties window
+                $("#propertiesBody").html(windowBody);
+                // incase we have Multi select element needs to be prepared
+                $("#propertiesBody").find('.multiselect-ui').multiselect({
+                    includeSelectAllOption: true
+                });
+            }
         }
 
         function handleMultiNodeSelection(node) {

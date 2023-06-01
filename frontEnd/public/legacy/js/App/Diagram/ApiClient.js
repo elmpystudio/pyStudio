@@ -12,6 +12,7 @@ const GET_PORT_OUTPUT_HIST = "/api/ml/node/get_node_output_hist/";
 const GET_PORT_OUTPUT_PAIRWISE = "/api/ml/node/get_node_output_pairwise/";
 const GET_PORT_OUTPUT_CORR_MATRIX = "/api/ml/node/get_node_output_corr_matrix/";
 const GET_NODE_OUTPUT_METADATA = "/api/ml/node/get_workflow_ports_md/";
+const GET_KAGGLE_DATASETS = "/api/ml/nodes/get_kaggle_datasets_list/";
 const GET_MODEL_OUTPUT = '/api/ml/node/get_model_info/';
 const GET_EVAL_METRICS = '/api/ml/node/get_eval_metrics/';
 const GET_ROC_CHART = '/api/ml/node/get_roc_chart/';
@@ -713,6 +714,26 @@ function getNodeOutputMetadata(workflowJson) {
     });
 }
 
+function getKaggleDatasetsList() {
+    let data;
+    $.ajax({
+        url: API_URL + GET_KAGGLE_DATASETS,
+        method: "GET",
+        async: false,
+        contentType: "application/json",
+        cache: false,
+        datatype: "json",
+        success: function (response) {
+            data = response;
+        },
+        error: function (response) {
+            console.log('error', response);
+        }
+    });
+
+    return data;
+}
+
 function GET_NODES_DATA(username) {
     let data = [];
     $.ajax({
@@ -760,5 +781,6 @@ export {
     //jsplumbClient | NodeManager
     getNodeOutputMetadata,
     GET_NODES_DATA,
-    sendReadcsvFile
+    sendReadcsvFile,
+    getKaggleDatasetsList
 }
