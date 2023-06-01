@@ -17,8 +17,6 @@ from django.http import JsonResponse
 from django.conf import settings
 import kaggle
 
-
-
 @login_required(login_url=reverse_lazy('accounts:login'), redirect_field_name=None)
 def index(request):
     current_user_id = request.user.id
@@ -133,7 +131,7 @@ def deploy_workflow(request):
     json_str = json.loads(request.body.decode('utf-8'))
 
     userId = json_str['userId']
-    experimentName = json_str['experimentName']
+    experimentName = jsKAGGLE_DATASETSon_str['experimentName']
     wf_unique_id = json_str['wf_unique_id']
     deployment_json = {}
 
@@ -154,15 +152,14 @@ def deploy_workflow(request):
 @csrf_exempt
 def get_kaggle_datasets_list(request):
     kaggle.api.authenticate()
-    datasets = kaggle.api.dataset_list()
     kaggleDataSets = []
     for dataset in kaggle.api.datasets_list():
-        aux = {"display_name": dataset['title'],
-                "name": dataset['url'],
+        aux = {"name": dataset['title'],
+                "url": dataset['url'],
                 "type": "string",
-                 "value": dataset['id']}
+                "value": dataset['id']}
         kaggleDataSets.append(aux)
-    return HttpResponse(kaggleDataSets, content_type="application/json")
+    return HttpResponse(json.dumps(kaggleDataSets), content_type="application/json")
   
   
   
