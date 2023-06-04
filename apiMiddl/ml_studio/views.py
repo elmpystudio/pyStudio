@@ -157,7 +157,7 @@ def get_kaggle_datasets_list(request):
         aux = {"name": dataset['title'],
                 "url": dataset['url'],
                 "type": "string",
-                "value": dataset['id']}
+                "value": dataset['ref']}
         kaggleDataSets.append(aux)
     return HttpResponse(json.dumps(kaggleDataSets), content_type="application/json")
   

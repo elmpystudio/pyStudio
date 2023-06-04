@@ -538,7 +538,7 @@ export default function run() {
                 let middleHTML = ''
 
                 $.each(datasets, function(i, dataset) {
-                    middleHTML += `<option value="${dataset.url}"> ${dataset.name}</option>`
+                    middleHTML += `<option value="${dataset.value}"> ${dataset.name}</option>`
                 });
 
                 $("#propertiesBody").on("click", "#kaggle_save", function () {
