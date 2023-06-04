@@ -6,7 +6,7 @@ import pandas as pd
 import xgboost as xgb
 import json
 from dagster_resources.object_storage_handler import read_dataset, read_dataset_sample, get_deployed_wf_model, \
-    read_Kaggle_dataset
+    read_kaggle_dataset
 import random
 from tasks.model_imp.model_lstm import LSTM
 from tasks.light import LModeling
@@ -23,18 +23,14 @@ from tasks.light import LModeling
     )],
     required_resource_keys={'pyspark'}
 )
-def SelectKaggleDataset(context, dataset_name: str, delimiter: str) -> DataFrame:
+def KaggleDataset(context, dataset_name: str, delimiter: str) -> DataFrame:
     tasks = []
     context.log.info(
         'Dataset {named}'.format(named=dataset_name)
     )
     try:
-        if not context.mode_def.name == 'heavy':
-            df = read_kaggle_dataset(dataset_name, delimiter=delimiter)
-            yield Output([df, tasks], 'BottomLeft')
-        else:
-            df = context.resources.pyspark.spark_session.builder.getOrCreate().read.csv('s3a://' + dataset_name)
-            yield Output([df, tasks], 'BottomLeft')
+        df = read_kaggle_dataset(dataset_name, delimiter=delimiter)
+        yield Output([df, tasks], 'BottomLeft')
     except Exception as e:
         print(e)
 
