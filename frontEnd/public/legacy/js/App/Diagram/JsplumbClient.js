@@ -511,38 +511,39 @@ export default function run() {
 
         //click box, onclick box, box
         function handleSingleNodeSelection(node) {
-
             //remove highlight from any highlighted nodes
             unHighlightAllNodes();
             //Highlight selected node onle
             highlightSelectedNode(node);
 
             if($(node).attr("type") === "KaggleDataset"){
-                const datasets = getKaggleDatasetsList();
+                let page = 1;
+                let HTML = updateKaggleDatasets(getKaggleDatasetsList(page))
+                $("#propertiesBody").html(HTML);
 
-                const startHTML = 
-                `
-                <form> 
-                    <div class="form-group">
-                        <label for="kaggle_dataset">Kaggle Dataset</label>
-                        <select id="kaggle_dataset" class="form-control" style="background-color: #8080805c  ; margin-left: 8px;">
-                `
-                const endHTML = 
-                `
-                        </select>
-                    </div>
-                </form>
-                <a id="kaggle_save" href="#" class="btn btn-primary">Set value</a>
-                `
-
-                let middleHTML = ''
-
-                $.each(datasets, function(i, dataset) {
-                    middleHTML += `<option value="${dataset.url}"> ${dataset.name}</option>`
+                $("#propertiesBody").on("click", ".option", function () {
+                    // remove active 
+                    $(".option.active").removeClass("active")
+                    // add active
+                    $(this).addClass("active")
+                    // set value
+                    $("#kaggle_dataset").attr("value", $(this).attr('value'));        
                 });
 
-                $("#propertiesBody").on("click", "#kaggle_save", function () {
-                    let nodeId = $("#kaggle_dataset").val()
+                $("#propertiesBody").on("click", "#kaggle_dataset_back", function (e) {
+                    HTML = updateKaggleDatasets(getKaggleDatasetsList(--page))
+                    $("#propertiesBody").html(HTML);
+                    e.preventDefault();
+                });
+
+                $("#propertiesBody").on("click", "#kaggle_dataset_next", function (e) {
+                    HTML = updateKaggleDatasets(getKaggleDatasetsList(++page))
+                    $("#propertiesBody").html(HTML);
+                    e.preventDefault();
+                });
+
+                $("#propertiesBody").on("click", "#kaggle_dataset_submit", function (e) {
+                    let nodeId = $("#kaggle_dataset").attr('value');
                     updateNodeProperties(nodeId);
                     let workflowJson = formatFlowDiagramAsJson(instance.getAllConnections());
                     let asjson = JSON.parse(workflowJson);
@@ -550,9 +551,8 @@ export default function run() {
                     workflowJson = JSON.stringify(asjson) 
                     let flowDiagramJson = workflowJson.replace('SelectDataset', 'SelectDatasetSample').replace('ReadCSV', 'ReadCSVSample')
                     workFlowExecution(flowDiagramJson);
+                    e.preventDefault();
                 });
-
-                $("#propertiesBody").html(startHTML+middleHTML+endHTML);
             }
 
             else {
@@ -566,6 +566,44 @@ export default function run() {
                     includeSelectAllOption: true
                 });
             }
+        }
+
+        function updateKaggleDatasets(datasets) {
+            const startHTML = 
+            `
+            <form> 
+            <div id="kaggle_dataset">
+            <div class="select-container">
+                <div class="layout">
+            `
+            const endHTML = 
+            `
+                </div>
+                </div>
+                <div class="pagination-container">
+                    <button id="kaggle_dataset_back">
+                        <div class="icon-container">
+                            <i class="icon left fa fa-angle-left" aria-hidden="true"></i>
+                        </div>
+                    </button>
+                    <button id="kaggle_dataset_next">
+                        <div class="icon-container">
+                            <i class="icon right fa fa-angle-right" aria-hidden="true"></i>
+                        </div>
+                    </button>
+                </div>
+                <div class="button-container">
+                    <button id="kaggle_dataset_submit" >Set Value</button>
+                </div>
+            </div>
+            `
+
+            let middleHTML = ''
+            $.each(datasets, function(i, dataset) {
+                middleHTML += `<div class="option" value="${dataset.ref}"> ${dataset.name}</div>`
+            });
+
+            return startHTML+middleHTML+endHTML;
         }
 
         function handleMultiNodeSelection(node) {

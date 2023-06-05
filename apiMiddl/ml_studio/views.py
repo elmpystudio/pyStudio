@@ -150,16 +150,17 @@ def deploy_workflow(request):
     return HttpResponse(response, content_type="application/json")
 
 @csrf_exempt
-def get_kaggle_datasets_list(request):
+def get_kaggle_datasets_list(request, page):
     kaggle.api.authenticate()
-    kaggleDataSets = []
-    for dataset in kaggle.api.datasets_list():
-        aux = {"name": dataset['title'],
-                "url": dataset['url'],
+    datasets = []
+    for dataset in kaggle.api.datasets_list(page=page):
+        datasets.append({
+                "name": dataset['title'],
+                "ref": dataset['ref'],
                 "type": "string",
-                "value": dataset['id']}
-        kaggleDataSets.append(aux)
-    return HttpResponse(json.dumps(kaggleDataSets), content_type="application/json")
+                "value": dataset['id']
+            })    
+    return HttpResponse(json.dumps(datasets), content_type="application/json")
   
   
   
