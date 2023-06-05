@@ -162,6 +162,3 @@ def get_kaggle_datasets_list(request, page):
             })    
     return HttpResponse(json.dumps(datasets), content_type="application/json")
   
-  
-  
-

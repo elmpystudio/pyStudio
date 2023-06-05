@@ -12,6 +12,10 @@ import pandas as pd
 from s3fs import S3FileSystem
 import pyarrow.parquet as pq
 
+USER_DATASETS = "./engine/user/datasets"
+
+kaggle.api.authenticate()
+
 minioClient = Minio(conf.OBJECT_STORAGE_HANDLER['connection_string'],
                     access_key=conf.OBJECT_STORAGE_HANDLER['access_key'],
                     secret_key=conf.OBJECT_STORAGE_HANDLER['secret_key'],
@@ -63,15 +67,22 @@ def read_dataset_metadata(dataset_name):
 
 
 def read_kaggle_dataset(dataset_name, data_types=None, delimiter=','):
-    dataset_bytes = kaggle.api.dataset_download_files(dataset_name, unzip=False)
-    dataset_file = io.BytesIO(dataset_bytes)
+    dataset_files = kaggle.api.dataset_list_files(dataset_name)
+    try:
+        kaggle.api.dataset_download_files(dataset_name, USER_DATASETS, unzip=True)
+    except Exception as e:
+        print(e)
 
-    with zipfile.ZipFile(dataset_file, 'r') as zip_ref:
-        csv_filename = zip_ref.namelist()[0]
-        csv_content = zip_ref.read(csv_filename)
+    file_path = USER_DATASETS+"/"+dataset_files.files[0].name
 
-    return pd.read_csv(io.BytesIO(csv_content),
-                       encoding='utf8', dtype=data_types, header=0)
+    # Open the file as bytes
+    with open(file_path, 'rb') as file:
+        file_bytes = file.read()
+        dataset_file = io.BytesIO(file_bytes)
+        df = pd.read_csv(dataset_file, encoding='utf8', dtype=data_types, header=0)
+
+    return df
+
 
 
 def read_dataset(dataset_name, data_types=None, delimiter=','):

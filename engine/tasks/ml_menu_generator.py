@@ -96,6 +96,7 @@ __model_type = dict(DecisionTreeClassifier="Classifier",
                     PreTrainedModel='Pretrained')
 
 __nodes_grouping = dict(ReadCSV="Data Sources",
+                        KaggleDataset="Data Sources",
                         ApplySqlite="Data Manipulation",
                         ReplaceValue="Data Manipulation",
                         RowFilter="Data Manipulation",
@@ -149,6 +150,7 @@ __nodes_grouping = dict(ReadCSV="Data Sources",
                         SGDC_Calissifier='Machine Learning',
                         PreTrainedModel='Pre trained model')
 __nodes_display_names = dict(ReadCSV="Read CSV",
+                             KaggleDataset="Data Sources",
                              ApplySqlite="Apply SQL",
                              ReplaceValue="Replace Value",
                              RowFilter="Row Filter",
@@ -211,6 +213,9 @@ __parameters_names = {
         'csv_path': 'CSV Path'
     },
     'SelectDataset': {
+        'dataset_name': 'Dataset Name'
+    },
+    'KaggleDataset': {
         'dataset_name': 'Dataset Name'
     },
     'ClusteringMetrics': {
@@ -426,6 +431,9 @@ __parameters_default_values = {
     'SelectDataset': {
         'dataset_name': ''
     },
+    'KaggleDataset': {
+        'dataset_name': ''
+    },
     'ClusteringMetrics': {
         'predict_column': '',
         'label_column': ''
@@ -637,6 +645,9 @@ __parameters_types = {
         'csv_path': ''
     },
     'SelectDataset': {
+        'dataset_name': ''
+    },
+    'KaggleDataset': {
         'dataset_name': ''
     },
     'ClusteringMetrics': {
