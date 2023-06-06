@@ -516,45 +516,71 @@ export default function run() {
             //Highlight selected node onle
             highlightSelectedNode(node);
 
-            if($(node).attr("type") === "KaggleDataset"){
+            // Kaggle Dataset ONLY
+            if ($(node).attr("type") === "KaggleDataset") {
+                // init
                 let page = 1;
-                let HTML = updateKaggleDatasets(getKaggleDatasetsList(page))
-                $("#propertiesBody").html(HTML);
+                getKaggleDatasetsList(page)
+                    .success((data) => {
+                        let HTML = updateKaggleDatasets(data)
+                        $("#propertiesBody").html(HTML);
+                        $("#kaggle_dataset_pagenumber").html(page);
+                        $("#kaggle_dataset_back").addClass("disabled");
+                    })
 
+                // When You clik into dataset
                 $("#propertiesBody").on("click", ".option", function () {
-                    // remove active 
+                    // switch active
                     $(".option.active").removeClass("active")
-                    // add active
                     $(this).addClass("active")
+
+                    // remove disabled from the submit button
+                    $("#kaggle_dataset_submit").removeClass("disabled");
                     // set value
-                    $("#kaggle_dataset").attr("value", $(this).attr('value'));        
+                    $("#kaggle_dataset").attr("value", $(this).attr('value'));
                 });
 
+                // BACK Button
                 $("#propertiesBody").on("click", "#kaggle_dataset_back", function (e) {
-                    HTML = updateKaggleDatasets(getKaggleDatasetsList(--page))
-                    $("#propertiesBody").html(HTML);
+                    if (page > 1)
+                        getKaggleDatasetsList(--page)
+                            .success((data) => {
+                                let HTML = updateKaggleDatasets(data)
+                                $("#propertiesBody").html(HTML);
+                                $("#kaggle_dataset_pagenumber").html(page);
+                                if (page === 1)
+                                    $("#kaggle_dataset_back").addClass("disabled");
+                            })
                     e.preventDefault();
                 });
 
+                // NEXT Button
                 $("#propertiesBody").on("click", "#kaggle_dataset_next", function (e) {
-                    HTML = updateKaggleDatasets(getKaggleDatasetsList(++page))
-                    $("#propertiesBody").html(HTML);
+                    getKaggleDatasetsList(++page)
+                        .success((data) => {
+                            let HTML = updateKaggleDatasets(data)
+                            $("#propertiesBody").html(HTML);
+                            $("#kaggle_dataset_pagenumber").html(page);
+                            $("#kaggle_dataset_back").removeClass("disabled");
+                        })
                     e.preventDefault();
                 });
 
+                // SUBMIT Button
                 $("#propertiesBody").on("click", "#kaggle_dataset_submit", function (e) {
                     let nodeId = $("#kaggle_dataset").attr('value');
                     updateNodeProperties(nodeId);
                     let workflowJson = formatFlowDiagramAsJson(instance.getAllConnections());
                     let asjson = JSON.parse(workflowJson);
                     asjson.wf_body.nodes[0].parameters[0].value = nodeId;
-                    workflowJson = JSON.stringify(asjson) 
+                    workflowJson = JSON.stringify(asjson)
                     let flowDiagramJson = workflowJson.replace('SelectDataset', 'SelectDatasetSample').replace('ReadCSV', 'ReadCSVSample')
                     workFlowExecution(flowDiagramJson);
                     e.preventDefault();
                 });
             }
 
+            // OTHER
             else {
                 sampleExecuteWorkflow(node['id']);
                 //get node attributes        
@@ -569,41 +595,41 @@ export default function run() {
         }
 
         function updateKaggleDatasets(datasets) {
-            const startHTML = 
-            `
+            const startHTML =
+                `
             <form> 
             <div id="kaggle_dataset">
+            <div class="kaggle_dataset_title">Kaggle Datasets</div>
             <div class="select-container">
                 <div class="layout">
             `
-            const endHTML = 
-            `
+            const endHTML =
+                `
                 </div>
                 </div>
                 <div class="pagination-container">
                     <button id="kaggle_dataset_back">
-                        <div class="icon-container">
+                        <div class="icon-container left">
                             <i class="icon left fa fa-angle-left" aria-hidden="true"></i>
                         </div>
                     </button>
+                    <div id="kaggle_dataset_pagenumber"></div>
                     <button id="kaggle_dataset_next">
-                        <div class="icon-container">
+                        <div class="icon-container right">
                             <i class="icon right fa fa-angle-right" aria-hidden="true"></i>
                         </div>
                     </button>
                 </div>
                 <div class="button-container">
-                    <button id="kaggle_dataset_submit" >Set Value</button>
+                    <button id="kaggle_dataset_submit" class="disabled">Set Value</button>
                 </div>
             </div>
             `
-
             let middleHTML = ''
-            $.each(datasets, function(i, dataset) {
+            $.each(datasets, function (i, dataset) {
                 middleHTML += `<div class="option" value="${dataset.ref}"> ${dataset.name}</div>`
             });
-
-            return startHTML+middleHTML+endHTML;
+            return startHTML + middleHTML + endHTML;
         }
 
         function handleMultiNodeSelection(node) {

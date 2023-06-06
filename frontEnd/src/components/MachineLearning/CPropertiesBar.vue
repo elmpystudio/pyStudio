@@ -241,8 +241,6 @@ export default {
 
         form {
             .form-group {
-                label {}
-
                 select {
                     margin: 0 !important;
                     background-color: rgba(255, 255, 255, 0.836) !important;
@@ -322,15 +320,20 @@ export default {
 }
 
 #kaggle_dataset {
-    height: 500px;
+    height: 600px;
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
     row-gap: 5px;
 
+    .kaggle_dataset_title {
+        font-size: 23px;
+    }
+
     .select-container {
         flex-grow: 3;
         background: white;
+        border-radius: 5px;
         position: relative;
 
         .layout {
@@ -356,7 +359,7 @@ export default {
             }
 
             &::-webkit-scrollbar-thumb {
-                background: #2c3e50;
+                background: grey;
 
                 &:hover {
                     opacity: 0.9;
@@ -382,14 +385,20 @@ export default {
                 }
             }
         }
-
     }
 
     .pagination-container {
         display: flex;
         flex-flow: row nowrap;
         width: 100%;
+        height: 30px;
         column-gap: 3px;
+
+        #kaggle_dataset_pagenumber {
+            padding: 0 10px;
+            line-height: 2;
+
+        }
 
         button {
             width: 100%;
@@ -399,10 +408,23 @@ export default {
                 opacity: 0.8;
             }
 
+            &.disabled {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+
             .icon-container {
                 width: 100%;
                 height: 100%;
                 background-color: white;
+
+                &.right {
+                    border-radius: 0 5px 5px 0;
+                }
+
+                &.left {
+                    border-radius: 5px 0 0 5px;
+                }
 
                 .icon {
                     color: #2c3e50;
@@ -418,26 +440,27 @@ export default {
                     }
                 }
             }
-
-
         }
     }
 
     .button-container {
         button {
             border-radius: 5px;
-            width: 120px;
+            width: 150px;
             height: 35px;
             background-color: white;
             color: #2c3e50;
             transition: all 300ms;
 
+            &.disabled {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+
             &:hover {
                 opacity: 0.8;
             }
         }
-
     }
-
 }
 </style>
