@@ -4,6 +4,7 @@ WORKDIR /app
 
 ENV DAGSTER_HOME=/app/.dagster_home
 RUN ln -s /app/.aws /root
+RUN ln -s /app/.kaggle /root
 
 COPY requirements.txt /app
 RUN pip install --upgrade pip
