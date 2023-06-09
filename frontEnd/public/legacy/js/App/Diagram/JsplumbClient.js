@@ -511,50 +511,76 @@ export default function run() {
 
         //click box, onclick box, box
         function handleSingleNodeSelection(node) {
-
             //remove highlight from any highlighted nodes
             unHighlightAllNodes();
             //Highlight selected node onle
             highlightSelectedNode(node);
 
-            if($(node).attr("type") === "KaggleDataset"){
-                const datasets = getKaggleDatasetsList();
+            // Kaggle Dataset ONLY
+            if ($(node).attr("type") === "KaggleDataset") {
+                // init
+                let page = 1;
+                getKaggleDatasetsList(page)
+                    .success((data) => {
+                        let HTML = updateKaggleDatasets(data)
+                        $("#propertiesBody").html(HTML);
+                        $("#kaggle_dataset_pagenumber").html(page);
+                        $("#kaggle_dataset_back").addClass("disabled");
+                    })
 
-                const startHTML = 
-                `
-                <form> 
-                    <div class="form-group">
-                        <label for="kaggle_dataset">Kaggle Dataset</label>
-                        <select id="kaggle_dataset" class="form-control" style="background-color: #8080805c  ; margin-left: 8px;">
-                `
-                const endHTML = 
-                `
-                        </select>
-                    </div>
-                </form>
-                <a id="kaggle_save" href="#" class="btn btn-primary">Set value</a>
-                `
+                // When You clik into dataset
+                $("#propertiesBody").on("click", ".option", function () {
+                    // switch active
+                    $(".option.active").removeClass("active")
+                    $(this).addClass("active")
 
-                let middleHTML = ''
-
-                $.each(datasets, function(i, dataset) {
-                    middleHTML += `<option value="${dataset.value}"> ${dataset.name}</option>`
+                    // remove disabled from the submit button
+                    $("#kaggle_dataset_submit").removeClass("disabled");
+                    // set value
+                    $("#kaggle_dataset").attr("value", $(this).attr('value'));
                 });
 
-                $("#propertiesBody").on("click", "#kaggle_save", function () {
-                    let nodeId = $("#kaggle_dataset").val()
+                // BACK Button
+                $("#propertiesBody").on("click", "#kaggle_dataset_back", function (e) {
+                    if (page > 1)
+                        getKaggleDatasetsList(--page)
+                            .success((data) => {
+                                let HTML = updateKaggleDatasets(data)
+                                $("#propertiesBody").html(HTML);
+                                $("#kaggle_dataset_pagenumber").html(page);
+                                if (page === 1)
+                                    $("#kaggle_dataset_back").addClass("disabled");
+                            })
+                    e.preventDefault();
+                });
+
+                // NEXT Button
+                $("#propertiesBody").on("click", "#kaggle_dataset_next", function (e) {
+                    getKaggleDatasetsList(++page)
+                        .success((data) => {
+                            let HTML = updateKaggleDatasets(data)
+                            $("#propertiesBody").html(HTML);
+                            $("#kaggle_dataset_pagenumber").html(page);
+                            $("#kaggle_dataset_back").removeClass("disabled");
+                        })
+                    e.preventDefault();
+                });
+
+                // SUBMIT Button
+                $("#propertiesBody").on("click", "#kaggle_dataset_submit", function (e) {
+                    let nodeId = $("#kaggle_dataset").attr('value');
                     updateNodeProperties(nodeId);
                     let workflowJson = formatFlowDiagramAsJson(instance.getAllConnections());
                     let asjson = JSON.parse(workflowJson);
                     asjson.wf_body.nodes[0].parameters[0].value = nodeId;
-                    workflowJson = JSON.stringify(asjson) 
+                    workflowJson = JSON.stringify(asjson)
                     let flowDiagramJson = workflowJson.replace('SelectDataset', 'SelectDatasetSample').replace('ReadCSV', 'ReadCSVSample')
                     workFlowExecution(flowDiagramJson);
+                    e.preventDefault();
                 });
-
-                $("#propertiesBody").html(startHTML+middleHTML+endHTML);
             }
 
+            // OTHER
             else {
                 sampleExecuteWorkflow(node['id']);
                 //get node attributes        
@@ -566,6 +592,44 @@ export default function run() {
                     includeSelectAllOption: true
                 });
             }
+        }
+
+        function updateKaggleDatasets(datasets) {
+            const startHTML =
+                `
+            <form> 
+            <div id="kaggle_dataset">
+            <div class="kaggle_dataset_title">Kaggle Datasets</div>
+            <div class="select-container">
+                <div class="layout">
+            `
+            const endHTML =
+                `
+                </div>
+                </div>
+                <div class="pagination-container">
+                    <button id="kaggle_dataset_back">
+                        <div class="icon-container left">
+                            <i class="icon left fa fa-angle-left" aria-hidden="true"></i>
+                        </div>
+                    </button>
+                    <div id="kaggle_dataset_pagenumber"></div>
+                    <button id="kaggle_dataset_next">
+                        <div class="icon-container right">
+                            <i class="icon right fa fa-angle-right" aria-hidden="true"></i>
+                        </div>
+                    </button>
+                </div>
+                <div class="button-container">
+                    <button id="kaggle_dataset_submit" class="disabled">Set Value</button>
+                </div>
+            </div>
+            `
+            let middleHTML = ''
+            $.each(datasets, function (i, dataset) {
+                middleHTML += `<div class="option" value="${dataset.ref}"> ${dataset.name}</div>`
+            });
+            return startHTML + middleHTML + endHTML;
         }
 
         function handleMultiNodeSelection(node) {

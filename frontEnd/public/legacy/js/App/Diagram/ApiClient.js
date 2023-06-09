@@ -714,24 +714,26 @@ function getNodeOutputMetadata(workflowJson) {
     });
 }
 
-function getKaggleDatasetsList() {
-    let data;
-    $.ajax({
-        url: API_URL + GET_KAGGLE_DATASETS,
-        method: "GET",
-        async: false,
-        contentType: "application/json",
-        cache: false,
-        datatype: "json",
-        success: function (response) {
-            data = response;
-        },
-        error: function (response) {
-            console.log('error', response);
-        }
-    });
-
-    return data;
+function getKaggleDatasetsList(page) {
+        return $.ajax({
+            url: `${API_URL}${GET_KAGGLE_DATASETS}${page}/`,
+            method: "GET",
+            contentType: "application/json",
+            cache: false,
+            datatype: "json",
+            beforeSend: function () {
+                $("#loader").css("display", "block");
+            },
+            complete: function () {
+                $("#loader").css("display", "none");
+            },
+            success: function (response) {
+                return response;
+            },
+            error: function (response) {
+                console.log('error', response);
+            }
+        });
 }
 
 function GET_NODES_DATA(username) {

@@ -11,19 +11,13 @@
                 <div class="buttons-container">
                     <button id="remove_node" type="button" class="delete-btn">
                         <span class="mytooltip expand" data-title="Eraser">
-                            <span
-                                class="icon fa fa-eraser"
-                                aria-hidden="true"
-                            ></span>
+                            <span class="icon fa fa-eraser" aria-hidden="true"></span>
                         </span>
                     </button>
 
                     <button id="clear" type="button" class="clear-btn">
                         <span class="mytooltip expand" data-title="Clear">
-                            <span
-                                class="icon fa fa-trash-o"
-                                aria-hidden="true"
-                            ></span>
+                            <span class="icon fa fa-trash-o" aria-hidden="true"></span>
                         </span>
                     </button>
                 </div>
@@ -119,6 +113,7 @@ export default {
                 position: absolute;
                 margin-left: -40px;
             }
+
             //arrow
             .mytooltip:after {
                 border-right: 6px solid transparent;
@@ -130,6 +125,7 @@ export default {
                 top: 20px;
                 left: 43px;
             }
+
             //text
             .mytooltip:before {
                 background: rgba(255, 255, 255, 0.75);
@@ -148,15 +144,18 @@ export default {
                 transform: scale3d(0.2, 0.2, 1);
                 transition: all 0.2s ease-in-out;
             }
+
             .mytooltip.expand:after {
                 transform: translate3d(0, 6px, 0);
                 transition: all 0.1s ease-in-out;
             }
+
             .mytooltip.expand:hover:before,
             .mytooltip.expand:hover:after {
                 opacity: 1;
                 transform: scale3d(1, 1, 1);
             }
+
             .mytooltip.expand:hover:after {
                 transition: all 0.2s 0.1s ease-in-out;
             }
@@ -182,7 +181,7 @@ export default {
     }
 }
 
-#trigger-properties:checked + div {
+#trigger-properties:checked+div {
     margin-right: -270px;
 }
 
@@ -242,9 +241,6 @@ export default {
 
         form {
             .form-group {
-                label {
-                }
-
                 select {
                     margin: 0 !important;
                     background-color: rgba(255, 255, 255, 0.836) !important;
@@ -259,6 +255,7 @@ export default {
                 }
             }
         }
+
         hr {
             margin: 20px;
             border-color: rgba(255, 255, 255, 0.836);
@@ -269,10 +266,12 @@ export default {
             font-size: 20px;
             color: #d73fda;
         }
+
         #propertiesWindowHint {
             color: rgba(255, 255, 255, 0.836);
             font-size: 16px;
         }
+
         #propertiesWindowHint::after {
             content: " !";
             font-size: 20px;
@@ -291,8 +290,8 @@ export default {
     justify-content: center;
     align-items: center;
     row-gap: 10px;
-    
-    > label {
+
+    >label {
         margin: 0;
         font-size: 13px;
         background: rgba(255, 255, 255, 0.863);
@@ -304,19 +303,164 @@ export default {
         padding: 3px 2px 2px 10px;
         line-height: 2.2;
 
-        > .fa-cloud-upload {
+        >.fa-cloud-upload {
             margin-top: 5px;
             margin-right: 13px;
         }
     }
 
-    > input {
+    >input {
         display: none;
     }
-    
-    > span {
+
+    >span {
         color: rgb(202, 0, 0);
         display: none;
+    }
+}
+
+#kaggle_dataset {
+    height: 600px;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 5px;
+
+    .kaggle_dataset_title {
+        font-size: 23px;
+    }
+
+    .select-container {
+        flex-grow: 3;
+        background: white;
+        border-radius: 5px;
+        position: relative;
+
+        .layout {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            padding: 5px;
+            overflow-y: scroll;
+            overflow-x: none;
+
+            display: flex;
+            flex-flow: column nowrap;
+            row-gap: 5px;
+
+            &::-webkit-scrollbar {
+                width: 5px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: grey;
+
+                &:hover {
+                    opacity: 0.9;
+                }
+            }
+
+            .option {
+                background-color: rgb(214, 214, 214);
+                border-radius: 5px;
+                color: black;
+                padding: 5px;
+                cursor: pointer;
+                transition: all 300ms;
+
+                &.active {
+                    background-color: #2c3e50;
+                    color: white;
+                }
+
+                &:hover {
+                    background-color: #2c3e50;
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .pagination-container {
+        display: flex;
+        flex-flow: row nowrap;
+        width: 100%;
+        height: 30px;
+        column-gap: 3px;
+
+        #kaggle_dataset_pagenumber {
+            padding: 0 10px;
+            line-height: 2;
+
+        }
+
+        button {
+            width: 100%;
+            transition: all 300ms;
+
+            &:hover {
+                opacity: 0.8;
+            }
+
+            &.disabled {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+
+            .icon-container {
+                width: 100%;
+                height: 100%;
+                background-color: white;
+
+                &.right {
+                    border-radius: 0 5px 5px 0;
+                }
+
+                &.left {
+                    border-radius: 5px 0 0 5px;
+                }
+
+                .icon {
+                    color: #2c3e50;
+                    font-size: 30px;
+                    font-weight: bold;
+
+                    &.right {
+                        padding-left: 4px;
+                    }
+
+                    &.left {
+                        padding-right: 4px;
+                    }
+                }
+            }
+        }
+    }
+
+    .button-container {
+        button {
+            border-radius: 5px;
+            width: 150px;
+            height: 35px;
+            background-color: white;
+            color: #2c3e50;
+            transition: all 300ms;
+
+            &.disabled {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
     }
 }
 </style>

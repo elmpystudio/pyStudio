@@ -37,7 +37,7 @@ def open(request):
 @permission_classes([IsAuthenticated])
 def sync(request):
     user = request.user
-    container_name = "jupyter-"+user.username
+    container_name = "jupyter-"+user.username.lower()
 
     # Validate if container [Exist] or [Running]
     try:
@@ -49,7 +49,7 @@ def sync(request):
         return Response({"status": "Error", "message": "Container Not Exist."}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
     datasets = Dataset.objects.filter(user=user)
-    tmp = "/tmp/api/jupyterhub/"+user.username
+    tmp = "/tmp/api/jupyterhub/"+user.username.lower()
     os.system("mkdir -p "+tmp)
     for dataset in datasets:
         filepath = tmp+"/"+dataset.filename
@@ -98,5 +98,5 @@ def auth_step3(request):
     queue.delete()
 
     return JsonResponse({
-        "username": user.username 
+        "username": user.username.lower()
     })
