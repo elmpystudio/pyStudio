@@ -60,7 +60,7 @@
                         {
                             "display_name": "Dataset Name",
                             "lookup": [],
-                            "name": "kaggle_name",
+                            "name": "dataset_name",
                             "type": "string",
                             "value": ""
                         }
