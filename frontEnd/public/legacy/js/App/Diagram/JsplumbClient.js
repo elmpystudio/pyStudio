@@ -520,11 +520,13 @@ export default function run() {
             if ($(node).attr("type") === "KaggleDataset") {
                 // init
                 let page = 1;
-                getKaggleDatasetsList(page)
+                let search = "";
+                getKaggleDatasetsList(page, search)
                     .success((data) => {
                         let HTML = updateKaggleDatasets(data)
                         $("#propertiesBody").html(HTML);
                         $("#kaggle_dataset_pagenumber").html(page);
+                        $("#kaggle_dataset_search_input").val(search)
                         $("#kaggle_dataset_back").addClass("disabled");
                     })
 
@@ -533,21 +535,53 @@ export default function run() {
                     // switch active
                     $(".option.active").removeClass("active")
                     $(this).addClass("active")
-
                     // remove disabled from the submit button
                     $("#kaggle_dataset_submit").removeClass("disabled");
                     // set value
                     $("#kaggle_dataset").attr("value", $(this).attr('value'));
                 });
 
-                // BACK Button
-                $("#propertiesBody").on("click", "#kaggle_dataset_back", function (e) {
-                    if (page > 1)
-                        getKaggleDatasetsList(--page)
+                // SEARCH Button
+                $("#propertiesBody").on("click", "#kaggle_dataset_search_submit", function (e) {
+                    // if search input NOT empty
+                    if ($("#kaggle_dataset_search_input").val() !== "") { 
+                        page = 1;
+                        search = $("#kaggle_dataset_search_input").val();
+                        getKaggleDatasetsList(page, search)
                             .success((data) => {
                                 let HTML = updateKaggleDatasets(data)
                                 $("#propertiesBody").html(HTML);
                                 $("#kaggle_dataset_pagenumber").html(page);
+                                $("#kaggle_dataset_search_input").val(search)
+                                $("#kaggle_dataset_back").addClass("disabled");
+                            })
+                    }
+                    // if search input empty
+                    else {
+                        page = 1;
+                        search = "";
+                        $("#kaggle_dataset_back").addClass("disabled");
+                        getKaggleDatasetsList(page, search)
+                            .success((data) => {
+                                let HTML = updateKaggleDatasets(data)
+                                $("#propertiesBody").html(HTML);
+                                $("#kaggle_dataset_pagenumber").html(page);
+                                $("#kaggle_dataset_search_input").val(search)
+                                $("#kaggle_dataset_back").addClass("disabled");
+                            })
+                    }
+                    e.preventDefault();
+                });
+
+                // BACK Button
+                $("#propertiesBody").on("click", "#kaggle_dataset_back", function (e) {
+                    if (page > 1)
+                        getKaggleDatasetsList(--page, search)
+                            .success((data) => {
+                                let HTML = updateKaggleDatasets(data)
+                                $("#propertiesBody").html(HTML);
+                                $("#kaggle_dataset_pagenumber").html(page);
+                                $("#kaggle_dataset_search_input").val(search)
                                 if (page === 1)
                                     $("#kaggle_dataset_back").addClass("disabled");
                             })
@@ -556,11 +590,12 @@ export default function run() {
 
                 // NEXT Button
                 $("#propertiesBody").on("click", "#kaggle_dataset_next", function (e) {
-                    getKaggleDatasetsList(++page)
+                    getKaggleDatasetsList(++page, search)
                         .success((data) => {
                             let HTML = updateKaggleDatasets(data)
                             $("#propertiesBody").html(HTML);
                             $("#kaggle_dataset_pagenumber").html(page);
+                            $("#kaggle_dataset_search_input").val(search)
                             $("#kaggle_dataset_back").removeClass("disabled");
                         })
                     e.preventDefault();
@@ -600,6 +635,10 @@ export default function run() {
             <form> 
             <div id="kaggle_dataset">
             <div class="kaggle_dataset_title">Kaggle Datasets</div>
+            <div class="search_input_container">
+                <input id="kaggle_dataset_search_input" type="text" placeholder="Ex: Car Dataset">
+                <button id="kaggle_dataset_search_submit">Search</button>
+            </div>
             <div class="select-container">
                 <div class="layout">
             `

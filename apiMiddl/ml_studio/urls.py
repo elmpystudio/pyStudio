@@ -5,6 +5,7 @@ app_name = 'machine_learning_app'
 urlpatterns = [
 
     path('nodes/get_kaggle_datasets_list/<int:page>/', views.get_kaggle_datasets_list, name='get_kaggle_datasets_list'),
+    path('nodes/get_kaggle_datasets_list/<int:page>/<str:search>/', views.get_kaggle_datasets_list, name='get_kaggle_datasets_list'),
 
     # ok
     re_path(r'^nodes/list', views.get_nodes_list, name='get_nodes_list'),

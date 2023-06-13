@@ -714,9 +714,13 @@ function getNodeOutputMetadata(workflowJson) {
     });
 }
 
-function getKaggleDatasetsList(page) {
+function getKaggleDatasetsList(page, search="") {
+        let url = `${API_URL}${GET_KAGGLE_DATASETS}${page}/`;
+        if(search !== "")
+            url = `${API_URL}${GET_KAGGLE_DATASETS}${page}/${search}/`;
+
         return $.ajax({
-            url: `${API_URL}${GET_KAGGLE_DATASETS}${page}/`,
+            url: url,
             method: "GET",
             contentType: "application/json",
             cache: false,
