@@ -328,6 +328,38 @@ export default {
 
     .kaggle_dataset_title {
         font-size: 23px;
+        padding-bottom: 10px;
+    }
+
+    .search_input_container {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        column-gap: 5px;
+
+        #kaggle_dataset_search_input {
+            background-color: white;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        #kaggle_dataset_search_submit {
+            border-radius: 5px;
+            width: 150px;
+            height: 35px;
+            background-color: white;
+            color: #2c3e50;
+            transition: all 300ms;
+
+            &.disabled {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
     }
 
     .select-container {
