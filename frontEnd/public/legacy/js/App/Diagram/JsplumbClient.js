@@ -544,7 +544,7 @@ export default function run() {
                 // SEARCH Button
                 $("#propertiesBody").on("click", "#kaggle_dataset_search_submit", function (e) {
                     // if search input NOT empty
-                    if ($("#kaggle_dataset_search_input").val() !== "") { 
+                    if ($("#kaggle_dataset_search_input").val() !== "") {
                         page = 1;
                         search = $("#kaggle_dataset_search_input").val();
                         getKaggleDatasetsList(page, search)
@@ -603,11 +603,20 @@ export default function run() {
 
                 // SUBMIT Button
                 $("#propertiesBody").on("click", "#kaggle_dataset_submit", function (e) {
-                    let nodeId = $("#kaggle_dataset").attr('value');
-                    updateNodeProperties(nodeId);
+                    let value = $("#kaggle_dataset").attr('value');
+
+                    // save value in nodesList
+                    nodesList.forEach(function (object, index) {
+                        object.proprties.forEach(function (property, index) {
+                            if (property.display_name === "Dataset Name")
+                                property.value = value;
+                        })
+                    })
+
+                    updateNodeProperties(value);
                     let workflowJson = formatFlowDiagramAsJson(instance.getAllConnections());
                     let asjson = JSON.parse(workflowJson);
-                    asjson.wf_body.nodes[0].parameters[0].value = nodeId;
+                    asjson.wf_body.nodes[0].parameters[0].value = value;
                     workflowJson = JSON.stringify(asjson)
                     let flowDiagramJson = workflowJson.replace('SelectDataset', 'SelectDatasetSample').replace('ReadCSV', 'ReadCSVSample')
                     workFlowExecution(flowDiagramJson);
