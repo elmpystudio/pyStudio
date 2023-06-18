@@ -12,19 +12,19 @@
 
             <div class="buttons-container">
                 <a href="https://github.com/elmpystudio/pyStudio" target="_blank" class="button">
-                    Vist us on GitHub
+                    Vist us on <p class="headlink github">GitHub</p>
                 </a>
 
                 <a href="https://twitter.com/elmPyStudio" target="_blank" class="button">
-                    Follow us on Twitter
+                    Follow us on <p class="headlink twitter">Twitter</p>
                 </a>
 
                 <a href="https://www.reddit.com/r/pyStudio" target="_blank" class="button">
-                    Join us on Reddit
+                    Join us on <p class="headlink reddit">Reddit</p>
                 </a>
 
                 <a href="https://pystudio-workspace.slack.com/join/shared_invite/zt-1xi5r2uo4-aGSvV4gxxM68HM_FmWOVQg#/shared-invite/email" target="_blank" class="button">
-                    Talk on Slack
+                    Talk on <p class="headlink slack">Slack</p>
                 </a>
             </div>
         </div>
@@ -91,6 +91,27 @@ export default {
                 text-decoration: none;
                 border-bottom: 2px solid white;
                 transition: all 300ms;
+
+                .headlink {
+                    display: inline;
+                    font-weight: bold;
+                    
+                    &.github {
+                        color: #161B22;
+                    }
+
+                    &.twitter {
+                        color: #1D9BF0;
+                    }
+
+                    &.reddit {
+                        color: #FF4500;
+                    }
+
+                    &.slack {
+                        color: #ECB22E;
+                    }
+                }
 
                 &:hover {
                     opacity: 0.8;
