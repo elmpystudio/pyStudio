@@ -11,8 +11,21 @@
             </div>
 
             <div class="buttons-container">
-                <a href="https://github.com/elmpystudio/pyStudio" target="_blank" class="button">Vist our project in
-                    GitHub</a>
+                <a href="https://github.com/elmpystudio/pyStudio" target="_blank" class="button">
+                    Vist us on GitHub
+                </a>
+
+                <a href="https://twitter.com/elmPyStudio" target="_blank" class="button">
+                    Follow us on Twitter
+                </a>
+
+                <a href="https://www.reddit.com/r/pyStudio" target="_blank" class="button">
+                    Join us on Reddit
+                </a>
+
+                <a href="https://pystudio-workspace.slack.com/join/shared_invite/zt-1xi5r2uo4-aGSvV4gxxM68HM_FmWOVQg#/shared-invite/email" target="_blank" class="button">
+                    Talk on Slack
+                </a>
             </div>
         </div>
     </div>
@@ -68,15 +81,20 @@ export default {
 
         .buttons-container {
             padding-top: 10px;
+            display: flex;
+            flex-wrap: row nowrap;
+            justify-content: space-around;
 
             .button {
                 color: white;
                 font-size: 20px;
-                text-decoration: underline;
+                text-decoration: none;
+                border-bottom: 2px solid white;
                 transition: all 300ms;
 
                 &:hover {
                     opacity: 0.8;
+                    border-color: rgb(218, 218, 218);
                 }
             }
         }
