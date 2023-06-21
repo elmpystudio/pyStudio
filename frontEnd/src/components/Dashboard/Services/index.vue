@@ -250,10 +250,18 @@ export default {
         handle_run2(file) {
             this.run2.isLoading = true;
 
+            let columns = [];
+            this.ml_model.columns.forEach((column) => {
+                columns.push(column.name)
+            })
+
+            console.log(columns);
+
             run_mlModels2({
                 model_name: this.ml_model.model_name,
                 username: this.ml_model.username,
                 file: file,
+                columns: JSON.stringify(columns),
                 isBulk: true
             })
                 .then(({ status, data }) => {

@@ -81,5 +81,5 @@ def run1(request):
 def run2(request):
     url = settings.ML_ROOT_URL + "run/" + request.POST.get('username') + "_" + request.POST.get('model_name')
     file = request.FILES['file']
-    response = requests.post(url, files={'file': file})
+    response = requests.post(url, files={'file': file}, data={'columns': request.data['columns']})
     return Response(response.text, status=response.status_code)
