@@ -393,9 +393,11 @@ def run_model_as_service(model_name):
                 for row in reader:
                     # if 0 <= pepe_column_index < len(row):
                     #     del row[pepe_column_index]  # Skip the "PEPE" column
-                    for index in column_index:
-                        if 0 <= index < len(row):
+
+                    for index in sorted(column_index, reverse=True):
+                        if -1 < index < len(row):
                             del row[index]
+
                     converted_row = []
                     for value in row:
                         # if value is category get the numeric value from databse
