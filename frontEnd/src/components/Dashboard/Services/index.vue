@@ -252,10 +252,9 @@ export default {
 
             let columns = [];
             this.ml_model.columns.forEach((column) => {
-                columns.push(column.name)
-            })
-
-            console.log(columns);
+                if(!column.hasOwnProperty("values"))
+                    columns.push(column.name);
+            });
 
             run_mlModels2({
                 model_name: this.ml_model.model_name,
@@ -276,13 +275,6 @@ export default {
                     this.run2.isLoading = false;
                 });
         },
-
-        // handle_action(who) {
-        //     if (who.name === "run1")
-        //         this.handle_run1();
-        //     else
-        //         this.handle_run2(who.file);
-        // }
     },
 };
 </script>
