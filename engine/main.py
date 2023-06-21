@@ -22,7 +22,7 @@ from tasks.ml_menu_generator import make_the_menu
 from solids import *
 
 test = make_the_menu()
-print (str(test))
+print(str(test))
 
 app = Flask(__name__)
 
@@ -70,6 +70,8 @@ def handle_resources(wf):
 @resource
 def nothing(init_context):
     return None
+
+
 # there is no pySpark
 def execute(wf, mode='light', storage={'s3': {'config': {'s3_bucket': 'dagster-test'}}}):
     ##json parsing
@@ -355,7 +357,7 @@ models_cash = {}
 
 
 @app.route('/run/<model_name>', methods=['POST'])
-def run_model_as_service(model_name):    
+def run_model_as_service(model_name):
     loaded_model = models_cash.get(model_name)
     if not loaded_model:
         loaded_model = get_deployed_wf_model(model_name)
@@ -370,43 +372,30 @@ def run_model_as_service(model_name):
                 reader = csv.reader(stream, delimiter=',')
                 header = next(reader)
                 header.append("Result")
-
-                # pending get columns from database and use them here below to remove the not used ones
                 exist_columns = json.loads(request.form.get('columns'))
 
-                pepe_column_index = []
-                pepe_column_names = []
-
+                column_index = []
+                column_names = []
                 for column in header:
-                    # print(column, end="\n")
+                    if column not in exist_columns:
+                        column_index.append(header.index(column))
+                        column_names.append(column)
 
-                    if column in exist_columns :
-                       pepe_column_index.append(header.index(column))
-                       pepe_column_names.append(column)
-
-
-                for index in pepe_column_names:
+                for index in column_names:
                     header.remove(index)
-
-                
 
                 # pepe_column_index = header.index("TAX") if "TAX" in header else -1
                 # header.remove("TAX")
-
                 csv_output = ""
                 csv_output += ','.join(header) + '\n'
 
                 print("RESULT", csv_output)
-
                 for row in reader:
                     # if 0 <= pepe_column_index < len(row):
                     #     del row[pepe_column_index]  # Skip the "PEPE" column
-
-                    for index in pepe_column_index:
+                    for index in column_index:
                         if 0 <= index < len(row):
                             del row[index]
-
-
                     converted_row = []
                     for value in row:
                         # if value is category get the numeric value from databse
@@ -423,7 +412,7 @@ def run_model_as_service(model_name):
                         print(e)
                         print(test)
                         classification = "null"
-                    
+
                     row.append(str(classification[0].item()))
                     csv_output += ','.join(row) + '\n'
 
@@ -461,7 +450,9 @@ def run_model_as_service(model_name):
 
 
 CSVS = "./engine/user/csvs/"
-@app.route('/uploader', methods = ['POST'])
+
+
+@app.route('/uploader', methods=['POST'])
 def upload_file():
     f = request.files['file']
     csv_file = CSVS + f.filename
