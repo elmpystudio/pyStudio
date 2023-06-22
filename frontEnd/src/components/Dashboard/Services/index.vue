@@ -236,6 +236,7 @@ export default {
                             this.run1.response = "Result = " + JSON.parse(data.result)[0];
                         else
                             this.run1.response = JSON.stringify(data);
+                        this.run1.response = ""
                     }
                 })
                 .catch((error) => {
@@ -264,8 +265,10 @@ export default {
                 isBulk: true
             })
                 .then(({ status, data }) => {
-                    if (status === 200) 
+                    if (status === 200){
                         this.download(data, 'data.csv', 'text/csv');
+                        this.run2.response = ""
+                    }
                 })
                 .catch(error => {
                     this.run2.response = error;
