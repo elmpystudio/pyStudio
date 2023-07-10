@@ -264,6 +264,60 @@
                     "kind": "dataManipulation"
                 },
                 {
+                    "desc": "Task Name: Apply PCA<br>DESC: <br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- Label Column: Name of the label column <br>&nbsp&nbsp&nbsp&nbsp- Number of PCA Components: number of components to keep <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: a Data frame <br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output: a dimensionally reduced Data frame",
+                    "name": "Principal Component Analysis",
+                    "ports": [
+                        {
+                            "is_output": true,
+                            "type": "data"
+                        },
+                        {
+                            "is_output": false,
+                            "type": "data"
+                        }
+                    ],
+                    "proprties": [
+                        {
+                            "display_name": "Label Column",
+                            "name": "label_column",
+                            "type": "single_column",
+                            "value": ""
+                        },
+                        {
+                            "display_name": "Number of PCA Components",
+                            "name": "pca_components",
+                            "type": "integer",
+                            "value": ""
+                        }
+                    ],
+                    "type": "PCA_PC",
+                    "kind": "dataManipulation"
+                },
+                {
+                    "desc": "Task Name: Remove Low Varience Columns<br>DESC: <br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- Label Column: Name of the label column <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: a Data frame <br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output: a Data frame with no low varience columns",
+                    "name": "Ignore Low Varience",
+                    "ports": [
+                        {
+                            "is_output": true,
+                            "type": "data"
+                        },
+                        {
+                            "is_output": false,
+                            "type": "data"
+                        }
+                    ],
+                    "proprties": [
+                        {
+                            "display_name": "Label Column",
+                            "name": "label_column",
+                            "type": "single_column",
+                            "value": ""
+                        }
+                    ],
+                    "type": "ILV_PC",
+                    "kind": "dataManipulation"
+                },
+                {
                     "desc": "Task Name: Filling Missing with Mean<br>DESC: Filling missing records in a column with the mean of the column<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- Column Names: Names of the columns where missing records will be filled<br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: a Data frame with missing records<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: a Data frame with missing records filled",
                     "name": "Fill Missing with Mean",
                     "ports": [
@@ -641,6 +695,302 @@
             "backgroundColor": "#ffffff",
             "iconColor": "#000000",
             "iconName": "fa fa-cogs",
+            "name": "Incremental Learning",
+            "nodes": [
+                {
+                    "desc": "Task Name: Load Model<br>DESC: Retrain a model <br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- model name: the model name<br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: model name<br>&nbsp&nbsp&nbsp&nbsp-<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: a fitted(RE-trained) model",
+                    "name": "Load Model",
+                    "ports": [
+                        {
+                            "is_output": true,
+                            "type": "model"
+                        }
+                    ],
+                    "proprties": [
+                        {
+                            "display_name": "Model Name",
+                            "name": "model_name",
+                            "type": "string",
+                            "value": ""
+                        }
+                    ],
+                    "type": "PreTrainedModel",
+                    "kind": "machineLearning"
+                },
+                {
+                    "desc": "Task Name: Fit Model<br>DESC: Train initialized model with labeled data<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- label_column: labeled column which the model will train on<br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: a Data frame containing labeled data<br>&nbsp&nbsp&nbsp&nbsp- Input2: an Initialized model<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: a fitted(trained) model",
+                    "name": "Fit Model",
+                    "ports": [
+                        {
+                            "is_output": true,
+                            "type": "model"
+                        },
+                        {
+                            "is_output": false,
+                            "type": "model"
+                        },
+                        {
+                            "is_output": false,
+                            "type": "data"
+                        }
+                    ],
+                    "proprties": [
+                        {
+                            "display_name": "Label Column",
+                            "name": "label_column",
+                            "type": "single_column",
+                            "value": ""
+                        }
+                    ],
+                    "type": "FitModel",
+                    "kind": "machineLearning"
+                },
+                {
+                    "desc": "Task Name: Run Model<br>DESC: run fitted(trained) model to make predictions<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- label_column: unlabeled column to make prediction on<br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: a Data Frame with unlabeled data<br>&nbsp&nbsp&nbsp&nbsp- Input1: fitted model<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: a Data frame with predictions for the unlabeled data",
+                    "name": "Run Model",
+                    "ports": [
+                        {
+                            "is_output": true,
+                            "type": "data"
+                        },
+                        {
+                            "is_output": false,
+                            "type": "model"
+                        },
+                        {
+                            "is_output": false,
+                            "type": "data"
+                        }
+                    ],
+                    "proprties": [
+                        {
+                            "display_name": "Label Column",
+                            "name": "label_column",
+                            "type": "single_column",
+                            "value": ""
+                        }
+                    ],
+                    "type": "RunModel",
+                    "kind": "machineLearning"
+                }
+            ],
+            "groups": [
+                {
+                    "name": "Classification",
+                    "iconName": "fa fa-cogs",
+                    "nodes": [
+                        {
+                            "desc": "SGDC ... <br>DESC: SGDC Classifier<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: n_inputs<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: SGDC Model",
+                            "name": "SGDC Classifier",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Learning Rate",
+                                    "name": "learning_rate",
+                                    "type": "string",
+                                    "value": "optimal"
+                                }
+                            ],
+                            "type": "SGDC_Calissifier"
+                        },
+                        {
+                            "desc": "MultinomialNB <br>DESC: MultinomialNB Classifier<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: alpha<br>&nbsp&nbsp&nbsp&nbsp- Input2: fit_prior<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: MultinomialNB Model",
+                            "name": "MultinomialNB",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Alpha",
+                                    "name": "alpha",
+                                    "type": "float",
+                                    "value": "1.0"
+                                },
+                                {
+                                    "display_name": "Fit Prior",
+                                    "name": "fit_prior",
+                                    "type": "boolean",
+                                    "value": "True"
+                                }
+                            ],
+                            "type": "MultinomialNB_Classifier"
+                        },
+                        {
+                            "desc": "BernoulliNB <br>DESC: BernoulliNB Classifier<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: alpha<br>&nbsp&nbsp&nbsp&nbsp- Input2: fit_prior<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: BernoulliNB Model",
+                            "name": "BernoulliNB",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Alpha",
+                                    "name": "alpha",
+                                    "type": "float",
+                                    "value": "1.0"
+                                },
+                                {
+                                    "display_name": "Fit Prior",
+                                    "name": "fit_prior",
+                                    "type": "boolean",
+                                    "value": "True"
+                                }
+                            ],
+                            "type": "BernoulliNB_Classifier"
+                        },
+                        {
+                            "desc": "Perceptron <br>DESC: Perceptron Calissifier<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: penalty<br>&nbsp&nbsp&nbsp&nbsp- Input2: alpha<br>&nbsp&nbsp&nbsp&nbsp- Input3: fit_intercept<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: Perceptron Model",
+                            "name": "Perceptron",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Penalty",
+                                    "name": "penalty",
+                                    "type": "string",
+                                    "lookup": [
+                                        "None",
+                                        "l2",
+                                        "l1"
+                                    ],
+                                    "value": "None"
+                                },
+                                {
+                                    "display_name": "Alpha",
+                                    "name": "alpha",
+                                    "type": "float",
+                                    "value": "0.0001"
+                                },
+                                {
+                                    "display_name": "Fit Intercept",
+                                    "name": "fit_intercept",
+                                    "type": "boolean",
+                                    "value": "True"
+                                }
+                            ],
+                            "type": "Perceptron_Classifier"
+                        },
+                        {
+                            "desc": "PassiveAggressiveClassifier <br>DESC: Passive Agressive Calissifier<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: step_size<br>&nbsp&nbsp&nbsp&nbsp- Input2: fit_intercept<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: PassiveAggressiveClassifier Model",
+                            "name": "Passive Aggressive Classifier",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Step Size",
+                                    "name": "step_size",
+                                    "type": "float",
+                                    "value": "1.0"
+                                },
+                                {
+                                    "display_name": "Fit Intercept",
+                                    "name": "fit_intercept",
+                                    "type": "boolean",
+                                    "value": "True"
+                                }
+                            ],
+                            "type": "PassiveAggressive_Classifier"
+                        }
+                    ]
+                },
+                {
+                    "name": "Regression",
+                    "iconName": "fa fa-cogs",
+                    "nodes": [
+                        {
+                            "desc": "PassiveAggressiveRegressor <br>DESC: Passive Agressive Calissifier<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: step_size<br>&nbsp&nbsp&nbsp&nbsp- Input2: epsilon<<br>&nbsp&nbsp&nbsp&nbsp- Input3: fit_intercept<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: PassiveAggressiveRegressor Model",
+                            "name": "Passive Aggressive Regressor",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Step Size",
+                                    "name": "step_size",
+                                    "type": "float",
+                                    "value": "1.0"
+                                },
+                                {
+                                    "display_name": "Epsilon",
+                                    "name": "epsilon",
+                                    "type": "float",
+                                    "value": "0.1"
+                                },
+                                {
+                                    "display_name": "Fit Intercept",
+                                    "name": "fit_intercept",
+                                    "type": "boolean",
+                                    "value": "True"
+                                }
+                            ],
+                            "type": "PassiveAggressive_Regressor"
+                        }
+                    ]
+                },
+                {
+                    "name": "Clustering",
+                    "iconName": "fa fa-cogs",
+                    "nodes": [
+                        {
+                            "desc": "MiniBatchKMeans <br>DESC: Mini Batch KMeans Clusterer<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: n_clusters<br>&nbsp&nbsp&nbsp&nbsp- Input2: num_iter<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: MiniBatchKMeans Model",
+                            "name": "MiniBatchKMeans",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Number of Clusters",
+                                    "name": "n_clusters",
+                                    "type": "integer",
+                                    "value": "8"
+                                },
+                                {
+                                    "display_name": "Number of Iterations",
+                                    "name": "num_iter",
+                                    "type": "integer",
+                                    "value": "100"
+                                },
+                                {
+                                    "display_name": "Fit Intercept",
+                                    "name": "fit_intercept",
+                                    "type": "bool",
+                                    "value": "True"
+                                }
+                            ],
+                            "type": "MiniBatchKMeans"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "backgroundColor": "#ffffff",
+            "iconColor": "#000000",
+            "iconName": "fa fa-cogs",
             "name": "Machine Learning",
             "nodes": [
                 {
@@ -703,6 +1053,188 @@
             "groups": [
                 {
                     "name": "Top",
+                    "iconName": "fa fa-cogs",
+                    "nodes": [
+                        {
+                            "desc": "XGBRegressor<br>DESC: XGBRegressor<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: XGBRegressor model",
+                            "name": "XGBRegressor",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Tree Method",
+                                    "name": "tree_method",
+                                    "type": "string",
+                                    "value": "hist"
+                                }
+                            ],
+                            "type": "XGBRegressor"
+                        },
+                        {
+                            "desc": "XGBClassifier<br>DESC: XGBClassifier<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: XGBClassifier model",
+                            "name": "XGBClassifier",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "booster",
+                                    "name": "booster",
+                                    "type": "string",
+                                    "value": "gbtree"
+                                }
+                            ],
+                            "type": "XGBClassifier"
+                        },
+                        {
+                            "desc": "LGBMClassifier <br>DESC: LLGBMClassifier<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: LGBMClassifier model",
+                            "name": "LGBMClassifier",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "random_state",
+                                    "name": "random_state",
+                                    "type": "integer",
+                                    "value": "42"
+                                }
+                            ],
+                            "type": "LGBMClassifier"
+                        },
+                        {
+                            "desc": "BaggingClassifier <br>DESC: BaggingClassifier<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: BaggingClassifier model",
+                            "name": "BaggingClassifier",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "random state",
+                                    "name": "n_estimators",
+                                    "type": "integer",
+                                    "value": "10"
+                                },
+                                {
+                                    "display_name": "max features",
+                                    "name": "max_features",
+                                    "type": "integer",
+                                    "value": "1.0"
+                                }
+                            ],
+                            "type": "BaggingClassifier"
+                        },
+                        {
+                            "desc": "LGBMRegressor<br>DESC: LGBMRegressor<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: LGBMRegressor model",
+                            "name": "LGBMRegressor",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Number of leaves",
+                                    "name": "num_leaves",
+                                    "type": "integer",
+                                    "value": "30"
+                                },
+                                {
+                                    "display_name": "Learning rate in 0.... way",
+                                    "name": "learning_rate",
+                                    "type": "integer",
+                                    "value": "0.05"
+                                },
+                                {
+                                    "display_name": "number of estimators",
+                                    "name": "n_estimators",
+                                    "type": "integer",
+                                    "value": "20"
+                                }
+                            ],
+                            "type": "LGBMRegressor"
+                        },
+                        {
+                            "desc": "Adaboost<br>DESC: Adaboost<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: Adaboost model",
+                            "name": "Adaboost",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "algorithm",
+                                    "name": "algorithm",
+                                    "type": "string",
+                                    "value": "SAMME.R"
+                                }
+                            ],
+                            "type": "Adaboost"
+                        },
+                        {
+                            "desc": "CatBoost<br>DESC: CatBoost<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: CatBoost model",
+                            "name": "CatBoost",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Number of iterations",
+                                    "name": "iterations",
+                                    "type": "integer",
+                                    "value": "100"
+                                },
+                                {
+                                    "display_name": "task_type",
+                                    "name": "task_type",
+                                    "type": "string",
+                                    "value": "GPU"
+                                }
+                            ],
+                            "type": "CatBoost"
+                        },
+                        {
+                            "desc": "Long-Short-Term-Memory-<br>DESC: LSTM_Model<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: n_inputs<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: LSTM model",
+                            "name": "LSTM_Model",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Epochs",
+                                    "name": "epochs",
+                                    "type": "integer",
+                                    "value": "100"
+                                }
+                            ],
+                            "type": "LSTM_Model"
+                        }
+                    ]
+                },
+                {
+                    "name": "Classic",
                     "iconName": "fa fa-cogs",
                     "nodes": [
                         {
@@ -797,99 +1329,6 @@
                             "type": "RandomForestRegressor",
                             "kind": "noInput"
                         },
-                        {
-                            "desc": "XGBRegressor<br>DESC: XGBRegressor<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: XGBRegressor model",
-                            "name": "XGBRegressor",
-                            "ports": [
-                                {
-                                    "is_output": true,
-                                    "type": "model"
-                                }
-                            ],
-                            "proprties": [
-                                {
-                                    "display_name": "Tree Method",
-                                    "name": "tree_method",
-                                    "type": "string",
-                                    "value": "hist"
-                                }
-                            ],
-                            "type": "XGBRegressor"
-                        },
-                        {
-                            "desc": "XGBClassifier<br>DESC: XGBClassifier<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- to be defined <br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: XGBClassifier model",
-                            "name": "XGBClassifier",
-                            "ports": [
-                                {
-                                    "is_output": true,
-                                    "type": "model"
-                                }
-                            ],
-                            "proprties": [
-                                {
-                                    "display_name": "booster",
-                                    "name": "booster",
-                                    "type": "string",
-                                    "value": "gbtree"
-                                }
-                            ],
-                            "type": "XGBClassifier"
-                        },
-                        {
-                            "desc": "Task Name: K-Means Cluster<br>DESC: K-means clustering<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- n_clusters: The number of clusters to form as well as the number of centroids to generate<br>&nbsp&nbsp&nbsp&nbsp- init: Method for initialization<br>&nbsp&nbsp&nbsp&nbsp- n_init: Number of time the k-means algorithm will be run with different centroid seeds<br>&nbsp&nbsp&nbsp&nbsp- max_iter: Maximum number of iterations of the k-means algorithm for a single run<br>&nbsp&nbsp&nbsp&nbsp- tol: Relative tolerance with regards to inertia to declare convergence<br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: a K-means Cluster Model",
-                            "name": "k-Means",
-                            "ports": [
-                                {
-                                    "is_output": true,
-                                    "type": "model"
-                                }
-                            ],
-                            "proprties": [
-                                {
-                                    "display_name": "Initialization Method",
-                                    "name": "init",
-                                    "type": "string",
-                                    "lookup": [
-                                        "k-means++",
-                                        "random",
-                                        "an ndarray"
-                                    ],
-                                    "value": ""
-                                },
-                                {
-                                    "display_name": "Max Number of Iterations",
-                                    "name": "max_iter",
-                                    "type": "string",
-                                    "value": ""
-                                },
-                                {
-                                    "display_name": "Number of Clusters",
-                                    "name": "n_clusters",
-                                    "type": "string",
-                                    "value": ""
-                                },
-                                {
-                                    "display_name": "Initialization Number",
-                                    "name": "n_init",
-                                    "type": "int",
-                                    "value": "10"
-                                },
-                                {
-                                    "display_name": "Tolerance",
-                                    "name": "tol",
-                                    "type": "string",
-                                    "value": ""
-                                }
-                            ],
-                            "type": "Kmeans",
-                            "kind": "noInput"
-                        }
-                    ]
-                },
-                {
-                    "name": "Classic",
-                    "iconName": "fa fa-cogs",
-                    "nodes": [
                         {
                             "desc": "Task Name: Decision Tree<br>DESC: Decision Tree Classifier<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- criterion: The function to measure the quality of a split<br>&nbsp&nbsp&nbsp&nbsp- min_samples_split: The minimum number of samples required to split an internal node<br>&nbsp&nbsp&nbsp&nbsp- min_samples_leaf: The minimum number of samples required to be at a leaf node<br>&nbsp&nbsp&nbsp&nbsp- max_depth: (optional) The maximum depth of the tree<br>&nbsp&nbsp&nbsp&nbsp- max_leaf_nodes: (optional) Grow a tree with max leaf nodes in best-first fashion. Best nodes are defined as relative reduction in impurity<br>&nbsp&nbsp&nbsp&nbsp- random_state: Seed for the random generator<br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: Decision Tree classifier model",
                             "name": "Decision Tree Classifier",
@@ -1096,6 +1535,55 @@
                                 }
                             ],
                             "type": "MultilayerPerceptronClassifier",
+                            "kind": "noInput"
+                        },
+                        {
+                            "desc": "Task Name: K-Means Cluster<br>DESC: K-means clustering<br>Task Parameters:<br>&nbsp&nbsp&nbsp&nbsp- n_clusters: The number of clusters to form as well as the number of centroids to generate<br>&nbsp&nbsp&nbsp&nbsp- init: Method for initialization<br>&nbsp&nbsp&nbsp&nbsp- n_init: Number of time the k-means algorithm will be run with different centroid seeds<br>&nbsp&nbsp&nbsp&nbsp- max_iter: Maximum number of iterations of the k-means algorithm for a single run<br>&nbsp&nbsp&nbsp&nbsp- tol: Relative tolerance with regards to inertia to declare convergence<br>Task Inputs:<br>&nbsp&nbsp&nbsp&nbsp- Input1: None<br>Task Outputs:<br>&nbsp&nbsp&nbsp&nbsp- Output1: a K-means Cluster Model",
+                            "name": "k-Means",
+                            "ports": [
+                                {
+                                    "is_output": true,
+                                    "type": "model"
+                                }
+                            ],
+                            "proprties": [
+                                {
+                                    "display_name": "Initialization Method",
+                                    "name": "init",
+                                    "type": "string",
+                                    "lookup": [
+                                        "k-means++",
+                                        "random",
+                                        "an ndarray"
+                                    ],
+                                    "value": ""
+                                },
+                                {
+                                    "display_name": "Max Number of Iterations",
+                                    "name": "max_iter",
+                                    "type": "string",
+                                    "value": ""
+                                },
+                                {
+                                    "display_name": "Number of Clusters",
+                                    "name": "n_clusters",
+                                    "type": "string",
+                                    "value": ""
+                                },
+                                {
+                                    "display_name": "Initialization Number",
+                                    "name": "n_init",
+                                    "type": "int",
+                                    "value": "10"
+                                },
+                                {
+                                    "display_name": "Tolerance",
+                                    "name": "tol",
+                                    "type": "string",
+                                    "value": ""
+                                }
+                            ],
+                            "type": "Kmeans",
                             "kind": "noInput"
                         }
                     ]
