@@ -65,7 +65,7 @@ We are open source and we ❤️ contributions big or small. [See our guide](htt
 ### Get in touch 
 
 We are working in our social networks and website, our commintment is focused on the code just [check our commintment statement](https://github.com/elmpystudio/eps/blob/main/COMMINTMENT.md).
-For now you can contact directly to egomiciamur@elm.sa and if you want to know more about us [Check our division website](https://elm.sa/en/research-and-innovation/Pages/overview.aspx) 
+You can contact directly to hi@pystudio.org and if you want to know more about us [Check our division website](https://elm.sa/en/research-and-innovation/Pages/overview.aspx) 
 
 
 
