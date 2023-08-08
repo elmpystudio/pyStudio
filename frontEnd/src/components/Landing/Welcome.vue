@@ -16,7 +16,7 @@
                 </a>
 
                 <a href="https://twitter.com/elmPyStudio" target="_blank" class="button">
-                    Follow us on <p class="headlink twitter">Twitter</p>
+                    Follow us on <p class="headlink x">X</p>
                 </a>
 
                 <a href="https://www.reddit.com/r/pyStudio" target="_blank" class="button">
@@ -97,11 +97,11 @@ export default {
                     font-weight: bold;
                     
                     &.github {
-                        color: #161B22;
+                        color: #0D2636;
                     }
 
-                    &.twitter {
-                        color: #1D9BF0;
+                    &.x {
+                        color: black;
                     }
 
                     &.reddit {
