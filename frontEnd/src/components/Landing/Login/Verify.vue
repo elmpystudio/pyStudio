@@ -3,8 +3,8 @@
         <div class="name">
             Hey there! Please check your email (including your spam folder) for your OTP. We've sent it your way. Thanks!
         </div>
-        <CInput :id="email.id" :type="email.type" :placeholder="email.placeholder" :iconName="email.iconName"
-            :value="email_value" :rules="email.rules" @onChange="handleInput" />
+        <CInput :id="new_email.id" :type="new_email.type" :placeholder="new_email.placeholder" :iconName="new_email.iconName"
+            :value="email" :rules="new_email.rules" @onChange="handleInput" />
 
         <CInput :id="otp.id" :type="otp.type" :placeholder="otp.placeholder" :iconName="otp.iconName" :value="otp.value"
             :rules="otp.rules" @onChange="handleInput" />
@@ -18,7 +18,7 @@
 <script>
 import CInput from "@/components/CInput.vue";
 import CButton from "@/components/CButton.vue";
-import { verify } from "@/api_client.js";
+import { verify, login } from "@/api_client.js";
 
 export default {
     name: "Verify",
@@ -28,12 +28,14 @@ export default {
     },
 
     props: {
-        email_value: { type: String, required: true }
+        email: { type: String, required: true },
+        username: { type: String, required: true },
+        password: { type: String, required: true },
     },
 
     data() {
         return {
-            email: {
+            new_email: {
                 id: "email", //pass
                 type: "email", //pass
                 placeholder: "Email", //pass
@@ -58,7 +60,7 @@ export default {
 
     computed: {
         isValid() {
-            if ((this.email.isValid || this.email_value) && this.otp.isValid) return true;
+            if ((this.email || this.new_email.isValid) && this.otp.isValid) return true;
             return false;
         },
     },
@@ -71,13 +73,28 @@ export default {
         },
 
         handleSubmit() {
-            if (this.email.value === "")
-                this.email.value = this.email_value;
+            if (this.new_email.value !== "")
+                this.email = this.new_email.value;
 
-            verify({ email: this.email.value, otp: this.otp.value })
+            verify({ email: this.email, otp: this.otp.value })
                 .then(({ status }) => {
-                    if (status === 200)
-                        this.$emit("done");
+                    if (status === 200) {
+                        login({ username: this.username, password: this.password })
+                            .then(({ status, data }) => {
+                                if (status === 200) {
+                                    localStorage.setItem("token", data.token);
+                                    localStorage.setItem("username", this.username);
+                                    this.$router.push("/");
+                                }
+                            })
+                            .catch((error) => {
+                                if (error.response.status === 401)
+                                    if (error.response.data.detail === "User account not verified")
+                                        this.$emit("done", error.response)
+
+                                this.error = "Invalid credentials";
+                            });
+                    }
                 })
                 .catch(() => {
                     this.error = "Invalid credentials";

@@ -147,7 +147,9 @@ export default {
                 .then(() => {
                     this.$emit("done", {
                         good: true,
-                        email: this.email.value
+                        username: this.username.value,
+                        email: this.email.value,
+                        password: this.password.value
                     });
                 })
                 .catch((error) => {
