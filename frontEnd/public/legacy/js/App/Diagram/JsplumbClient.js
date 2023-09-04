@@ -81,6 +81,7 @@ export default function run() {
     let isWorkflowRanSuccessfuly = false;
     let executionType = "execution";
     let nodesList = [];
+    localStorage.removeItem("kaggle_dataset_node");
 
     jsPlumb.ready(function () {
         let instance = window.jsp = jsPlumb.getInstance({
@@ -521,14 +522,31 @@ export default function run() {
                 // init
                 let page = 1;
                 let search = "";
-                getKaggleDatasetsList(page, search)
-                    .success((data) => {
-                        let HTML = updateKaggleDatasets(data)
-                        $("#propertiesBody").html(HTML);
-                        $("#kaggle_dataset_pagenumber").html(page);
-                        $("#kaggle_dataset_search_input").val(search)
+                let html = "";
+
+                if (localStorage.getItem("kaggle_dataset_node")) {
+                    const kaggle_dataset_node = JSON.parse(localStorage.getItem("kaggle_dataset_node"));
+                    $("#propertiesBody").html(kaggle_dataset_node.html);
+                    $("#kaggle_dataset_pagenumber").html(kaggle_dataset_node.page);
+                    $("#kaggle_dataset_search_input").val(kaggle_dataset_node.search)
+                    if (page < 1)
                         $("#kaggle_dataset_back").addClass("disabled");
-                    })
+                }
+                else {
+                    getKaggleDatasetsList(1, "")
+                        .success((data) => {
+                            html = updateKaggleDatasets(data)
+                            $("#propertiesBody").html(html);
+                            $("#kaggle_dataset_pagenumber").html(page);
+                            $("#kaggle_dataset_search_input").val(search)
+                            $("#kaggle_dataset_back").addClass("disabled");
+                            localStorage.setItem("kaggle_dataset_node", JSON.stringify({
+                                html,
+                                page,
+                                search
+                            }))
+                        })
+                }
 
                 // When You clik into dataset
                 $("#propertiesBody").on("click", ".option", function () {
@@ -543,61 +561,66 @@ export default function run() {
 
                 // SEARCH Button
                 $("#propertiesBody").on("click", "#kaggle_dataset_search_submit", function (e) {
-                    // if search input NOT empty
-                    if ($("#kaggle_dataset_search_input").val() !== "") {
-                        page = 1;
-                        search = $("#kaggle_dataset_search_input").val();
-                        getKaggleDatasetsList(page, search)
-                            .success((data) => {
-                                let HTML = updateKaggleDatasets(data)
-                                $("#propertiesBody").html(HTML);
-                                $("#kaggle_dataset_pagenumber").html(page);
-                                $("#kaggle_dataset_search_input").val(search)
-                                $("#kaggle_dataset_back").addClass("disabled");
-                            })
-                    }
-                    // if search input empty
-                    else {
-                        page = 1;
-                        search = "";
-                        $("#kaggle_dataset_back").addClass("disabled");
-                        getKaggleDatasetsList(page, search)
-                            .success((data) => {
-                                let HTML = updateKaggleDatasets(data)
-                                $("#propertiesBody").html(HTML);
-                                $("#kaggle_dataset_pagenumber").html(page);
-                                $("#kaggle_dataset_search_input").val(search)
-                                $("#kaggle_dataset_back").addClass("disabled");
-                            })
-                    }
+                    page = 1;
+                    search = $("#kaggle_dataset_search_input").val();
+                    getKaggleDatasetsList(page, search)
+                        .success((data) => {
+                            html = updateKaggleDatasets(data)
+                            $("#propertiesBody").html(html);
+                            $("#kaggle_dataset_pagenumber").html(page);
+                            $("#kaggle_dataset_search_input").val(search)
+                            $("#kaggle_dataset_back").addClass("disabled");
+                            localStorage.setItem("kaggle_dataset_node", JSON.stringify({
+                                html,
+                                page,
+                                search
+                            }))
+                        })
                     e.preventDefault();
                 });
 
                 // BACK Button
                 $("#propertiesBody").on("click", "#kaggle_dataset_back", function (e) {
-                    if (page > 1)
+                    const kaggle_dataset_node = JSON.parse(localStorage.getItem("kaggle_dataset_node"));
+                    page = kaggle_dataset_node.page;
+                    search = kaggle_dataset_node.search;
+                    if (page > 1) {
                         getKaggleDatasetsList(--page, search)
                             .success((data) => {
-                                let HTML = updateKaggleDatasets(data)
-                                $("#propertiesBody").html(HTML);
+                                html = updateKaggleDatasets(data)
+                                $("#propertiesBody").html(html);
                                 $("#kaggle_dataset_pagenumber").html(page);
-                                $("#kaggle_dataset_search_input").val(search)
+                                $("#kaggle_dataset_search_input").val(search);
+                                localStorage.setItem("kaggle_dataset_node", JSON.stringify({
+                                    html,
+                                    page,
+                                    search
+                                }));
+
                                 if (page === 1)
                                     $("#kaggle_dataset_back").addClass("disabled");
-                            })
+                            });
+                    }
                     e.preventDefault();
                 });
 
                 // NEXT Button
                 $("#propertiesBody").on("click", "#kaggle_dataset_next", function (e) {
+                    const kaggle_dataset_node = JSON.parse(localStorage.getItem("kaggle_dataset_node"));
+                    page = kaggle_dataset_node.page;
+                    search = kaggle_dataset_node.search;
                     getKaggleDatasetsList(++page, search)
                         .success((data) => {
-                            let HTML = updateKaggleDatasets(data)
-                            $("#propertiesBody").html(HTML);
+                            html = updateKaggleDatasets(data)
+                            $("#propertiesBody").html(html);
                             $("#kaggle_dataset_pagenumber").html(page);
-                            $("#kaggle_dataset_search_input").val(search)
-                            $("#kaggle_dataset_back").removeClass("disabled");
-                        })
+                            $("#kaggle_dataset_search_input").val(search);
+                            localStorage.setItem("kaggle_dataset_node", JSON.stringify({
+                                html,
+                                page,
+                                search
+                            }));
+                        });
                     e.preventDefault();
                 });
 
@@ -799,6 +822,9 @@ export default function run() {
         }
 
         function removeAllNodes() {
+            if ($(this).attr("type") === "KaggleDataset")
+                localStorage.removeItem("kaggle_dataset_node");
+
             $("div.jtk-node").each(function () {
                 let nodeId = $(this).attr("id");
                 //remove all Endpoints and attached connections

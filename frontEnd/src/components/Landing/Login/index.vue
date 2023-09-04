@@ -35,7 +35,7 @@
 
         <Modal :active="modal_toggle" @close="modal_toggle = false">
             <template #default>
-                <Verify :email_value="email" @done="handle_verify" />
+                <Verify :email="email" :username="username" :password="password" @done="handle_verify" />
             </template>
         </Modal>
 
@@ -66,7 +66,9 @@ export default {
             tabContents: null,
             modal_toggle: false,
             loader_toggle: false,
-            email: null
+            email: null,
+            username: null,
+            password: null
         };
     },
 
@@ -89,6 +91,8 @@ export default {
         handle_register(response) {
             if (response.good) {
                 this.email = response.email;
+                this.username = response.username;
+                this.password = response.password;
                 this.modal_toggle = true;
                 this.openTab('login');
             }
