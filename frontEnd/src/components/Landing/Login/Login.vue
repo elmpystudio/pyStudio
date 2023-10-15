@@ -68,8 +68,10 @@ export default {
                 .then(({ status, data }) => {
                     if (status === 200) {
                         localStorage.setItem("token", data.token);
+                        localStorage.setItem("user_id", data.user_id);
                         localStorage.setItem("username", this.username.value);
                         this.$router.push("/");
+                        this.$store.dispatch('GET_NOTIFICATIONS');
                     }
                 })
                 .catch((error) => {

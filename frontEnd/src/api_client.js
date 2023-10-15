@@ -133,40 +133,42 @@ export const downloadMl_model = (id) => axios.get(`${API_URL}/api/marketplace/ml
         Authorization: `Bearer ${localStorage.getItem('token')}`
     }
 });
+
+export const datasetsAdd = (id, payload) => axios.post(`${API_URL}/api/marketplace/datasets/add/${id}`, payload, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
+export const ml_modelsAdd = (id, payload) => axios.post(`${API_URL}/api/marketplace/ml_models/add/${id}`, payload, {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+});
 // END MARKETPLACE
 
 // START NOTIFICATION
-export const getNotifications = () => axios.get(`${API_URL}/api/notifications/`, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
-// END MARKETPLACE
+// export const getNotifications = () => axios.get(`${API_URL}/api/notifications/`, {
+//     headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`
+//     }
+// });
 
+// export const createNotification = (payload) => axios.post(`${API_URL}/api/notifications/`, payload, {
+//     headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`
+//     }
+// });
 
-export const createNotification = (payload) => axios.post(`${API_URL}/api/notifications/`, payload, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
-
-
-export const acceptNotification = (id) => axios.get(`${API_URL}/api/notifications/accept/${id}`, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
 // end NOTIFICATION
 
 
-export const denyNotification = (id) => axios.get(`${API_URL}/api/notifications/deny/${id}`, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-});
+// export const denyNotification = (id) => axios.get(`${API_URL}/api/notifications/deny/${id}`, {
+//     headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`
+//     }
+// });
 // end NOTIFICATION
-
-
 
 export const getMarketplaceOfferings = () => axios.get(`${API_URL}/api/marketplace/offering/`, {
     headers: {

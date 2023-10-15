@@ -35,7 +35,7 @@ class Login(TokenObtainPairView):
         token = serializer.validated_data['access']
         user.last_login = timezone.now()
         user.save()
-        return Response({'token': str(token)})
+        return Response({'token': str(token), 'user_id': user.id})
 
 @csrf_exempt
 def register(request):

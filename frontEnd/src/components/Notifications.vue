@@ -1,27 +1,27 @@
 <template>
     <div class="notifications" v-if="data.length > 0">
-        <div class="content" v-for="notification in data" :key="notification.id"
-            :id="`notification_${notification.id}`">
+
+        <div class="content" v-for="(notification, index) in data" :key="index" :id="`notification_${index}`">
             <div class="message-container">
-                <h6 class="title">
-                    <span v-if="notification.dataset">Dataset</span>
-                    <span v-else-if="notification.ml_model">ML_Model</span>
+                <h6 class="title" v-if="notification.isRequest">
                     Request
                 </h6>
-                <p class="message">{{ short_message(notification.message) }}</p>
+                <h6 class="title" v-else>
+                    Response
+                </h6>
+                <p class="message" v-if="notification.isRequest">{{ short_message(notification.message) }}</p>
+                <p class="message" v-else>
+                    Your Request is {{ acceptOrNot(notification) }}
+                </p>
+
                 <div class="more-container">
 
                     <div class="more">
                         <div class="name">
                             Name:
                         </div>
-                        <!-- Dataset -->
-                        <div class="value" v-if="notification.dataset">
-                            {{ notification.dataset.name }}
-                        </div>
-                        <!-- Ml_model -->
-                        <div class="value" v-else-if="notification.ml_model">
-                            {{ notification.ml_model.name }}
+                        <div class="value">
+                            {{ short_message(notification.name) }}
                         </div>
                     </div>
 
@@ -30,16 +30,20 @@
                             From:
                         </div>
                         <div class="value">
-                            {{ notification.from_user.username }}
+                            {{ notification.username }}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="actions-container">
-                <v-btn class="action primary" @click="handle_action('accept', notification.id)">Accept</v-btn>
-                <v-btn class="action danger" @click="handle_action('deny', notification.id)">Deny</v-btn>
+            <div class="actions-container" v-if="notification.isRequest">
+                <v-btn class="action primary" @click="handle_action('accept', notification)">Accept</v-btn>
+                <v-btn class="action danger" @click="handle_action('deny', notification)">Deny</v-btn>
+            </div>
+            <div class="actions-container" v-else>
+                <v-btn class="action primary" @click="handle_ok(notification)">Ok</v-btn>
             </div>
         </div>
+
     </div>
 
     <div class="notifications empty" v-else>
@@ -49,10 +53,11 @@
 </template>
 
 <script>
-import $ from 'jquery';
+import { datasetsAdd, ml_modelsAdd } from "@/api_client";
 
 export default {
     name: "Notifications",
+    
     props: {
         short: { type: Boolean, default: false }
     },
@@ -64,21 +69,64 @@ export default {
     },
 
     methods: {
-        handle_action(type, id) {
-            if (type === 'accept')
-                this.$store.dispatch('ACCEPT_NOTIFICATION', id);
-            else if (type === 'deny')
-                this.$store.dispatch('DENY_NOTIFICATION', id);
+        handle_action(type, notification) {
+            if (type === 'accept') {
+                if (notification.type === "dataset")
+                    datasetsAdd(notification.id, {
+                        user_id: notification.user_id
+                    })
+                        .then(({ status }) => {
+                            if (status === 200)
+                                return;
+                        })
+                        .catch((error) => console.log(error))
+                else
+                    ml_modelsAdd(notification.id, {
+                        user_id: notification.user_id
+                    })
+                        .then(({ status }) => {
+                            if (status === 200)
+                                return;
+                        })
+                        .catch((error) => console.log(error))
+            }
 
-            $(`#notification_${id}`).addClass("hide");
-            this.$store.dispatch('GET_NOTIFICATIONS');
+            // Delete it
+            this.$store.dispatch('DELETE_NOTIFICATION', notification);
+
+            // answer
+            this.$store.dispatch('SET_NOTIFICATION', {
+                owner_id: notification.user_id,
+                data: {
+                    id: notification.id,
+                    name: notification.name,
+                    type: notification.type,
+                    message: notification.message,
+                    user_id: localStorage.getItem("user_id"),
+                    username: localStorage.getItem("username"),
+                    isAccept: type === 'accept'
+                }
+            });
+        },
+
+        handle_ok(notification) {
+            if (notification.isAccept)
+                location.reload();
+            this.$store.dispatch('DELETE_NOTIFICATION', notification);
         },
 
         short_message(message) {
             if (this.short)
-                return message.substring(0, 60) + '...';
+                if (message.length > 15)
+                    return message.substring(0, 30) + '...';
             return message;
         },
+
+        acceptOrNot(notification) {
+            if (notification.isAccept)
+                return 'Aceepted';
+            return 'Denied';
+        }
     }
 }
 </script>

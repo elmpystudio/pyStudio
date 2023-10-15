@@ -7,6 +7,7 @@ import random
 import string
 from datasets.models import Dataset
 from ml_models.models import Ml_model
+from users.models import User
 from .serializers import DatasetSerializer, Ml_modelSerializer, DatasetDownloadSerializer, Ml_modelDownloadSerializer
     
 class DatasetList(APIView):
@@ -72,3 +73,34 @@ class Ml_modelDownload(APIView):
         ml_model.file = 'tmp/' + file_name
         serializer = Ml_modelDownloadSerializer(ml_model)
         return Response(serializer.data)
+
+class DatasetAdd(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk, format=None):
+        dataset = Dataset.objects.get(pk=pk, user=request.user)
+        askUser = request.data['user_id']
+
+        # Check if user exist
+        if User.objects.filter(pk=askUser):
+            dataset.purchased.add(askUser)
+
+        return Response({"status": "Success", "message": "user added successfully"}, status=status.HTTP_200_OK)    
+
+
+
+class Ml_modelAdd(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk, format=None):
+        ml_model = Ml_model.objects.get(pk=pk, user=request.user)
+        askUser = request.data['user_id']
+
+        # Check if user exist
+        if User.objects.filter(pk=askUser):
+            ml_model.purchased.add(askUser)
+
+        return Response({"status": "Success", "message": "user added successfully"}, status=status.HTTP_200_OK) 
+
+    
+

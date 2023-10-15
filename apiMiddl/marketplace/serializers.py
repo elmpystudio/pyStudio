@@ -31,7 +31,8 @@ class DatasetSerializer(serializers.ModelSerializer):
             'uuid',
             'file',
             'user',
-            'access'
+            'access',
+            'user'
         ]
 
 class Ml_modelSerializer(serializers.ModelSerializer):
@@ -62,7 +63,8 @@ class Ml_modelSerializer(serializers.ModelSerializer):
             'version',
             'eval_metrics',
             'columns',
-            'access'
+            'access',
+            'user'
         ]
 
 

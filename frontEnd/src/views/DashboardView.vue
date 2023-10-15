@@ -11,7 +11,7 @@ export default {
     name: 'DashboardView',
     components: {
         Dashboard
-    }
+    },
 };
 </script>
 

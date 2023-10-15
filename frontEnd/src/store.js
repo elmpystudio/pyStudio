@@ -1,38 +1,37 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { getNotifications, acceptNotification, denyNotification } from '@/api_client.js';
+import db from '@/firebase'
+import { onSnapshot, doc, setDoc, arrayUnion, arrayRemove, } from "firebase/firestore";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        notifications: [],
+        notifications: []
     },
     mutations: {
         // 
     },
     actions: {
         GET_NOTIFICATIONS({ state }) {
-            getNotifications()
-                .then(({ data }) => {
-                    state.notifications = data;
-                })
-                .catch((error) => console.log(error))
+            onSnapshot(doc(db, "notifications", localStorage.getItem("user_id")), (doc) => {
+                if(doc.data())
+                    state.notifications = doc.data().data;
+            });
         },
-        ACCEPT_NOTIFICATION({state}, id) {
-            acceptNotification(id)
-                .then(() => {
-                    console.log(state)
 
-                })
-                .catch((error) => console.log(error))
+        async SET_NOTIFICATION(NULL, payload) {
+            console.log("STORE, ", payload)
+            await setDoc(doc(db, "notifications", payload.owner_id+""), {
+                data: arrayUnion(payload.data)
+            }, { merge: true });
         },
-        DENY_NOTIFICATION({state}, id) {
-            denyNotification(id)
-                .then(() => {
-                    console.log(state)
-                })
-                .catch((error) => console.log(error))
+
+        async DELETE_NOTIFICATION({ commit }, payload) {
+            commit;
+            await setDoc(doc(db, "notifications", localStorage.getItem("user_id")), {
+                data: arrayRemove(payload)
+            }, { merge: true });
         },
 
     },

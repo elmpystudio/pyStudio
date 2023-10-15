@@ -53,10 +53,10 @@ REST_FRAMEWORK = {
 }
 
 MINIO_SERVER = {
-    "IP": "localhost",
+    "IP": "34.91.137.119",
     "PORT": 9000,
-    "ACCESS_KEY": "xxxxx",
-    "SECRET_KEY": "xxxxx",
+    "ACCESS_KEY": "dev",
+    "SECRET_KEY": "Aa123456",
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -138,8 +138,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'api',
-        'USER': 'yourUser',
-        'PASSWORD': 'yourPass',
+        'USER': 'dev',
+        'PASSWORD': 'Aa123456',
         'HOST': 'localhost',
         'PORT': '5432',
     }

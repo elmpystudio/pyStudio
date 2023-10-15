@@ -12,7 +12,7 @@
                 <h1>No Data Found</h1>
             </div>
 
-            <v-row no-gutters>
+            <v-row no-gutters style="overflow: scroll; height: 90vh">
                 <v-col v-for="data in filtered_datasets" :key="`dataset_${data.id}`">
                     <CCard :id="data.id" :name="data.name" :description="data.description" :date="data.date"
                         :rate="data.rate" :access="data.access" :type="data.type" :to="'/marketplace/dataset'"
@@ -63,8 +63,7 @@ import {
     getMarketplaceDatasets,
     getMarketplaceMlModels,
     downloadDataset,
-    downloadMl_model,
-    createNotification
+    downloadMl_model
 } from '@/api_client.js';
 
 export default {
@@ -165,10 +164,19 @@ export default {
                 if (data.type === 'dataset')
                     this.download_dataset();
                 else
-                    this.download_ml_model();
+                    this.fake_download();
             }
             else if (data.action_type === 'request')
                 this.modalToggle = true;
+        },
+
+        fake_download() {
+            const csvData = "Name,Email\nJohn,john@example.com\nJane,jane@example.com";
+            const blob = new Blob([csvData], { type: "text/csv" });
+
+            const url = window.URL.createObjectURL(blob);
+
+            this.download(url);
         },
 
         download_dataset() {
@@ -188,19 +196,29 @@ export default {
         },
 
         send_request() {
-            const data = {
-                message: this.request.message,
-            };
-            data[this.selected.type] = this.selected.id;
+            var data = null
 
-            createNotification(data)
-                .then((response) => {
-                    if (response.status === 201)
-                        this.request.status = true;
-                    else
-                        this.request.status = false;
+            if (this.selected.type === "dataset")
+                data = this.datasets.data.find(el => {
+                    return el.id === this.selected.id
+                });
+            else
+                data = this.ml_models.data.find(el => {
+                    return el.id === this.selected.id
                 })
-                .catch((erroe) => console.error(erroe))
+
+            this.$store.dispatch('SET_NOTIFICATION', {
+                owner_id: data.user,
+                data: {
+                    id: data.id,
+                    name: data.name,
+                    type: this.selected.type,
+                    message: this.request.message,
+                    user_id: localStorage.getItem("user_id"),
+                    username: localStorage.getItem("username"),
+                    isRequest: true
+                }
+            });
         }
     }
 }

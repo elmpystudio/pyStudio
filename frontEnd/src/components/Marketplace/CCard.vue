@@ -5,7 +5,7 @@
 
             <!--Herader-->
             <div class="grey lighten-3">
-                <v-card-text style="font-size: 20px">
+                <v-card-text style="font-size: 14px; font-weight: bold;">
                     {{ name }}
                 </v-card-text>
             </div>
@@ -31,7 +31,8 @@
                 <div class="pt-2">
                     <v-btn v-if="access" @click="onClick('download')" color="primary"
                         style="width: 100px; height: 30px; font-size:12px" elevation="1">Download</v-btn>
-                    <v-btn v-else @click="onClick('request')" color="primary"
+
+                    <v-btn v-else @click="onClick('request')" color="grey"
                         style="width: 120px; height: 30px; font-size:12px" elevation="1">Send Request</v-btn>
                 </div>
             </div>
@@ -94,9 +95,9 @@ a {
     letter-spacing: 1px;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
+    // display: -webkit-box;
+    // -webkit-line-clamp: 4;
+    // line-clamp: 2;
+    // -webkit-box-orient: vertical;
 }
 </style>

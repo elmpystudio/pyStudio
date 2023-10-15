@@ -13,6 +13,7 @@
     "@mdi/js": "^4.8.95",
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
+    "firebase": "^10.3.1",
     "moment": "^2.24.0",
     "normalize": "^0.3.1",
     "v-click-outside": "^3.0.1",
